@@ -1,0 +1,37 @@
+<svg width="900" height="1600" viewBox="0 0 900 1600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="900" height="1600" rx="44" fill="#090611"/>
+  <rect x="34" y="34" width="832" height="1532" rx="34" fill="url(#bg)"/>
+  <text x="72" y="140" fill="#FBF5FF" font-family="Arial, sans-serif" font-size="60" font-weight="700">Cyber Family</text>
+  <text x="72" y="194" fill="#C2AFDD" font-family="Arial, sans-serif" font-size="28">APK shield and call protection</text>
+  <rect x="72" y="248" width="756" height="194" rx="32" fill="#170C2A"/>
+  <text x="112" y="314" fill="#D7C3F4" font-family="Arial, sans-serif" font-size="24">Latest scan</text>
+  <text x="112" y="374" fill="#FBF5FF" font-family="Arial, sans-serif" font-size="44" font-weight="700">No critical threats</text>
+  <text x="112" y="410" fill="#43E5F0" font-family="Arial, sans-serif" font-size="24">Dangerous calls blocked automatically</text>
+  <rect x="72" y="478" width="360" height="204" rx="28" fill="#1F1038"/>
+  <rect x="468" y="478" width="360" height="204" rx="28" fill="#170C2A"/>
+  <text x="108" y="540" fill="#D7C3F4" font-family="Arial, sans-serif" font-size="22">Risk score</text>
+  <text x="108" y="620" fill="#43E5F0" font-family="Arial, sans-serif" font-size="62" font-weight="700">12%</text>
+  <text x="504" y="540" fill="#D7C3F4" font-family="Arial, sans-serif" font-size="22">Call blocks</text>
+  <text x="504" y="620" fill="#FBF5FF" font-family="Arial, sans-serif" font-size="62" font-weight="700">24</text>
+  <rect x="72" y="718" width="756" height="328" rx="32" fill="#0F071C"/>
+  <text x="112" y="780" fill="#FBF5FF" font-family="Arial, sans-serif" font-size="32" font-weight="700">Threat breakdown</text>
+  <rect x="112" y="824" width="680" height="56" rx="18" fill="#1A0D30"/>
+  <rect x="112" y="902" width="540" height="56" rx="18" fill="#20103A"/>
+  <rect x="112" y="980" width="608" height="56" rx="18" fill="#170C2A"/>
+  <text x="138" y="860" fill="#FBF5FF" font-family="Arial, sans-serif" font-size="24">Suspicious permission chains verified</text>
+  <text x="138" y="938" fill="#FBF5FF" font-family="Arial, sans-serif" font-size="24">Unsafe call redirects blocked</text>
+  <text x="138" y="1016" fill="#FBF5FF" font-family="Arial, sans-serif" font-size="24">Alert history synced for family members</text>
+  <rect x="72" y="1082" width="756" height="408" rx="32" fill="#170C2A"/>
+  <text x="112" y="1146" fill="#FBF5FF" font-family="Arial, sans-serif" font-size="32" font-weight="700">Protection mode</text>
+  <circle cx="450" cy="1296" r="136" fill="#21103C"/>
+  <path d="M450 1208C502 1246 560 1248 612 1208V1286C612 1390 530 1452 450 1478C370 1452 288 1390 288 1286V1208C340 1248 398 1246 450 1208Z" fill="#43E5F0"/>
+  <path d="M450 1248C486 1274 526 1274 562 1250V1286C562 1354 508 1402 450 1420C392 1402 338 1354 338 1286V1250C374 1274 414 1274 450 1248Z" fill="#B454FF"/>
+  <circle cx="450" cy="1324" r="40" fill="#170C2A"/>
+  <text x="176" y="1458" fill="#C2AFDD" font-family="Arial, sans-serif" font-size="26">Scan, score, and block before damage happens</text>
+  <defs>
+    <linearGradient id="bg" x1="70" y1="60" x2="840" y2="1520" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#130821"/>
+      <stop offset="1" stop-color="#0B1123"/>
+    </linearGradient>
+  </defs>
+</svg>

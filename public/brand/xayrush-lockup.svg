@@ -1,0 +1,31 @@
+<svg width="512" height="128" viewBox="0 0 512 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="lockup-md-stroke" x1="26" y1="24" x2="98" y2="103" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAFC"/>
+      <stop offset="0.6" stop-color="#E5E7EB"/>
+      <stop offset="1" stop-color="#CBD5E1"/>
+    </linearGradient>
+    <linearGradient id="lockup-md-glow" x1="22" y1="18" x2="104" y2="110" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38BDF8"/>
+      <stop offset="0.52" stop-color="#8B5CF6"/>
+      <stop offset="1" stop-color="#F59E0B"/>
+    </linearGradient>
+    <linearGradient id="lockup-text" x1="144" y1="36" x2="332" y2="108" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAFC"/>
+      <stop offset="1" stop-color="#D4D9E1"/>
+    </linearGradient>
+  </defs>
+  
+  <text x="62" y="86" text-anchor="middle" font-family="Geist, Sora, system-ui, sans-serif" font-size="64" font-weight="900" letter-spacing="-0.04em" stroke="url(#lockup-md-glow)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.45" fill="none">MD</text>
+  <text x="62" y="86" text-anchor="middle" font-family="Geist, Sora, system-ui, sans-serif" font-size="64" font-weight="900" letter-spacing="-0.04em" fill="url(#lockup-md-stroke)">MD</text>
+  
+  <circle cx="106" cy="38" r="6" fill="#F59E0B"/>
+  <circle cx="106" cy="38" r="9" stroke="#F59E0B" stroke-opacity="0.2"/>
+  
+  <text x="132" y="58" fill="url(#lockup-text)" font-size="34" font-weight="800" font-family="Geist, Sora, system-ui, sans-serif" letter-spacing="-0.04em">
+    M@nsu7Dev
+  </text>
+  <text x="134" y="84" fill="#8C98AB" font-size="12" font-weight="600" font-family="Geist, Sora, system-ui, sans-serif" letter-spacing="0.28em">
+    IOT AND DRONE ENGINEER
+  </text>
+</svg>

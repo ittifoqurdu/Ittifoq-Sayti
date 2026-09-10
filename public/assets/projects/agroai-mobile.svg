@@ -1,0 +1,39 @@
+<svg width="900" height="1600" viewBox="0 0 900 1600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="900" height="1600" rx="44" fill="#08161B"/>
+  <rect x="34" y="34" width="832" height="1532" rx="34" fill="url(#bg)"/>
+  <text x="72" y="140" fill="#F2FFF8" font-family="Arial, sans-serif" font-size="56" font-weight="700">IoT Monitoring</text>
+  <text x="72" y="198" fill="#F2FFF8" font-family="Arial, sans-serif" font-size="56" font-weight="700">Platform</text>
+  <text x="72" y="252" fill="#91C7C1" font-family="Arial, sans-serif" font-size="28">Drone + field command</text>
+  <rect x="72" y="250" width="756" height="180" rx="32" fill="#102D32"/>
+  <text x="110" y="314" fill="#A6DFD4" font-family="Arial, sans-serif" font-size="24">Today's mission</text>
+  <text x="110" y="374" fill="#F2FFF8" font-family="Arial, sans-serif" font-size="44" font-weight="700">Sector B2 health scan</text>
+  <text x="110" y="408" fill="#48D7B3" font-family="Arial, sans-serif" font-size="24">2 drones active now</text>
+  <rect x="72" y="466" width="360" height="190" rx="28" fill="#0C2429"/>
+  <rect x="468" y="466" width="360" height="190" rx="28" fill="#13363B"/>
+  <text x="108" y="528" fill="#A6DFD4" font-family="Arial, sans-serif" font-size="22">Crop score</text>
+  <text x="108" y="604" fill="#F2FFF8" font-family="Arial, sans-serif" font-size="62" font-weight="700">94%</text>
+  <text x="504" y="528" fill="#A6DFD4" font-family="Arial, sans-serif" font-size="22">Sensors online</text>
+  <text x="504" y="604" fill="#F2FFF8" font-family="Arial, sans-serif" font-size="62" font-weight="700">128</text>
+  <rect x="72" y="694" width="756" height="280" rx="32" fill="#0A1C21"/>
+  <text x="110" y="754" fill="#F2FFF8" font-family="Arial, sans-serif" font-size="32" font-weight="700">AI alerts</text>
+  <rect x="110" y="792" width="680" height="56" rx="18" fill="#143A3F"/>
+  <rect x="110" y="870" width="520" height="56" rx="18" fill="#163A40"/>
+  <rect x="110" y="948" width="612" height="56" rx="18" fill="#14343A"/>
+  <text x="136" y="828" fill="#E8FFF8" font-family="Arial, sans-serif" font-size="24">Leaf stress detected in row 08</text>
+  <text x="136" y="906" fill="#E8FFF8" font-family="Arial, sans-serif" font-size="24">Weather safe window: 16:20</text>
+  <text x="136" y="984" fill="#E8FFF8" font-family="Arial, sans-serif" font-size="24">Spray route optimized</text>
+  <rect x="72" y="1020" width="756" height="470" rx="32" fill="#102D32"/>
+  <text x="110" y="1084" fill="#F2FFF8" font-family="Arial, sans-serif" font-size="32" font-weight="700">Route map</text>
+  <path d="M184 1308C248 1178 336 1140 420 1184C494 1224 572 1224 640 1128L716 1048" stroke="#42D5B0" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="184" cy="1308" r="24" fill="#42D5B0"/>
+  <circle cx="420" cy="1184" r="24" fill="#42D5B0"/>
+  <circle cx="640" cy="1128" r="24" fill="#42D5B0"/>
+  <circle cx="716" cy="1048" r="24" fill="#F2FFF8"/>
+  <text x="110" y="1388" fill="#9BD8CF" font-family="Arial, sans-serif" font-size="26">Drone autopilot synced with IoT sensor zones</text>
+  <defs>
+    <linearGradient id="bg" x1="70" y1="60" x2="840" y2="1520" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A2327"/>
+      <stop offset="1" stop-color="#0B2B30"/>
+    </linearGradient>
+  </defs>
+</svg>
