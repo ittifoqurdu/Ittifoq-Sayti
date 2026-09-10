@@ -144,7 +144,7 @@ function FooterSection() {
                 value={formValues.name}
                 onChange={updateField('name')}
                 className="w-full rounded-xl border border-zinc-800 bg-zinc-900/80 px-4 py-3 text-sm text-zinc-100 outline-none transition placeholder:text-zinc-600 focus:border-emerald-500"
-                placeholder="Mansur Durdimatov"
+                placeholder="Ismingiz va familiyangiz"
                 autoComplete="name"
               />
               {errors.name ? <p className="mt-1 text-xs text-amber-300">{errors.name}</p> : null}
