@@ -79,14 +79,16 @@ export const universityStats = [
   },
 ]
 
-export const teamMembers = [
+// 1. BOSHQARUV (Leadership)
+export const boshqaruvMembers = [
   {
     id: 'leader',
     name: 'Bobur Rahimov',
     role: "Boshlang'ich tashkilot yetakchisi",
-    faculty: "Fizika-matematika va axborot texnologiyalari",
+    category: 'boshqaruv',
+    faculty: "Fizika-matematika va axborot texnologiyalari fakulteti",
     badge: 'Bosh Yetakchi',
-    bio: "Universitet talaba-yoshlarining tashabbuslarini muvofiqlashtirish, innovatsion g'oyalarni qo'llab-quvvatlash va umumiy faoliyatga rahbarlik.",
+    bio: "Universitet talaba-yoshlarining barcha tashabbuslarini muvofiqlashtirish, innovatsion g'oyalarni qo'llab-quvvatlash va umumiy faoliyatga rahbarlik.",
     avatar: '/assets/team/main_leader.jpg',
     email: 'rahimov.b@urdu.uz',
     telegram: 'https://t.me/UrDU_Yoshlari_BT',
@@ -96,11 +98,12 @@ export const teamMembers = [
     skills: ["Loyiha boshqaruvi", "Yetakchilik", "Tashabbuslar"],
   },
   {
-    id: 'coordinator',
+    id: 'coordinator-main',
     name: 'Azizbek Qurbonov',
-    role: "Yoshlar bilan ishlash koordinatori",
-    faculty: "Pedagogika fakulteti",
-    badge: 'Koordinator',
+    role: "Yoshlar bilan ishlash bosh koordinatori",
+    category: 'boshqaruv',
+    faculty: "Pedagogika va ijtimoiy fanlar fakulteti",
+    badge: 'Bosh Koordinator',
     bio: "Fakultetlar yoshlar yetakchilari faoliyatini muvofiqlashtirish, talabalar murojaatlari va 'Payshanba — yoshlar kuni' tadbirlari tashkilotchisi.",
     avatar: '/assets/team/coordinator.jpg',
     email: 'qurbonov.a@urdu.uz',
@@ -110,27 +113,17 @@ export const teamMembers = [
     phoneLabel: '+998 (91) 425-33-44',
     skills: ["Muloqot", "Tadbirlar boshqaruvi", "Ijtimoiy himoya"],
   },
-  {
-    id: 'science',
-    name: 'Dilnoza Matyoqubova',
-    role: "Ilm-fan va ta'lim yo'nalishi yetakchisi",
-    faculty: "Tabiiy fanlar fakulteti",
-    badge: 'Ilm-fan',
-    bio: "Iqtidorli talabalar bilan ishlash, davlat stipendiyalari (Navoiy, Beruniy, Prezident), xalqaro grantlar va ilmiy anjumanlar koordinatori.",
-    avatar: '/assets/team/science.jpg',
-    email: 'matyoqubova.d@urdu.uz',
-    telegram: 'https://t.me/UrDU_Yoshlari_BT',
-    telegramHandle: '@UrDU_Yoshlari_BT',
-    phone: '+998937128899',
-    phoneLabel: '+998 (93) 712-88-99',
-    skills: ["Davlat stipendiyalari", "Fan olimpiadalari", "Ilmiy maqolalar"],
-  },
+]
+
+// 2. KOORDINATORLAR (Direction Coordinators)
+export const koordinatorMembers = [
   {
     id: 'it-media',
     name: 'Sardorbek Bobojonov',
-    role: "IT va Media xizmati rahbari",
+    role: "IT va Media xizmati koordinatori",
+    category: 'kordinator',
     faculty: "Dasturiy injiniring fakulteti",
-    badge: 'IT & Media',
+    badge: 'IT & Media Koordinator',
     bio: "Universitet yoshlar hayotini raqamlashtirish, rasmiy Telegram kanal kontentlari, IT startaplar va xakatonlar tashkiliy jarayoni.",
     avatar: '/assets/team/it_lead.jpg',
     email: 'bobojonov.s@urdu.uz',
@@ -144,8 +137,9 @@ export const teamMembers = [
     id: 'volunteers',
     name: 'Madina Yusupova',
     role: "'Oltin Qanot' volontyorlar koordinatori",
+    category: 'kordinator',
     faculty: "Xorijiy filologiya fakulteti",
-    badge: 'Volontyorlik',
+    badge: 'Volontyorlik Koordinatori',
     bio: "Ijtimoiy yordam loyihalari, 'Yashil makon' eko-harakati hamda yirik xalqaro universitet forumlarida volontyorlar xizmatini yo'lga qo'yish.",
     avatar: '/assets/team/volunteer.jpg',
     email: 'yusupova.m@urdu.uz',
@@ -158,9 +152,10 @@ export const teamMembers = [
   {
     id: 'culture-sports',
     name: 'Jamshid Otaboyev',
-    role: "Madaniyat va Sport yetakchisi",
+    role: "Madaniyat va Sport koordinatori",
+    category: 'kordinator',
     faculty: "Jismoniy madaniyat fakulteti",
-    badge: 'Sport & San\'at',
+    badge: 'Madaniyat & Sport Koordinatori',
     bio: "'Talabalar bahori' madaniy festivali, QVZ turnirlari, Rektor kubogi va talabalar sport ligalari mas'ul koordinatori.",
     avatar: '/assets/team/sports.jpg',
     email: 'otaboyev.j@urdu.uz',
@@ -170,6 +165,48 @@ export const teamMembers = [
     phoneLabel: '+998 (94) 123-45-67',
     skills: ["Talabalar bahori", "Rektor kubogi", "Teatr & QVZ"],
   },
+]
+
+// 3. YETAKCHILAR (Direction & Faculty Leads)
+export const yetakchiMembers = [
+  {
+    id: 'science',
+    name: 'Dilnoza Matyoqubova',
+    role: "Ilm-fan va ta'lim yo'nalishi yetakchisi",
+    category: 'yetakchi',
+    faculty: "Tabiiy fanlar fakulteti",
+    badge: 'Ilm-fan Yetakchisi',
+    bio: "Iqtidorli talabalar bilan ishlash, davlat stipendiyalari (Navoiy, Beruniy, Prezident), xalqaro grantlar va ilmiy anjumanlar yetakchisi.",
+    avatar: '/assets/team/science.jpg',
+    email: 'matyoqubova.d@urdu.uz',
+    telegram: 'https://t.me/UrDU_Yoshlari_BT',
+    telegramHandle: '@UrDU_Yoshlari_BT',
+    phone: '+998937128899',
+    phoneLabel: '+998 (93) 712-88-99',
+    skills: ["Davlat stipendiyalari", "Fan olimpiadalari", "Ilmiy maqolalar"],
+  },
+  {
+    id: 'debate',
+    name: 'Almasxon Matchonov',
+    role: "'Munozara' debat klubi va Zakovat yetakchisi",
+    category: 'yetakchi',
+    faculty: "Tarix va ijtimoiy-gumanitar fanlar",
+    badge: 'Debat & Zakovat Yetakchisi',
+    bio: "Notiqlik san'ati, tanqidiy fikrlash to'garaklari va haftalik Zakovat intellektual janglari tashkilotchi yetakchisi.",
+    avatar: '/assets/team/debate.jpg',
+    email: 'matchonov.a@urdu.uz',
+    telegram: 'https://t.me/UrDU_Yoshlari_BT',
+    telegramHandle: '@UrDU_Yoshlari_BT',
+    phone: '+998991238844',
+    phoneLabel: '+998 (99) 123-88-44',
+    skills: ["Notiqlik", "Munozara ligasi", "Zakovat klubi"],
+  },
+]
+
+export const teamMembers = [
+  ...boshqaruvMembers,
+  ...koordinatorMembers,
+  ...yetakchiMembers,
 ]
 
 export const directionsData = [
