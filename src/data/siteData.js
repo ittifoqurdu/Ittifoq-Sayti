@@ -616,7 +616,7 @@ export const footerColumns = [
     links: [
       { label: 'Urganch sh., H.Olimjon 14', href: 'https://yandex.uz/maps/-/CTDQBJZj' },
       { label: 'Tel: +998 (62) 224-67-00', href: 'tel:+998622246700' },
-      { label: 'Email: ittifoqurdu@gmail.com', href: 'mailto:ittifoqurdu@gmail.com' },
+      { label: 'Email: ittifoqurdu@gmail.com', href: 'https://mail.google.com/mail/?view=cm&fs=1&to=ittifoqurdu@gmail.com' },
       { label: 'Telegram: @UrDU_Yoshlari_BT', href: 'https://t.me/UrDU_Yoshlari_BT' },
     ],
   },
@@ -629,6 +629,6 @@ export const socialLinks = {
   instagramHandle: '@urdumatbuotxizmati',
   youtube: 'https://www.youtube.com/channel/UCkQ8N0jtKR9VigB0FALuFvA/videos',
   website: 'https://urdu.uz',
-  email: 'mailto:ittifoqurdu@gmail.com',
+  email: 'https://mail.google.com/mail/?view=cm&fs=1&to=ittifoqurdu@gmail.com',
   phone: 'tel:+998622246700',
 }

@@ -23,14 +23,14 @@ function FooterSection() {
   const [statusTone, setStatusTone] = useState('neutral')
 
   const contactEmail = useMemo(
-    () => (socialLinks.email || profile.emailHref || '').replace('mailto:', ''),
+    () => profile.email || 'ittifoqurdu@gmail.com',
     [],
   )
 
   const quickLinks = [
     { href: socialLinks.telegram, label: 'Telegram Kanal', icon: Send },
     { href: socialLinks.instagram, label: 'Instagram', icon: Instagram },
-    { href: socialLinks.email, label: contactEmail, icon: Mail },
+    { href: `https://mail.google.com/mail/?view=cm&fs=1&to=${contactEmail}`, label: contactEmail, icon: Mail },
     { href: socialLinks.phone, label: profile.phoneLabel, icon: Phone },
   ].filter((item) => item.href)
 
@@ -79,9 +79,16 @@ function FooterSection() {
       .filter(Boolean)
       .join('\n')
 
-    window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    // Outlook ochilmasligi uchun brauzerda to'g'ridan-to'g'ri Gmail veb-versiyasini ochamiz
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(contactEmail)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    
+    const newWindow = window.open(gmailUrl, '_blank')
+    if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+      window.location.href = gmailUrl
+    }
+
     setStatusTone('success')
-    setStatusText('Murojaatingiz pochta ilovasida tayyorlandi!')
+    setStatusText('Gmail brauzerda ochildi! Xabarni yuborish tugmasini bosing.')
   }
 
   return (
