@@ -31,7 +31,7 @@ function ScrollToTopButton() {
           transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
           whileHover={{ y: -3, scale: 1.04 }}
           whileTap={{ scale: 0.96 }}
-          className="fixed bottom-5 right-5 z-[115] inline-flex h-11 w-11 items-center justify-center rounded-full border border-zinc-700/80 bg-zinc-950/88 text-zinc-200 shadow-[0_16px_36px_rgba(0,0,0,0.45)] backdrop-blur-md transition hover:border-zinc-500 hover:text-white"
+          className="fixed bottom-5 right-5 z-[115] inline-flex h-11 w-11 items-center justify-center rounded-full border border-zinc-300/80 bg-white/90 text-zinc-700 shadow-[0_8px_30px_rgba(120,105,85,0.12)] backdrop-blur-md transition hover:border-emerald-500 hover:text-emerald-600 dark:border-zinc-700/80 dark:bg-zinc-950/88 dark:text-zinc-200 dark:shadow-[0_16px_36px_rgba(0,0,0,0.45)] dark:hover:border-zinc-500 dark:hover:text-white"
           aria-label="Scroll to top"
         >
           <ArrowUp size={18} />

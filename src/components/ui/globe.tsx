@@ -1,26 +1,21 @@
 import { useEffect, useRef } from 'react'
 import createGlobe, { type COBEOptions } from 'cobe'
 import { cn } from '@/lib/utils'
+import { useTheme } from '@/context/ThemeContext'
 
-const DEFAULT_GLOBE_CONFIG: COBEOptions = {
-  width: 700,
-  height: 700,
-  onRender: () => {},
-  devicePixelRatio: 2,
-  phi: -1.2,
-  theta: 0.32,
-  dark: 0,
-  diffuse: 0.55,
-  mapSamples: 16000,
-  mapBrightness: 1.25,
-  baseColor: [0.95, 0.95, 0.95],
-  markerColor: [14 / 255, 165 / 255, 233 / 255],
-  glowColor: [1, 1, 1],
-  backgroundColor: [0, 0, 0, 0],
-  markers: [
-    { location: [41.3111, 69.2797], size: 0.13 }, // Tashkent, Uzbekistan
-  ],
-}
+const PARTNER_MARKERS = [
+  { location: [41.55, 60.63], size: 0.15 }, // Urganch, Uzbekistan (Headquarters)
+  { location: [46.62, 14.30], size: 0.08 }, // Klagenfurt, Austria
+  { location: [50.98, 11.32], size: 0.08 }, // Weimar, Germany
+  { location: [42.35, 13.39], size: 0.08 }, // L'Aquila, Italy
+  { location: [37.88, -4.77], size: 0.08 }, // Cordoba, Spain
+  { location: [52.23, 21.01], size: 0.08 }, // Warsaw, Poland
+  { location: [41.00, 28.97], size: 0.09 }, // Istanbul, Turkey
+  { location: [55.75, 37.61], size: 0.08 }, // Moscow, Russia
+  { location: [31.23, 121.47], size: 0.08 }, // Shanghai, China
+  { location: [3.13, 101.68], size: 0.08 }, // Malaysia
+  { location: [43.23, 76.88], size: 0.08 }, // Almaty, Kazakhstan
+]
 
 export function Globe({
   className,
@@ -30,16 +25,54 @@ export function Globe({
   config?: Partial<COBEOptions>
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const phiRef = useRef(DEFAULT_GLOBE_CONFIG.phi ?? 0)
+  const phiRef = useRef(-1.2)
   const pointerInteractingRef = useRef<number | null>(null)
   const pointerRotationRef = useRef(0)
+  const { isDark } = useTheme()
 
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return undefined
 
-    const mergedConfig = {
-      ...DEFAULT_GLOBE_CONFIG,
+    const themeConfig: Partial<COBEOptions> = isDark
+      ? {
+          dark: 1,
+          diffuse: 1.2,
+          mapSamples: 16000,
+          mapBrightness: 2.5,
+          baseColor: [0.15, 0.2, 0.28],
+          markerColor: [16 / 255, 185 / 255, 129 / 255],
+          glowColor: [0.08, 0.2, 0.3],
+          backgroundColor: [0, 0, 0, 0],
+        }
+      : {
+          dark: 0,
+          diffuse: 0.8,
+          mapSamples: 16000,
+          mapBrightness: 1.2,
+          baseColor: [0.93, 0.89, 0.83],
+          markerColor: [16 / 255, 185 / 255, 129 / 255],
+          glowColor: [0.96, 0.93, 0.88],
+          backgroundColor: [0, 0, 0, 0],
+        }
+
+    const mergedConfig: COBEOptions = {
+      width: 700,
+      height: 700,
+      onRender: () => {},
+      devicePixelRatio: 2,
+      phi: -1.2,
+      theta: 0.32,
+      dark: isDark ? 1 : 0,
+      diffuse: 1,
+      mapSamples: 16000,
+      mapBrightness: 1.5,
+      baseColor: [0.2, 0.25, 0.35],
+      markerColor: [16 / 255, 185 / 255, 129 / 255],
+      glowColor: [0.1, 0.2, 0.3],
+      backgroundColor: [0, 0, 0, 0],
+      markers: PARTNER_MARKERS,
+      ...themeConfig,
       ...config,
     }
 
@@ -91,9 +124,8 @@ export function Globe({
       width: canvas.width,
       height: canvas.height,
       onRender: (state) => {
-        // Keep Uzbekistan marker visible, but allow user drag interaction.
         if (pointerInteractingRef.current === null) {
-          phiRef.current += 0.0008
+          phiRef.current += 0.001
         }
         state.phi = phiRef.current + pointerRotationRef.current
         state.width = canvas.width
@@ -113,7 +145,7 @@ export function Globe({
       canvas.removeEventListener('pointerleave', stopPointerInteraction)
       globe.destroy()
     }
-  }, [config])
+  }, [config, isDark])
 
   return (
     <div className={cn('relative z-[1] mx-auto aspect-square w-[300px] sm:w-[360px] lg:w-[380px]', className)}>

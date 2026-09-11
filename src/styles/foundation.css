@@ -1,4 +1,4 @@
-﻿@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   --bg-base: #07090d;
@@ -16,38 +16,53 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --background: oklch(1 0 0);
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --radius: 0.625rem;
+}
+
+html.light {
+  --bg-base: #F5F0E8;
+  --bg-elev-1: #EFE9DF;
+  --bg-elev-2: #E8E1D5;
+  --text-main: #18181B;
+  --text-muted: #52525B;
+  --line: rgba(0, 0, 0, 0.10);
+  --line-strong: rgba(0, 0, 0, 0.18);
+  --accent-warm: #d97706;
+  --accent-cool: #0284c7;
+  color-scheme: light;
+  --background: oklch(0.96 0.01 80);
   --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
+  --card: oklch(0.97 0.008 80);
   --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
+  --popover: oklch(0.97 0.008 80);
   --popover-foreground: oklch(0.145 0 0);
   --primary: oklch(0.205 0 0);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
+  --secondary: oklch(0.94 0.008 80);
   --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
+  --muted: oklch(0.94 0.008 80);
+  --muted-foreground: oklch(0.5 0 0);
+  --border: rgba(0, 0, 0, 0.10);
+  --input: rgba(0, 0, 0, 0.12);
   --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.809 0.105 251.813);
-  --chart-2: oklch(0.623 0.214 259.815);
-  --chart-3: oklch(0.546 0.245 262.881);
-  --chart-4: oklch(0.488 0.243 264.376);
-  --chart-5: oklch(0.424 0.199 265.638);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
 }
 
 * {
@@ -56,6 +71,7 @@
 
 html {
   scroll-behavior: smooth;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body {
@@ -68,6 +84,12 @@ body {
     radial-gradient(40rem 40rem at 70% 90%, rgba(244, 63, 94, 0.08), transparent 50%),
     linear-gradient(180deg, #07090d 0%, #070a10 55%, #06080d 100%);
   cursor: auto;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+html.light body {
+  color: var(--text-main) !important;
+  background: #F5F0E8 !important;
 }
 
 #root {
@@ -81,7 +103,7 @@ body {
 
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid rgba(228, 228, 231, 0.9);
+  outline: 2px solid rgba(16, 185, 129, 0.7);
   outline-offset: 2px;
 }
 
@@ -90,8 +112,38 @@ button:focus-visible {
   color: #0b0c10;
 }
 
+html.light ::selection {
+  background: rgba(16, 185, 129, 0.25);
+  color: #064e3b;
+}
+
 .font-script {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
 }
 
+/* Light mode: force ALL white/light backgrounds to cream */
+html.light [class*="bg-white"] {
+  background-color: #F5F0E8 !important;
+}
+
+html.light [class*="bg-zinc-50"],
+html.light [class*="bg-zinc-100"],
+html.light [class*="bg-zinc-200"] {
+  background-color: #EDE8DE !important;
+}
+
+html.light input,
+html.light textarea,
+html.light select {
+  background-color: #F5F0E8 !important;
+  border-color: rgba(180, 170, 150, 0.5) !important;
+}
+
+html.light [class*="from-white"] {
+  --tw-gradient-from: #F5F0E8 !important;
+}
+
+html.light [class*="via-white"] {
+  --tw-gradient-via: #F5F0E8 !important;
+}

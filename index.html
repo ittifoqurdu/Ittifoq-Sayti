@@ -1,9 +1,23 @@
 <!doctype html>
-<html lang="uz">
+<html lang="uz" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#07090d" />
+    <script>
+      (function() {
+        try {
+          var mode = localStorage.getItem('urdu_theme_mode');
+          if (mode === 'light') {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
+          } else {
+            document.documentElement.classList.remove('light');
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
     <link rel="icon" type="image/png" href="/img/logo-oq.png" />
 
     <title>UrDU Yoshlar Ittifoqi | Rasmiy Portal | Urganch Davlat Universiteti</title>

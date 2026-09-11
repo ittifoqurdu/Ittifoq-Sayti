@@ -59,13 +59,13 @@ function BehindCurtains() {
       className="mx-auto flex w-full max-w-[1320px] flex-col justify-center px-4 py-20 md:px-7 lg:py-28"
     >
       <MotionDiv variants={fadeUp} className="mb-14 text-center">
-        <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300">
+        <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-300">
           <Sparkles size={14} />
           Imkoniyatlar
         </div>
-        <h2 className="mt-4 text-3xl font-bold tracking-tight text-zinc-100 sm:text-4xl lg:text-5xl">
+        <h2 className="mt-4 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl lg:text-5xl dark:text-zinc-100">
           UrDU Talabalari Uchun{' '}
-          <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent dark:from-emerald-400 dark:via-teal-300 dark:to-cyan-400">
             Yaratilgan Imkoniyatlar
           </span>
         </h2>
@@ -76,25 +76,25 @@ function BehindCurtains() {
           <MotionDiv
             key={card.title}
             variants={fadeUpChild}
-            className="group flex flex-col justify-between overflow-hidden rounded-3xl border border-zinc-800/80 bg-zinc-900/40 p-8 shadow-xl backdrop-blur-sm transition-all duration-500 hover:border-emerald-500/50 hover:bg-zinc-900/60 hover:shadow-2xl"
+            className="group flex flex-col justify-between overflow-hidden rounded-3xl border border-zinc-200/80 bg-white/90 p-8 shadow-lg backdrop-blur-sm transition-all duration-500 hover:border-emerald-500/50 hover:bg-white hover:shadow-2xl dark:border-zinc-800/80 dark:bg-zinc-900/40 dark:hover:bg-zinc-900/60"
           >
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-300">
-                <Sparkles size={12} className="text-emerald-400" />
+              <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-300">
+                <Sparkles size={12} className="text-emerald-600 dark:text-emerald-400" />
                 {card.eyebrow}
               </div>
-              <h3 className="mt-5 text-2xl font-bold leading-tight tracking-tight text-zinc-100 group-hover:text-emerald-300 transition-colors">
+              <h3 className="mt-5 text-2xl font-bold leading-tight tracking-tight text-zinc-900 group-hover:text-emerald-700 transition-colors dark:text-zinc-100 dark:group-hover:text-emerald-300">
                 {card.title}
               </h3>
-              <p className="mt-4 text-sm leading-relaxed text-zinc-400">
+              <p className="mt-4 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
                 {card.description}
               </p>
             </div>
 
-            <div className="mt-8 space-y-3 border-t border-zinc-800/60 pt-6">
+            <div className="mt-8 space-y-3 border-t border-zinc-200/80 pt-6 dark:border-zinc-800/60">
               {card.points.map((point) => (
-                <div key={point} className="flex items-start gap-3 rounded-2xl border border-zinc-800/70 bg-zinc-950/45 px-4 py-3 text-xs text-zinc-300">
-                  <span className="mt-1 inline-block h-2 w-2 shrink-0 rounded-full bg-emerald-400" />
+                <div key={point} className="flex items-start gap-3 rounded-2xl border border-zinc-200/80 bg-zinc-50 px-4 py-3 text-xs text-zinc-700 dark:border-zinc-800/70 dark:bg-zinc-950/45 dark:text-zinc-300 shadow-sm">
+                  <span className="mt-1 inline-block h-2 w-2 shrink-0 rounded-full bg-emerald-500 dark:bg-emerald-400" />
                   <span>{point}</span>
                 </div>
               ))}
@@ -103,10 +103,10 @@ function BehindCurtains() {
         ))}
       </div>
 
-      <MotionDiv variants={fadeUpChild} className="mt-8 flex flex-col gap-4 rounded-3xl border border-zinc-800/80 bg-zinc-900/35 p-6 md:flex-row md:items-center md:justify-between">
+      <MotionDiv variants={fadeUpChild} className="mt-8 flex flex-col gap-4 rounded-3xl border border-zinc-200/80 bg-white/80 p-6 shadow-md md:flex-row md:items-center md:justify-between dark:border-zinc-800/80 dark:bg-zinc-900/35">
         <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-400">Biz bilan bog‘laning</p>
-          <p className="mt-1 text-sm leading-relaxed text-zinc-300">
+          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400">Biz bilan bog‘laning</p>
+          <p className="mt-1 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
             UrDU Yoshlar Ittifoqi barcha talabalarga ochiq — o‘z tashabbus va g‘oyangiz bilan safimizga qo‘shiling!
           </p>
         </div>
@@ -114,7 +114,7 @@ function BehindCurtains() {
         <div className="flex flex-wrap gap-3">
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-2.5 text-xs font-bold uppercase tracking-[0.16em] text-zinc-950 transition hover:bg-emerald-400"
+            className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-2.5 text-xs font-bold uppercase tracking-[0.16em] text-zinc-950 transition hover:bg-emerald-400 shadow-sm"
           >
             Murojaat yo‘llash
             <ArrowUpRight size={14} />
@@ -127,7 +127,7 @@ function BehindCurtains() {
                 href={item.href}
                 target={item.href.startsWith('http') ? '_blank' : undefined}
                 rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="inline-flex items-center gap-2 rounded-full border border-zinc-700 bg-zinc-900/80 px-4 py-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-200 transition hover:border-emerald-500/50 hover:text-emerald-300"
+                className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-4 py-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-700 shadow-sm transition hover:border-emerald-500/50 hover:text-emerald-700 dark:border-zinc-700 dark:bg-zinc-900/80 dark:text-zinc-200 dark:hover:text-emerald-300"
               >
                 <Icon size={14} />
                 {item.label}

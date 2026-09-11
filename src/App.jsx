@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
-import { Route, Routes, useLocation, Navigate } from 'react-router-dom'
-import AboutSection from './components/sections/AboutSection'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import BehindCurtains from './components/sections/BehindCurtains'
 import BlogsSection from './components/sections/BlogsSection'
 import FooterSection from './components/sections/FooterSection'
@@ -16,6 +15,9 @@ import SmoothScroll from './components/ui/SmoothScroll'
 import ScrollToTopButton from './components/ui/ScrollToTopButton'
 import { profile } from './data/siteData'
 import NotFoundPage from './components/pages/NotFoundPage'
+import PartnershipsPage from './components/pages/PartnershipsPage'
+import NewsDetailPage from './components/pages/NewsDetailPage'
+import NewsListPage from './components/pages/NewsListPage'
 
 const STATIC_SITE_URL = 'https://urdu.uz'
 const DEFAULT_IMAGE_PATH = '/img/banner-ornament.png'
@@ -67,7 +69,6 @@ function HomePage() {
     <>
       <HeroSection />
       <TopCardsSection />
-      <AboutSection />
       <TeamSection />
       <DirectionsSection />
       <MarqueeRibbon />
@@ -114,7 +115,21 @@ function App() {
       url: buildSiteUrl(normalizedPath),
     }
 
-    if (!isHome) {
+    if (normalizedPath === '/hamkorlik') {
+      seo = {
+        ...seo,
+        title: `Xalqaro Hamkorlik va Grantlar | ${profile.brand}`,
+        description:
+          'Urganch davlat universitetining xorijiy hamkor universitetlari, Erasmus+, DAAD va xalqaro talabalar almashinuvi dasturlari.',
+      }
+    } else if (normalizedPath === '/yangiliklar' || normalizedPath.startsWith('/yangiliklar/')) {
+      seo = {
+        ...seo,
+        title: `Yangiliklar va Tadbirlar | ${profile.brand}`,
+        description:
+          'Urganch davlat universiteti Yoshlar ittifoqi eng so‘nggi yangiliklari, xakatonlar, tanlovlar va eʼlonlar.',
+      }
+    } else if (!isHome) {
       seo = {
         ...seo,
         title: `404 | Sahifa topilmadi | ${profile.brand}`,
@@ -148,20 +163,22 @@ function App() {
         >
           Asosiy qismga o‘tish
         </a>
-        <div className="relative isolate min-h-[100dvh] overflow-x-clip bg-[#07090d] text-zinc-100">
+        <div className="relative isolate min-h-[100dvh] overflow-x-clip bg-[#07090d] dark:bg-[#07090d] text-zinc-900 dark:text-zinc-100" style={{ backgroundColor: 'var(--bg-base)' }}>
           <NoiseLayer />
-          <div className="pointer-events-none fixed inset-0 -z-10">
+          <div className="pointer-events-none fixed inset-0 -z-10 hidden dark:block">
             <div className="absolute -left-[10%] -top-[8%] h-[38%] w-[38%] rounded-full bg-emerald-500/10 blur-[130px]" />
             <div className="absolute right-[6%] top-[18%] h-[30%] w-[30%] rounded-full bg-cyan-400/10 blur-[120px]" />
             <div className="absolute -bottom-[14%] -right-[12%] h-[40%] w-[40%] rounded-full bg-emerald-400/10 blur-[140px]" />
           </div>
-          <div className="pointer-events-none absolute inset-0 -z-10 soft-grid opacity-50" />
+          <div className="pointer-events-none absolute inset-0 -z-10 soft-grid opacity-50 dark:opacity-50 opacity-20" />
           <HeaderNav />
 
           <main className="relative z-10 pb-0 pt-0" id="main-content">
             <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="/work/*" element={<Navigate to="/" replace />} />
+              <Route path="/hamkorlik" element={<PartnershipsPage />} />
+              <Route path="/yangiliklar" element={<NewsListPage />} />
+              <Route path="/yangiliklar/:id" element={<NewsDetailPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </main>
