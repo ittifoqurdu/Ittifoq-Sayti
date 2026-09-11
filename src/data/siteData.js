@@ -35,6 +35,8 @@ export const profile = {
   instagramUrl: 'https://instagram.com/urdumatbuotxizmati',
   telegramHandle: '@UrDU_Yoshlari_BT',
   telegramChannel: 'https://t.me/UrDU_Yoshlari_BT',
+  telegramBot: 'https://t.me/urdu_ittifoq_bot',
+  telegramBotHandle: '@urdu_ittifoq_bot',
   website: 'https://urdu.uz',
 }
 
@@ -617,7 +619,8 @@ export const footerColumns = [
       { label: 'Urganch sh., H.Olimjon 14', href: 'https://yandex.uz/maps/-/CTDQBJZj' },
       { label: 'Tel: +998 (62) 224-67-00', href: 'tel:+998622246700' },
       { label: 'Email: ittifoqurdu@gmail.com', href: 'https://mail.google.com/mail/?view=cm&fs=1&to=ittifoqurdu@gmail.com' },
-      { label: 'Telegram: @UrDU_Yoshlari_BT', href: 'https://t.me/UrDU_Yoshlari_BT' },
+      { label: 'Telegram Kanal: @UrDU_Yoshlari_BT', href: 'https://t.me/UrDU_Yoshlari_BT' },
+      { label: 'Telegram Bot: @urdu_ittifoq_bot', href: 'https://t.me/urdu_ittifoq_bot' },
     ],
   },
 ]
@@ -625,6 +628,8 @@ export const footerColumns = [
 export const socialLinks = {
   telegram: 'https://t.me/UrDU_Yoshlari_BT',
   telegramHandle: '@UrDU_Yoshlari_BT',
+  telegramBot: 'https://t.me/urdu_ittifoq_bot',
+  telegramBotHandle: '@urdu_ittifoq_bot',
   instagram: 'https://instagram.com/urdumatbuotxizmati',
   instagramHandle: '@urdumatbuotxizmati',
   youtube: 'https://www.youtube.com/channel/UCkQ8N0jtKR9VigB0FALuFvA/videos',

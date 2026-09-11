@@ -119,7 +119,7 @@ function FooterSection() {
           Biz har bir talabaning foydali g‘oyasini qo‘llab-quvvatlaymiz. O‘z loyihangiz yoki taklifingizni qoldiring.
         </p>
         <a
-          href={socialLinks.telegram}
+          href={socialLinks.telegramBot || 'https://t.me/urdu_ittifoq_bot'}
           target="_blank"
           rel="noopener noreferrer"
           className="group mt-10 flex items-center gap-3 rounded-full bg-emerald-500 px-8 py-4 text-base font-bold text-zinc-950 transition-all hover:bg-emerald-400 hover:shadow-[0_0_35px_rgba(16,185,129,0.35)]"
@@ -211,13 +211,13 @@ function FooterSection() {
                 <ArrowRight size={14} />
               </button>
               <a
-                href={socialLinks.telegram}
+                href={socialLinks.telegramBot || 'https://t.me/urdu_ittifoq_bot'}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-zinc-300 bg-white px-5 py-3 text-xs font-bold uppercase tracking-[0.18em] text-zinc-700 shadow-sm transition hover:border-emerald-500/60 hover:text-emerald-700 dark:border-zinc-700 dark:bg-zinc-900/80 dark:text-zinc-200 dark:hover:text-emerald-300"
+                className="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-5 py-3 text-xs font-bold uppercase tracking-[0.18em] text-emerald-700 shadow-sm transition hover:bg-emerald-500 hover:text-zinc-950 dark:border-emerald-500/30 dark:bg-emerald-500/15 dark:text-emerald-300 dark:hover:bg-emerald-500 dark:hover:text-zinc-950"
               >
                 <Send size={13} />
-                Telegram kanal
+                Telegram murojaat (@urdu_ittifoq_bot)
               </a>
               {statusText ? (
                 <p className={`text-xs font-semibold ${statusTone === 'success' ? 'text-emerald-600 dark:text-emerald-300' : 'text-amber-600 dark:text-amber-300'}`}>
