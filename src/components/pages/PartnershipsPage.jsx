@@ -43,28 +43,28 @@ export default function PartnershipsPage() {
   })
 
   return (
-    <div className="min-h-screen bg-[#F5F0E8] dark:bg-[#07090d] text-zinc-900 dark:text-zinc-100 transition-colors duration-300">
+    <div className="min-h-screen pt-24 sm:pt-28 bg-[#F5F0E8] dark:bg-[#07090d] text-zinc-900 dark:text-zinc-100 transition-colors duration-300">
       {/* Top Breadcrumb Bar */}
-      <div className="border-b border-zinc-200/80 bg-white/70 backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/70 sticky top-0 z-40">
-        <div className="mx-auto flex max-w-[1320px] items-center justify-between px-4 py-3 sm:px-7">
-          <div className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
+      <div className="border-b border-zinc-200/80 bg-white/60 backdrop-blur-md dark:border-zinc-800/80 dark:bg-zinc-900/40 relative z-20">
+        <div className="mx-auto flex max-w-[1320px] items-center justify-between gap-4 px-4 py-3.5 sm:px-7">
+          <div className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400 min-w-0">
             <Link
               to="/"
-              className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1 font-medium"
+              className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1 font-medium shrink-0"
             >
               <ArrowLeft size={14} />
               Bosh sahifa
             </Link>
-            <span>/</span>
-            <span className="font-semibold text-zinc-800 dark:text-zinc-200">Xalqaro Hamkorlik</span>
+            <span className="shrink-0 text-zinc-400">/</span>
+            <span className="font-semibold text-zinc-800 dark:text-zinc-200 truncate">Xalqaro Hamkorlik</span>
           </div>
 
           <Link
             to="/#stats"
-            className="inline-flex items-center gap-1.5 rounded-full bg-zinc-200/80 px-3.5 py-1.5 text-xs font-semibold text-zinc-800 hover:bg-zinc-300 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-full bg-zinc-200/80 px-3.5 py-1.5 text-xs font-semibold text-zinc-800 hover:bg-zinc-300 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 transition-colors shrink-0 shadow-sm"
           >
             <ArrowLeft size={13} />
-            Ortga qaytish
+            <span>Ortga qaytish</span>
           </Link>
         </div>
       </div>

@@ -12,20 +12,22 @@ import {
   Newspaper,
   Check,
 } from 'lucide-react'
-import { newsEvents, socialLinks } from '../../data/siteData'
+import { useNews } from '../../context/NewsContext'
+import { socialLinks } from '../../data/siteData'
 import FooterSection from '../sections/FooterSection'
 
 export default function NewsDetailPage() {
   const { id } = useParams()
   const navigate = useNavigate()
+  const { newsList, getNewsById } = useNews()
   const [copied, setCopied] = useState(false)
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' })
   }, [id])
 
-  const currentNews = newsEvents.find((item) => item.id === id) || newsEvents[0]
-  const otherNews = newsEvents.filter((item) => item.id !== currentNews.id).slice(0, 3)
+  const currentNews = getNewsById(id) || (newsList && newsList.find((item) => item.id === id)) || (newsList && newsList[0]) || {}
+  const otherNews = (newsList || []).filter((item) => item.id !== currentNews.id).slice(0, 3)
 
   const handleShare = async () => {
     try {
@@ -40,11 +42,11 @@ export default function NewsDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F0E8] dark:bg-[#07090d] text-zinc-900 dark:text-zinc-100 transition-colors duration-300">
+    <div className="min-h-screen pt-24 sm:pt-28 bg-[#F5F0E8] dark:bg-[#07090d] text-zinc-900 dark:text-zinc-100 transition-colors duration-300">
       {/* Top Breadcrumb Bar */}
-      <div className="border-b border-zinc-200/80 bg-white/70 backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/70 sticky top-0 z-40">
-        <div className="mx-auto flex max-w-[1100px] items-center justify-between px-4 py-3 sm:px-7">
-          <div className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400 truncate">
+      <div className="border-b border-zinc-200/80 bg-white/60 backdrop-blur-md dark:border-zinc-800/80 dark:bg-zinc-900/40 relative z-20">
+        <div className="mx-auto flex max-w-[1100px] items-center justify-between gap-4 px-4 py-3.5 sm:px-7">
+          <div className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400 min-w-0">
             <Link
               to="/"
               className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1 font-medium shrink-0"
@@ -52,14 +54,14 @@ export default function NewsDetailPage() {
               <ArrowLeft size={14} />
               Bosh sahifa
             </Link>
-            <span>/</span>
+            <span className="shrink-0 text-zinc-400">/</span>
             <Link
               to="/yangiliklar"
               className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium shrink-0"
             >
               Yangiliklar
             </Link>
-            <span className="hidden sm:inline">/</span>
+            <span className="hidden sm:inline shrink-0 text-zinc-400">/</span>
             <span className="hidden sm:inline font-semibold text-zinc-800 dark:text-zinc-200 truncate">
               {currentNews.title}
             </span>
@@ -67,10 +69,10 @@ export default function NewsDetailPage() {
 
           <Link
             to="/yangiliklar"
-            className="inline-flex items-center gap-1.5 rounded-full bg-zinc-200/80 px-3.5 py-1.5 text-xs font-semibold text-zinc-800 hover:bg-zinc-300 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 transition-colors shrink-0"
+            className="inline-flex items-center gap-1.5 rounded-full bg-zinc-200/80 px-3.5 py-1.5 text-xs font-semibold text-zinc-800 hover:bg-zinc-300 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 transition-colors shrink-0 shadow-sm"
           >
             <ArrowLeft size={13} />
-            Barcha yangiliklar
+            <span>Barcha yangiliklar</span>
           </Link>
         </div>
       </div>
@@ -142,6 +144,19 @@ export default function NewsDetailPage() {
             </div>
           </div>
 
+          {/* 16:9 Landscape Cover Image Banner */}
+          {currentNews.image && (
+            <div className="mt-8 overflow-hidden rounded-3xl border border-zinc-200/80 shadow-xl dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-950">
+              <div className="relative aspect-[16/9] w-full">
+                <img
+                  src={currentNews.image}
+                  alt={currentNews.title}
+                  className="h-full w-full object-cover object-center"
+                />
+              </div>
+            </div>
+          )}
+
           {/* Lead Summary Callout */}
           <div className="mt-8 rounded-3xl border-l-4 border-emerald-500 bg-white/90 p-6 shadow-sm dark:bg-zinc-900/60 dark:border-emerald-400">
             <p className="text-base sm:text-lg font-medium leading-relaxed text-zinc-800 dark:text-zinc-200">
@@ -174,6 +189,21 @@ export default function NewsDetailPage() {
                   </li>
                 ))}
               </ul>
+            </div>
+          )}
+
+          {/* Action Link Button if provided */}
+          {currentNews.actionUrl && (
+            <div className="mt-8 flex justify-center">
+              <a
+                href={currentNews.actionUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-8 py-4 text-xs sm:text-sm font-bold uppercase tracking-wider text-zinc-950 transition hover:bg-emerald-400 shadow-lg hover:shadow-emerald-500/25 active:scale-95"
+              >
+                <Send size={15} />
+                {currentNews.actionLabel || 'Ro‘yxatdan o‘tish / Ariza topshirish'}
+              </a>
             </div>
           )}
 

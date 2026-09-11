@@ -23,7 +23,8 @@ import {
   Users,
 } from 'lucide-react'
 import { fadeUp } from '../../lib/animations'
-import { profile, socialLinks, universityStats, newsEvents } from '../../data/siteData'
+import { profile, socialLinks, universityStats } from '../../data/siteData'
+import { useNews } from '../../context/NewsContext'
 import { Globe } from '../ui/globe'
 import InternationalPartnersModal from '../ui/InternationalPartnersModal'
 import NewsDetailModal from '../ui/NewsDetailModal'
@@ -32,6 +33,8 @@ const MotionSection = motion.section
 const EMAIL = profile.email
 
 function TopCardsSection() {
+  const { newsList } = useNews()
+  const newsEvents = newsList && newsList.length > 0 ? newsList : []
   const [copyToast, setCopyToast] = useState('')
   const [now, setNow] = useState(() => new Date())
   const [isPartnersModalOpen, setIsPartnersModalOpen] = useState(false)
@@ -46,12 +49,12 @@ function TopCardsSection() {
   }, [])
 
   useEffect(() => {
-    if (isNewsPaused || isNewsModalOpen) return undefined
+    if (isNewsPaused || isNewsModalOpen || newsEvents.length === 0) return undefined
     const timer = window.setInterval(() => {
-      setActiveNewsIndex((prev) => (prev + 1) % newsEvents.length)
+      setActiveNewsIndex((prev) => (prev + 1) % (newsEvents.length || 1))
     }, 4500)
     return () => window.clearInterval(timer)
-  }, [isNewsPaused, isNewsModalOpen])
+  }, [isNewsPaused, isNewsModalOpen, newsEvents.length])
 
   useEffect(() => {
     if (!copyToast) return undefined

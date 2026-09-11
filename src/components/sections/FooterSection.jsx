@@ -1,9 +1,11 @@
 import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
-import { ArrowRight, Instagram, Mail, Phone, Send, Sparkles, MapPin, CheckCircle2 } from 'lucide-react'
+import { ArrowRight, Instagram, Mail, Phone, Send, Sparkles, MapPin, CheckCircle2, ShieldCheck } from 'lucide-react'
 import { footerColumns, profile, socialLinks } from '../../data/siteData'
 import { useTheme } from '../../context/ThemeContext'
 import { staggerContainer, fadeUpChild } from '../../lib/animations'
+import { sendMurojaatToSheet } from '../../lib/googleSheetsClient'
 
 const MotionSection = motion.section
 const MotionDiv = motion.div
@@ -21,6 +23,7 @@ function FooterSection() {
   const [errors, setErrors] = useState({})
   const [statusText, setStatusText] = useState('')
   const [statusTone, setStatusTone] = useState('neutral')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const contactEmail = useMemo(
     () => profile.email || 'ittifoqurdu@gmail.com',
@@ -46,8 +49,42 @@ function FooterSection() {
     return Object.keys(nextErrors).length === 0
   }
 
+  function formatPhoneInput(value) {
+    if (!value) return ''
+    if (value.startsWith('@') || /^[a-zA-Z]/.test(value)) {
+      return value
+    }
+    let digits = value.replace(/\D/g, '')
+    if (digits.startsWith('998')) {
+      digits = digits.slice(3)
+    }
+    digits = digits.slice(0, 9)
+
+    if (digits.length === 0) return '+998 '
+    let res = '+998'
+    if (digits.length > 0) {
+      res += ` (${digits.slice(0, 2)}`
+    }
+    if (digits.length >= 2) {
+      res += `)`
+    }
+    if (digits.length > 2) {
+      res += ` ${digits.slice(2, 5)}`
+    }
+    if (digits.length > 5) {
+      res += `-${digits.slice(5, 7)}`
+    }
+    if (digits.length > 7) {
+      res += `-${digits.slice(7, 9)}`
+    }
+    return res
+  }
+
   const updateField = (field) => (event) => {
-    const value = event.target.value
+    let value = event.target.value
+    if (field === 'phone') {
+      value = formatPhoneInput(value)
+    }
     setFormValues((prev) => ({ ...prev, [field]: value }))
     setStatusText('')
     if (errors[field]) {
@@ -59,13 +96,17 @@ function FooterSection() {
     }
   }
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault()
     if (!validateForm()) {
       setStatusTone('error')
       setStatusText('Iltimos, barcha majburiy maydonlarni to‘ldiring!')
       return
     }
+
+    setIsSubmitting(true)
+    setStatusTone('neutral')
+    setStatusText('Murojaatingiz yuborilmoqda...')
 
     const subject = `UrDU Yoshlar Ittifoqi Murojaati: ${formValues.name.trim()}`
     const body = [
@@ -79,16 +120,32 @@ function FooterSection() {
       .filter(Boolean)
       .join('\n')
 
-    // Outlook ochilmasligi uchun brauzerda to'g'ridan-to'g'ri Gmail veb-versiyasini ochamiz
+    const mailtoUrl = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
     const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(contactEmail)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-    
-    const newWindow = window.open(gmailUrl, '_blank')
-    if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-      window.location.href = gmailUrl
+
+    // 1. Google Sheets jadvaliga saqlaymiz (va backend orqali ittifoqurdu@gmail.com ga boradi)
+    await sendMurojaatToSheet({
+      name: formValues.name,
+      faculty: formValues.faculty,
+      phone: formValues.phone,
+      message: formValues.message,
+    })
+
+    // 2. Avvalgidek emailga ham yuborish (mobil qurilmada pochta ilovasi, kompyuterda Gmail/pochta)
+    const isMobile = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+    if (isMobile) {
+      window.location.href = mailtoUrl
+    } else {
+      const newWindow = window.open(gmailUrl, '_blank')
+      if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+        window.location.href = mailtoUrl
+      }
     }
 
+    setIsSubmitting(false)
     setStatusTone('success')
-    setStatusText('Gmail brauzerda ochildi! Xabarni yuborish tugmasini bosing.')
+    setStatusText('✅ Murojaatingiz Google Sheetga saqlandi va Emailga ham yo‘naltirildi!')
+    setFormValues(INITIAL_FORM)
   }
 
   return (
@@ -205,16 +262,21 @@ function FooterSection() {
             <div className="md:col-span-2 flex flex-wrap items-center gap-3 pt-2">
               <button
                 type="submit"
-                className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-6 py-3 text-xs font-bold uppercase tracking-[0.18em] text-zinc-950 transition hover:bg-emerald-400 shadow-sm"
+                disabled={isSubmitting}
+                className={`inline-flex items-center gap-2 rounded-full px-6 py-3 text-xs font-bold uppercase tracking-[0.18em] transition shadow-sm shrink-0 cursor-pointer ${
+                  isSubmitting
+                    ? 'bg-zinc-400 text-zinc-800 cursor-not-allowed'
+                    : 'bg-emerald-500 text-zinc-950 hover:bg-emerald-400'
+                }`}
               >
-                Xabarni yuborish
+                {isSubmitting ? 'Yuborilmoqda...' : 'Xabarni yuborish'}
                 <ArrowRight size={14} />
               </button>
               <a
                 href={socialLinks.telegramBot || 'https://t.me/urdu_ittifoq_bot'}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-5 py-3 text-xs font-bold uppercase tracking-[0.18em] text-emerald-700 shadow-sm transition hover:bg-emerald-500 hover:text-zinc-950 dark:border-emerald-500/30 dark:bg-emerald-500/15 dark:text-emerald-300 dark:hover:bg-emerald-500 dark:hover:text-zinc-950"
+                className="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-5 py-3 text-xs font-bold uppercase tracking-[0.18em] text-emerald-700 shadow-sm transition hover:bg-emerald-500 hover:text-zinc-950 dark:border-emerald-500/30 dark:bg-emerald-500/15 dark:text-emerald-300 dark:hover:bg-emerald-500 dark:hover:text-zinc-950 shrink-0"
               >
                 <Send size={13} />
                 Telegram murojaat (@urdu_ittifoq_bot)
@@ -271,22 +333,33 @@ function FooterSection() {
         <div className="mt-14 flex flex-col gap-4 border-t border-zinc-200/80 pt-6 text-xs text-zinc-500 sm:flex-row sm:items-center sm:justify-between dark:border-zinc-800/80">
           <p>© 2026 {profile.university.toUpperCase()} YOSHLAR ITTIFOQI. BARCHA HUQUQLAR HIMOYALANGAN.</p>
 
-          <div className="flex items-center gap-3">
-            {quickLinks.map((item) => {
-              const Icon = item.icon
-              return (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  target={item.href.startsWith('http') ? '_blank' : undefined}
-                  rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-600 shadow-sm transition-colors hover:border-emerald-500/50 hover:text-emerald-600 dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-zinc-400 dark:hover:text-emerald-300"
-                  aria-label={item.label}
-                >
-                  <Icon size={14} />
-                </a>
-              )
-            })}
+          <div className="flex flex-wrap items-center gap-4">
+            <Link
+              to="/admin"
+              className="inline-flex items-center gap-1.5 font-semibold text-zinc-500 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400 transition-colors"
+              title="UrDU Yoshlar Ittifoqi Boshqaruv Tizimi"
+            >
+              <ShieldCheck size={14} className="text-emerald-500" />
+              Admin Panel
+            </Link>
+
+            <div className="flex items-center gap-3">
+              {quickLinks.map((item) => {
+                const Icon = item.icon
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target={item.href.startsWith('http') ? '_blank' : undefined}
+                    rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-600 shadow-sm transition-colors hover:border-emerald-500/50 hover:text-emerald-600 dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-zinc-400 dark:hover:text-emerald-300"
+                    aria-label={item.label}
+                  >
+                    <Icon size={14} />
+                  </a>
+                )
+              })}
+            </div>
           </div>
         </div>
       </MotionDiv>

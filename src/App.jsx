@@ -18,6 +18,8 @@ import NotFoundPage from './components/pages/NotFoundPage'
 import PartnershipsPage from './components/pages/PartnershipsPage'
 import NewsDetailPage from './components/pages/NewsDetailPage'
 import NewsListPage from './components/pages/NewsListPage'
+import AdminPage from './components/pages/AdminPage'
+import { NewsProvider } from './context/NewsContext'
 
 const STATIC_SITE_URL = 'https://urdu.uz'
 const DEFAULT_IMAGE_PATH = '/img/banner-ornament.png'
@@ -129,6 +131,12 @@ function App() {
         description:
           'Urganch davlat universiteti Yoshlar ittifoqi eng so‘nggi yangiliklari, xakatonlar, tanlovlar va eʼlonlar.',
       }
+    } else if (normalizedPath === '/admin') {
+      seo = {
+        ...seo,
+        title: `Admin Boshqaruv Paneli | ${profile.brand}`,
+        description: 'Urganch davlat universiteti Yoshlar ittifoqi admin boshqaruv tizimi.',
+      }
     } else if (!isHome) {
       seo = {
         ...seo,
@@ -155,37 +163,40 @@ function App() {
   }, [location.pathname])
 
   return (
-    <SmoothScroll>
-      <CustomCursor>
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[120] focus:rounded-full focus:bg-zinc-100 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-zinc-900"
-        >
-          Asosiy qismga o‘tish
-        </a>
-        <div className="relative isolate min-h-[100dvh] overflow-x-clip bg-[#07090d] dark:bg-[#07090d] text-zinc-900 dark:text-zinc-100" style={{ backgroundColor: 'var(--bg-base)' }}>
-          <NoiseLayer />
-          <div className="pointer-events-none fixed inset-0 -z-10 hidden dark:block">
-            <div className="absolute -left-[10%] -top-[8%] h-[38%] w-[38%] rounded-full bg-emerald-500/10 blur-[130px]" />
-            <div className="absolute right-[6%] top-[18%] h-[30%] w-[30%] rounded-full bg-cyan-400/10 blur-[120px]" />
-            <div className="absolute -bottom-[14%] -right-[12%] h-[40%] w-[40%] rounded-full bg-emerald-400/10 blur-[140px]" />
-          </div>
-          <div className="pointer-events-none absolute inset-0 -z-10 soft-grid opacity-50 dark:opacity-50 opacity-20" />
-          <HeaderNav />
+    <NewsProvider>
+      <SmoothScroll>
+        <CustomCursor>
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[120] focus:rounded-full focus:bg-zinc-100 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-zinc-900"
+          >
+            Asosiy qismga o‘tish
+          </a>
+          <div className="relative isolate min-h-[100dvh] overflow-x-clip bg-[#07090d] dark:bg-[#07090d] text-zinc-900 dark:text-zinc-100" style={{ backgroundColor: 'var(--bg-base)' }}>
+            <NoiseLayer />
+            <div className="pointer-events-none fixed inset-0 -z-10 hidden dark:block">
+              <div className="absolute -left-[10%] -top-[8%] h-[38%] w-[38%] rounded-full bg-emerald-500/10 blur-[130px]" />
+              <div className="absolute right-[6%] top-[18%] h-[30%] w-[30%] rounded-full bg-cyan-400/10 blur-[120px]" />
+              <div className="absolute -bottom-[14%] -right-[12%] h-[40%] w-[40%] rounded-full bg-emerald-400/10 blur-[140px]" />
+            </div>
+            <div className="pointer-events-none absolute inset-0 -z-10 soft-grid opacity-50 dark:opacity-50 opacity-20" />
+            {!location.pathname.startsWith('/admin') && <HeaderNav />}
 
-          <main className="relative z-10 pb-0 pt-0" id="main-content">
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/hamkorlik" element={<PartnershipsPage />} />
-              <Route path="/yangiliklar" element={<NewsListPage />} />
-              <Route path="/yangiliklar/:id" element={<NewsDetailPage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-          </main>
-          <ScrollToTopButton />
-        </div>
-      </CustomCursor>
-    </SmoothScroll>
+            <main className="relative z-10 pb-0 pt-0" id="main-content">
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/hamkorlik" element={<PartnershipsPage />} />
+                <Route path="/yangiliklar" element={<NewsListPage />} />
+                <Route path="/yangiliklar/:id" element={<NewsDetailPage />} />
+                <Route path="/admin" element={<AdminPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </main>
+            <ScrollToTopButton />
+          </div>
+        </CustomCursor>
+      </SmoothScroll>
+    </NewsProvider>
   )
 }
 

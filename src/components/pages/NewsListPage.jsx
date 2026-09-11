@@ -9,10 +9,11 @@ import {
   Sparkles,
   Newspaper,
 } from 'lucide-react'
-import { newsEvents } from '../../data/siteData'
+import { useNews } from '../../context/NewsContext'
 import FooterSection from '../sections/FooterSection'
 
 export default function NewsListPage() {
+  const { newsList } = useNews()
   const [activeCategory, setActiveCategory] = useState('Barchasi')
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -20,41 +21,43 @@ export default function NewsListPage() {
     window.scrollTo({ top: 0, behavior: 'auto' })
   }, [])
 
-  const categories = ['Barchasi', 'Intellektual O‘yin', 'IT & Innovatsiya', 'Madaniyat & Sanʼat', 'Ijtimoiy Loyiha', 'Xalqaro Taʼlim']
+  const defaultCategories = ['Barchasi', 'Intellektual O‘yin', 'IT & Innovatsiya', 'Madaniyat & Sanʼat', 'Ijtimoiy Loyiha', 'Xalqaro Taʼlim']
+  const extraCategories = (newsList || []).map((n) => n.category).filter(Boolean)
+  const categories = Array.from(new Set([...defaultCategories, ...extraCategories]))
 
-  const filteredNews = newsEvents.filter((item) => {
+  const filteredNews = (newsList || []).filter((item) => {
     const matchesCategory = activeCategory === 'Barchasi' || item.category === activeCategory
     const matchesQuery =
       searchQuery.trim() === '' ||
       item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.category.toLowerCase().includes(searchQuery.toLowerCase())
+      (item.category && item.category.toLowerCase().includes(searchQuery.toLowerCase()))
     return matchesCategory && matchesQuery
   })
 
   return (
-    <div className="min-h-screen bg-[#F5F0E8] dark:bg-[#07090d] text-zinc-900 dark:text-zinc-100 transition-colors duration-300">
+    <div className="min-h-screen pt-24 sm:pt-28 bg-[#F5F0E8] dark:bg-[#07090d] text-zinc-900 dark:text-zinc-100 transition-colors duration-300">
       {/* Top Breadcrumb Bar */}
-      <div className="border-b border-zinc-200/80 bg-white/70 backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/70 sticky top-0 z-40">
-        <div className="mx-auto flex max-w-[1320px] items-center justify-between px-4 py-3 sm:px-7">
-          <div className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
+      <div className="border-b border-zinc-200/80 bg-white/60 backdrop-blur-md dark:border-zinc-800/80 dark:bg-zinc-900/40 relative z-20">
+        <div className="mx-auto flex max-w-[1320px] items-center justify-between gap-4 px-4 py-3.5 sm:px-7">
+          <div className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400 min-w-0">
             <Link
               to="/"
-              className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1 font-medium"
+              className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1 font-medium shrink-0"
             >
               <ArrowLeft size={14} />
               Bosh sahifa
             </Link>
-            <span>/</span>
-            <span className="font-semibold text-zinc-800 dark:text-zinc-200">Yangiliklar & Tadbirlar</span>
+            <span className="shrink-0 text-zinc-400">/</span>
+            <span className="font-semibold text-zinc-800 dark:text-zinc-200 truncate">Yangiliklar & Tadbirlar</span>
           </div>
 
           <Link
             to="/"
-            className="inline-flex items-center gap-1.5 rounded-full bg-zinc-200/80 px-3.5 py-1.5 text-xs font-semibold text-zinc-800 hover:bg-zinc-300 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-full bg-zinc-200/80 px-3.5 py-1.5 text-xs font-semibold text-zinc-800 hover:bg-zinc-300 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 transition-colors shrink-0 shadow-sm"
           >
             <ArrowLeft size={13} />
-            Bosh sahifaga qaytish
+            <span>Bosh sahifaga qaytish</span>
           </Link>
         </div>
       </div>
@@ -126,25 +129,61 @@ export default function NewsListPage() {
                 className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-zinc-200/80 bg-white/95 p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/50 hover:shadow-xl sm:p-8 dark:border-zinc-800 dark:bg-zinc-900/60"
               >
                 <div>
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-300">
-                      <Sparkles size={12} />
-                      {item.badge}
-                    </span>
+                  {/* 16:9 Landscape Cover Image if available */}
+                  {item.image ? (
+                    <div className="relative mb-5 aspect-[16/9] w-full overflow-hidden rounded-2xl bg-zinc-100 dark:bg-zinc-950 border border-zinc-200/60 dark:border-zinc-800">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute left-3 top-3">
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-black/75 backdrop-blur-md px-3 py-1 text-xs font-bold text-emerald-400 shadow">
+                          <Sparkles size={11} />
+                          {item.badge}
+                        </span>
+                      </div>
+                    </div>
+                  ) : null}
 
-                    <span className="flex items-center gap-1 text-xs text-zinc-500 dark:text-zinc-400">
-                      <CalendarDays size={13} className="text-zinc-400 dark:text-zinc-500" />
-                      {item.date}
-                    </span>
-                  </div>
+                  {/* Header metadata row if no image */}
+                  {!item.image && (
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-300">
+                        <Sparkles size={12} />
+                        {item.badge}
+                      </span>
 
-                  <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-cyan-600 dark:text-cyan-400">
-                    {item.category}
-                  </p>
+                      <span className="flex items-center gap-1 text-xs text-zinc-500 dark:text-zinc-400">
+                        <CalendarDays size={13} className="text-zinc-400 dark:text-zinc-500" />
+                        {item.date}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Category & Date Row when image exists */}
+                  {item.image && (
+                    <div className="flex items-center justify-between gap-2 text-xs text-zinc-500 mb-1">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                        {item.category}
+                      </span>
+                      <span className="flex items-center gap-1 text-zinc-400">
+                        <CalendarDays size={12} />
+                        {item.date}
+                      </span>
+                    </div>
+                  )}
+
+                  {!item.image && (
+                    <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-cyan-600 dark:text-cyan-400">
+                      {item.category}
+                    </p>
+                  )}
+
                   <h3 className="mt-2 text-xl font-bold tracking-tight text-zinc-900 group-hover:text-emerald-600 transition-colors sm:text-2xl dark:text-zinc-100 dark:group-hover:text-emerald-400">
                     {item.title}
                   </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                  <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400 line-clamp-3">
                     {item.summary}
                   </p>
                 </div>
