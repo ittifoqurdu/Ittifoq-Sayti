@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { ArrowDown, Award, Compass, MapPin, Send, Sparkles, Users } from 'lucide-react'
 import { profile, socialLinks } from '../../data/siteData'
@@ -82,20 +83,20 @@ function HeroSection() {
 
           {/* Action CTAs */}
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <a
-              href="#team"
+            <Link
+              to="/tuzilma"
               className="group inline-flex items-center justify-center rounded-full bg-emerald-500 px-7 py-3.5 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-950 shadow-[0_14px_35px_rgba(16,185,129,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 font-bold"
             >
               <Users size={15} className="mr-2" />
               Yetakchilar Kengashi
-            </a>
-            <a
-              href="#contact"
+            </Link>
+            <Link
+              to="/boglanish"
               className="inline-flex items-center justify-center rounded-full border border-zinc-300/80 bg-white/80 px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-800 shadow-[0_8px_20px_rgba(120,105,85,0.06)] backdrop-blur-xl transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-500/60 hover:text-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-white/15 dark:bg-black/40 dark:text-zinc-100 dark:shadow-[0_12px_30px_rgba(0,0,0,0.3)] dark:hover:border-emerald-400/60 dark:hover:text-emerald-300"
             >
               Safimizga Qo‘shiling
               <Send size={13} className="ml-2" />
-            </a>
+            </Link>
           </div>
         </div>
 

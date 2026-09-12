@@ -12,14 +12,10 @@ const HOME_SECTION = 'hero'
 
 function HeaderNav() {
   const { isDark, toggleTheme } = useTheme()
-  const [visibleSection, setVisibleSection] = useState(HOME_SECTION)
-  const [scrolled, setScrolled] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
-  const hashId = location.hash.replace('#', '')
-  const hasHashNavItem = navItems.some((item) => item.id === hashId)
-  const activeSection = hasHashNavItem ? hashId : visibleSection
+  const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40)
@@ -28,43 +24,16 @@ function HeaderNav() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  useEffect(() => {
-    if (location.pathname !== '/') return undefined
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
-
-        if (visible[0]?.target?.id) {
-          setVisibleSection(visible[0].target.id)
-        }
-      },
-      {
-        rootMargin: '-35% 0px -35% 0px',
-        threshold: [0.1, 0.3, 0.6],
-      },
-    )
-
-    navItems.forEach((item) => {
-      const section = document.getElementById(item.id)
-      if (section) observer.observe(section)
-    })
-
-    return () => observer.disconnect()
+  const getActiveId = useCallback(() => {
+    const path = location.pathname
+    if (path === '/tuzilma' || path === '/team') return 'team'
+    if (path === '/klublar' || path === '/yonalishlar') return 'directions'
+    if (path.startsWith('/yangiliklar')) return 'news'
+    if (path === '/boglanish') return 'contact'
+    return 'hero'
   }, [location.pathname])
 
-  const scrollToSection = useCallback((id) => {
-    const section = document.getElementById(id)
-    if (!section) return
-
-    const offset = window.innerWidth < 768 ? 84 : 100
-    const top = section.getBoundingClientRect().top + window.scrollY - offset
-    window.scrollTo({ top, behavior: 'smooth' })
-
-    setVisibleSection(id)
-  }, [])
+  const activeSection = getActiveId()
 
   const handleLogoClick = useCallback(() => {
     setMenuOpen(false)
@@ -72,17 +41,27 @@ function HeaderNav() {
       navigate('/')
       return
     }
-    scrollToSection(HOME_SECTION)
-  }, [location.pathname, navigate, scrollToSection])
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [location.pathname, navigate])
 
-  const handleNavClick = useCallback((id) => {
+  const handleNavClick = useCallback((item) => {
     setMenuOpen(false)
-    if (location.pathname !== '/') {
-      navigate(id === HOME_SECTION ? '/' : `/#${id}`)
+    const targetPath = item.path || (item.id === 'hero' ? '/' : `/${item.id}`)
+    if (location.pathname === targetPath) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
       return
     }
-    scrollToSection(id)
-  }, [location.pathname, navigate, scrollToSection])
+    navigate(targetPath)
+  }, [location.pathname, navigate])
+
+  const handleContactClick = useCallback(() => {
+    setMenuOpen(false)
+    if (location.pathname === '/boglanish') {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      return
+    }
+    navigate('/boglanish')
+  }, [location.pathname, navigate])
 
   return (
     <header
@@ -111,7 +90,7 @@ function HeaderNav() {
             <Magnetic key={item.id}>
               <NavPill
                 active={activeSection === item.id}
-                onClick={() => handleNavClick(item.id)}
+                onClick={() => handleNavClick(item)}
                 isCurrent={activeSection === item.id}
               >
                 {item.label}
@@ -139,11 +118,15 @@ function HeaderNav() {
           <Magnetic>
             <button
               type="button"
-              onClick={() => handleNavClick('contact')}
-              className="ml-1.5 inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/15 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-emerald-600 transition-all hover:border-emerald-500/60 hover:bg-emerald-500/25 hover:text-emerald-700 dark:text-emerald-300 dark:hover:text-white"
+              onClick={handleContactClick}
+              className={`ml-1.5 inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-all ${
+                activeSection === 'contact'
+                  ? 'border-emerald-500 bg-emerald-500 text-zinc-950 font-bold shadow-md'
+                  : 'border-emerald-500/30 bg-emerald-500/15 text-emerald-600 hover:border-emerald-500/60 hover:bg-emerald-500/25 hover:text-emerald-700 dark:text-emerald-300 dark:hover:text-white'
+              }`}
             >
               <Send size={12} />
-              Murojaat
+              Bog‘lanish
             </button>
           </Magnetic>
         </nav>
@@ -188,7 +171,7 @@ function HeaderNav() {
                 <li key={item.id}>
                   <button
                     type="button"
-                    onClick={() => handleNavClick(item.id)}
+                    onClick={() => handleNavClick(item)}
                     className={`w-full rounded-2xl px-4 py-3 text-left text-sm font-semibold transition ${
                       activeSection === item.id
                         ? 'bg-emerald-500 text-zinc-950 shadow-md font-bold'
@@ -199,6 +182,27 @@ function HeaderNav() {
                   </button>
                 </li>
               ))}
+
+              {/* Bog'lanish in Mobile Menu */}
+              <li>
+                <button
+                  type="button"
+                  onClick={handleContactClick}
+                  className={`w-full rounded-2xl px-4 py-3 text-left text-sm font-semibold transition flex items-center justify-between ${
+                    activeSection === 'contact'
+                      ? 'bg-emerald-500 text-zinc-950 shadow-md font-bold'
+                      : 'bg-emerald-500/15 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300'
+                  }`}
+                >
+                  <span className="flex items-center gap-2">
+                    <Send size={15} />
+                    Bog‘lanish
+                  </span>
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                    Aloqa
+                  </span>
+                </button>
+              </li>
 
               {/* Theme Toggle Row in Mobile Menu */}
               <li className="mt-2 border-t border-zinc-200/80 pt-2 dark:border-zinc-800/80">

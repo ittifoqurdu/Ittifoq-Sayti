@@ -11,7 +11,7 @@ describe('HeroSection', () => {
       </MemoryRouter>,
     )
 
-    expect(screen.getByRole('link', { name: /yetakchilar kengashi/i })).toHaveAttribute('href', '#team')
-    expect(screen.getByRole('link', { name: /safimizga qo‘shiling/i })).toHaveAttribute('href', '#contact')
+    expect(screen.getByRole('link', { name: /yetakchilar kengashi/i })).toHaveAttribute('href', '/tuzilma')
+    expect(screen.getByRole('link', { name: /safimizga qo‘shiling/i })).toHaveAttribute('href', '/boglanish')
   })
 })

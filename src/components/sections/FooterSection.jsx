@@ -17,7 +17,7 @@ const INITIAL_FORM = {
   message: '',
 }
 
-function FooterSection() {
+function FooterSection({ showContactForm = true } = {}) {
   const { isDark } = useTheme()
   const [formValues, setFormValues] = useState(INITIAL_FORM)
   const [errors, setErrors] = useState({})
@@ -160,35 +160,38 @@ function FooterSection() {
       <div className="h-px w-full bg-gradient-to-r from-transparent via-zinc-300 to-transparent dark:via-zinc-800" />
 
       {/* Call to Action Banner */}
-      <MotionDiv variants={fadeUpChild} className="mt-20 flex flex-col items-center text-center">
-        <div className="mb-6 flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-xs font-semibold tracking-widest text-emerald-700 dark:text-emerald-300">
-          <Sparkles size={14} className="text-emerald-600 dark:text-emerald-400" />
-          YOSHLAR BOSH QABULI
-        </div>
-        <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-black leading-[1] tracking-tighter text-zinc-900 dark:text-zinc-100">
-          Safimizga qo‘shiling yoki
-          <br />
-          <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent dark:from-emerald-400 dark:via-teal-300 dark:to-cyan-400">
-            tashabbusingizni bildiring!
-          </span>
-        </h2>
-        <p className="mt-4 max-w-xl text-base text-zinc-600 sm:text-lg dark:text-zinc-400">
-          Biz har bir talabaning foydali g‘oyasini qo‘llab-quvvatlaymiz. O‘z loyihangiz yoki taklifingizni qoldiring.
-        </p>
-        <a
-          href={socialLinks.telegramBot || 'https://t.me/urdu_ittifoq_bot'}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group mt-10 flex items-center gap-3 rounded-full bg-emerald-500 px-8 py-4 text-base font-bold text-zinc-950 transition-all hover:bg-emerald-400 hover:shadow-[0_0_35px_rgba(16,185,129,0.35)]"
-        >
-          <Send size={18} />
-          Telegram orqali murojaat
-          <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
-        </a>
-      </MotionDiv>
+      {showContactForm ? (
+        <MotionDiv variants={fadeUpChild} className="mt-20 flex flex-col items-center text-center">
+          <div className="mb-6 flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-xs font-semibold tracking-widest text-emerald-700 dark:text-emerald-300">
+            <Sparkles size={14} className="text-emerald-600 dark:text-emerald-400" />
+            YOSHLAR BOSH QABULI
+          </div>
+          <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-black leading-[1] tracking-tighter text-zinc-900 dark:text-zinc-100">
+            Safimizga qo‘shiling yoki
+            <br />
+            <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent dark:from-emerald-400 dark:via-teal-300 dark:to-cyan-400">
+              tashabbusingizni bildiring!
+            </span>
+          </h2>
+          <p className="mt-4 max-w-xl text-base text-zinc-600 sm:text-lg dark:text-zinc-400">
+            Biz har bir talabaning foydali g‘oyasini qo‘llab-quvvatlaymiz. O‘z loyihangiz yoki taklifingizni qoldiring.
+          </p>
+          <a
+            href={socialLinks.telegramBot || 'https://t.me/urdu_ittifoq_bot'}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group mt-10 flex items-center gap-3 rounded-full bg-emerald-500 px-8 py-4 text-base font-bold text-zinc-950 transition-all hover:bg-emerald-400 hover:shadow-[0_0_35px_rgba(16,185,129,0.35)]"
+          >
+            <Send size={18} />
+            Telegram orqali murojaat
+            <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+          </a>
+        </MotionDiv>
+      ) : null}
 
       {/* Contact Form & University Info Card */}
-      <MotionDiv variants={fadeUpChild} className="mt-24 rounded-3xl border border-zinc-200/80 bg-[#F8F3EB]/90 p-8 shadow-2xl backdrop-blur-md md:p-14 dark:border-zinc-800/80 dark:bg-zinc-900/30">
+      <MotionDiv variants={fadeUpChild} className={`${showContactForm ? 'mt-24' : 'mt-8'} rounded-3xl border border-zinc-200/80 bg-[#F8F3EB]/90 p-8 shadow-2xl backdrop-blur-md md:p-14 dark:border-zinc-800/80 dark:bg-zinc-900/30`}>
+        {showContactForm ? (
         <div className="rounded-2xl border border-zinc-200/80 bg-[#EDE8DE]/80 p-6 md:p-8 dark:border-zinc-800/80 dark:bg-zinc-950/45">
           <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
             <div>
@@ -289,6 +292,7 @@ function FooterSection() {
             </div>
           </form>
         </div>
+        ) : null}
 
         {/* Footer Navigation & Columns */}
         <div className="mt-16 grid gap-10 md:grid-cols-2 xl:grid-cols-[2fr_1fr_1fr_1fr]">

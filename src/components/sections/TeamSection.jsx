@@ -8,13 +8,12 @@ import {
   CheckCircle2,
   Sparkles,
   ShieldCheck,
-  Award,
   Layers,
 } from 'lucide-react'
 import {
   boshqaruvMembers,
   koordinatorMembers,
-  yetakchiMembers,
+  fakultetKoordinatorMembers,
 } from '../../data/siteData'
 
 function LeaderFeaturedCard({ member }) {
@@ -45,7 +44,7 @@ function LeaderFeaturedCard({ member }) {
           </div>
 
           {/* Verified active badge */}
-          <div className="absolute right-4 bottom-4 flex items-center gap-1 rounded-full bg-emerald-500 px-3 py-1 text-xs font-semibold text-zinc-950 shadow-md">
+          <div className="absolute right-4 top-4 flex items-center gap-1 rounded-full bg-emerald-500 px-3 py-1 text-xs font-semibold text-zinc-950 shadow-md">
             <CheckCircle2 size={14} strokeWidth={2.5} />
             <span>Faol</span>
           </div>
@@ -160,12 +159,12 @@ function MemberCard({ member }) {
   return (
     <div className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-zinc-200/80 bg-[#F8F3EB]/90 shadow-lg dark:border-zinc-800/90 dark:bg-zinc-900/60 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/50 hover:shadow-2xl hover:shadow-emerald-500/10">
       {/* Top Large Photo Section */}
-      <div className="relative h-72 w-full overflow-hidden sm:h-80 bg-[#EDE8DE] dark:bg-zinc-950">
+      <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#EDE8DE] dark:bg-zinc-950 border-b border-zinc-200/80 dark:border-zinc-800/80">
         {member.avatar ? (
           <img
             src={member.avatar}
             alt={member.name}
-            className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+            className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
             loading="lazy"
           />
         ) : (
@@ -174,19 +173,16 @@ function MemberCard({ member }) {
           </div>
         )}
 
-        {/* Gradient overlay for readability */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#F5F0E8]/95 via-[#F5F0E8]/20 to-transparent dark:from-zinc-950 dark:via-zinc-950/20" />
-
         {/* Badge on Photo */}
-        <div className="absolute left-4 top-4 flex items-center gap-2">
-          <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-[#F8F3EB]/90 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-700 backdrop-blur-md shadow-md dark:border-emerald-400/40 dark:bg-zinc-950/85 dark:text-emerald-300">
+        <div className="absolute left-3.5 top-3.5 flex items-center gap-2">
+          <span className="inline-flex items-center gap-1 rounded-full border border-black/10 bg-white/90 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-700 backdrop-blur-md shadow-sm dark:border-white/15 dark:bg-zinc-950/85 dark:text-emerald-300">
             <Sparkles size={11} className="text-emerald-600 dark:text-emerald-400" />
             {member.badge}
           </span>
         </div>
 
         {/* Verified active badge */}
-        <div className="absolute right-4 bottom-4 flex items-center gap-1 rounded-full bg-emerald-500 px-2.5 py-0.5 text-[11px] font-semibold text-zinc-950 shadow-md">
+        <div className="absolute right-3.5 top-3.5 flex items-center gap-1 rounded-full bg-emerald-500 px-2.5 py-1 text-[11px] font-bold text-zinc-950 shadow-md">
           <CheckCircle2 size={13} strokeWidth={2.5} />
           <span>Faol</span>
         </div>
@@ -195,7 +191,7 @@ function MemberCard({ member }) {
       {/* Member Details */}
       <div className="flex flex-1 flex-col justify-between p-6 sm:p-7">
         <div>
-          <h3 className="text-2xl font-bold tracking-tight text-zinc-900 group-hover:text-emerald-600 transition-colors dark:text-zinc-100 dark:group-hover:text-emerald-300">
+          <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 group-hover:text-emerald-600 transition-colors dark:text-zinc-100 dark:group-hover:text-emerald-300">
             {member.name}
           </h3>
           <p className="mt-1 text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
@@ -286,13 +282,13 @@ export default function TeamSection() {
   const tabs = [
     { id: 'all', label: 'Barchasi', icon: Layers },
     { id: 'boshqaruv', label: 'Boshqaruv', icon: ShieldCheck },
-    { id: 'kordinator', label: 'Koordinatorlar', icon: Users },
-    { id: 'yetakchi', label: 'Yetakchilar', icon: Award },
+    { id: 'univer', label: 'Universitet', icon: Users },
+    { id: 'fakultet', label: 'Fakultetlar', icon: GraduationCap },
   ]
 
   const showBoshqaruv = activeTab === 'all' || activeTab === 'boshqaruv'
-  const showKoordinator = activeTab === 'all' || activeTab === 'kordinator'
-  const showYetakchi = activeTab === 'all' || activeTab === 'yetakchi'
+  const showUniver = activeTab === 'all' || activeTab === 'univer'
+  const showFakultet = activeTab === 'all' || activeTab === 'fakultet'
 
   return (
     <section
@@ -307,13 +303,13 @@ export default function TeamSection() {
       <div className="mb-12 text-center lg:mb-16">
         <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-300">
           <Users size={14} />
-          Yetakchilar Kengashi
+          Yoshlar Ittifoqi Tuzilmasi
         </div>
         <h2 className="mt-4 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl lg:text-5xl dark:text-zinc-100">
           UrDU Yoshlar Ittifoqi <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent dark:from-emerald-400 dark:via-teal-300 dark:to-cyan-400">Tuzilmasi</span>
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-base text-zinc-600 sm:text-lg dark:text-zinc-400">
-          Universitetimiz talabalarining tashabbuslarini muvofiqlashtiruvchi Boshqaruv, Yo‘nalish Koordinatorlari va Faol Yetakchilar.
+          Universitetimiz talabalarining tashabbuslarini muvofiqlashtiruvchi Boshqaruv, Universitet va Fakultet Koordinatorlari.
         </p>
 
         {/* Tabs switcher */}
@@ -371,8 +367,8 @@ export default function TeamSection() {
           </div>
         ) : null}
 
-        {/* 2. KOORDINATORLAR */}
-        {showKoordinator ? (
+        {/* 2. UNIVERSITET KOORDINATORLARI */}
+        {showUniver ? (
           <div>
             <div className="mb-6 flex items-center gap-3 border-b border-zinc-200/80 pb-4 dark:border-zinc-800/80">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-500/30 bg-cyan-500/10 text-cyan-600 dark:text-cyan-400">
@@ -380,10 +376,10 @@ export default function TeamSection() {
               </div>
               <div>
                 <h3 className="text-xl font-bold text-zinc-900 sm:text-2xl dark:text-zinc-100">
-                  Koordinatorlar
+                  Universitet Koordinatorlari
                 </h3>
                 <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                  Soha va faoliyat yo‘nalishlari bo‘yicha mas’ul koordinatorlar
+                  Universitet miqyosidagi asosiy soha va faoliyat yo‘nalishlari koordinatorlari
                 </p>
               </div>
             </div>
@@ -396,25 +392,25 @@ export default function TeamSection() {
           </div>
         ) : null}
 
-        {/* 3. YETAKCHILAR */}
-        {showYetakchi ? (
+        {/* 3. FAKULTET KOORDINATORLARI */}
+        {showFakultet && fakultetKoordinatorMembers.length > 0 ? (
           <div>
             <div className="mb-6 flex items-center gap-3 border-b border-zinc-200/80 pb-4 dark:border-zinc-800/80">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400">
-                <Award size={20} />
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                <GraduationCap size={20} />
               </div>
               <div>
                 <h3 className="text-xl font-bold text-zinc-900 sm:text-2xl dark:text-zinc-100">
-                  Yetakchilar
+                  Fakultet Koordinatorlari
                 </h3>
                 <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                  Klublar, intellektual to‘garaklar va yo‘nalish faol yetakchilari
+                  Fakultetlar bo‘yicha yoshlar yetakchilari va yo‘nalish koordinatorlari
                 </p>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-2 max-w-4xl mx-auto">
-              {yetakchiMembers.map((member) => (
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {fakultetKoordinatorMembers.map((member) => (
                 <MemberCard key={member.id} member={member} />
               ))}
             </div>

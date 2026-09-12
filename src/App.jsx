@@ -19,6 +19,9 @@ import PartnershipsPage from './components/pages/PartnershipsPage'
 import NewsDetailPage from './components/pages/NewsDetailPage'
 import NewsListPage from './components/pages/NewsListPage'
 import AdminPage from './components/pages/AdminPage'
+import TuzilmaPage from './components/pages/TuzilmaPage'
+import KlublarPage from './components/pages/KlublarPage'
+import ContactPage from './components/pages/ContactPage'
 import { NewsProvider } from './context/NewsContext'
 
 const STATIC_SITE_URL = 'https://urdu.uz'
@@ -71,12 +74,9 @@ function HomePage() {
     <>
       <HeroSection />
       <TopCardsSection />
-      <TeamSection />
-      <DirectionsSection />
       <MarqueeRibbon />
       <BlogsSection />
-      <BehindCurtains />
-      <FooterSection />
+      <FooterSection showContactForm={false} />
     </>
   )
 }
@@ -117,7 +117,28 @@ function App() {
       url: buildSiteUrl(normalizedPath),
     }
 
-    if (normalizedPath === '/hamkorlik') {
+    if (normalizedPath === '/tuzilma' || normalizedPath === '/team') {
+      seo = {
+        ...seo,
+        title: `Yoshlar Ittifoqi Tuzilmasi | ${profile.brand}`,
+        description:
+          'Urganch davlat universiteti Yoshlar ittifoqi boshlang‘ich tashkiloti yetakchilari, boshqaruv va fakultet koordinatorlari.',
+      }
+    } else if (normalizedPath === '/klublar' || normalizedPath === '/yonalishlar') {
+      seo = {
+        ...seo,
+        title: `Klublar va To‘garaklar | ${profile.brand}`,
+        description:
+          'Urganch davlat universiteti talabalar klublari, to‘garaklar, iqtidorli yoshlar faoliyati va tashabbuslari.',
+      }
+    } else if (normalizedPath === '/boglanish') {
+      seo = {
+        ...seo,
+        title: `Bog‘lanish va Murojaat | ${profile.brand}`,
+        description:
+          'Urganch davlat universiteti Yoshlar ittifoqiga murojaat, taklif yo‘llash hamda rasmiy aloqa maʼlumotlari.',
+      }
+    } else if (normalizedPath === '/hamkorlik') {
       seo = {
         ...seo,
         title: `Xalqaro Hamkorlik va Grantlar | ${profile.brand}`,
@@ -127,7 +148,7 @@ function App() {
     } else if (normalizedPath === '/yangiliklar' || normalizedPath.startsWith('/yangiliklar/')) {
       seo = {
         ...seo,
-        title: `Yangiliklar va Tadbirlar | ${profile.brand}`,
+        title: `Yangiliklar va Tanlovlar | ${profile.brand}`,
         description:
           'Urganch davlat universiteti Yoshlar ittifoqi eng so‘nggi yangiliklari, xakatonlar, tanlovlar va eʼlonlar.',
       }
@@ -185,6 +206,11 @@ function App() {
             <main className="relative z-10 pb-0 pt-0" id="main-content">
               <Routes>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/tuzilma" element={<TuzilmaPage />} />
+                <Route path="/team" element={<TuzilmaPage />} />
+                <Route path="/klublar" element={<KlublarPage />} />
+                <Route path="/yonalishlar" element={<KlublarPage />} />
+                <Route path="/boglanish" element={<ContactPage />} />
                 <Route path="/hamkorlik" element={<PartnershipsPage />} />
                 <Route path="/yangiliklar" element={<NewsListPage />} />
                 <Route path="/yangiliklar/:id" element={<NewsDetailPage />} />

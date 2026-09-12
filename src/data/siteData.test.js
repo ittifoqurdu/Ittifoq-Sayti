@@ -10,7 +10,7 @@ describe('siteData for UrDU Yoshlar Ittifoqi', () => {
 
   it('contains valid navigation items', () => {
     expect(Array.isArray(navItems)).toBe(true)
-    expect(navItems.length).toBeGreaterThanOrEqual(5)
+    expect(navItems.length).toBeGreaterThanOrEqual(4)
     expect(navItems.some((item) => item.id === 'team')).toBe(true)
     expect(navItems.some((item) => item.id === 'directions')).toBe(true)
   })
