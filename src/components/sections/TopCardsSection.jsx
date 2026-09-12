@@ -398,7 +398,7 @@ function TopCardsSection() {
           <div className="flex flex-wrap items-center justify-between gap-3 border-t border-zinc-200/80 pt-4 dark:border-zinc-800">
             <Link
               to={`/yangiliklar/${currentNews?.id || 'news-1'}`}
-              className="inline-flex items-center gap-2 rounded-full bg-zinc-900 px-6 py-3 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-950 dark:hover:bg-white shadow-md active:scale-95"
+              className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-6 py-3 text-xs font-bold uppercase tracking-wider text-zinc-950 transition-all hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/25 active:scale-95"
             >
               Batafsil o‘qish
               <ArrowUpRight size={14} />
