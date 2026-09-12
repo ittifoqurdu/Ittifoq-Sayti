@@ -9,19 +9,32 @@ import {
 
 const NewsContext = createContext(null)
 
-const STORAGE_KEY = 'urdu_news_events_v1'
+const STORAGE_KEY = 'urdu_news_events_v2'
 const AUTH_KEY = 'urdu_admin_authenticated'
 const PASSWORD_KEY = 'urdu_admin_password'
 const DEFAULT_PASSWORD = 'admin2026'
 
+function filterValidNews(list) {
+  if (!Array.isArray(list)) return []
+  return list.filter(
+    (item) =>
+      item &&
+      item.id &&
+      String(item.id).trim().toLowerCase() !== 'id' &&
+      item.title &&
+      String(item.title).trim().toLowerCase() !== 'title'
+  )
+}
+
 export function NewsProvider({ children }) {
   const [newsList, setNewsList] = useState(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY)
+      const saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('urdu_news_events_v1')
       if (saved) {
         const parsed = JSON.parse(saved)
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed
+        const valid = filterValidNews(parsed)
+        if (valid.length > 0) {
+          return valid
         }
       }
     } catch {
@@ -46,10 +59,11 @@ export function NewsProvider({ children }) {
     setIsSyncing(true)
     try {
       const sheetNews = await fetchNewsFromSheet()
-      if (Array.isArray(sheetNews) && sheetNews.length > 0) {
-        setNewsList(sheetNews)
+      const valid = filterValidNews(sheetNews)
+      if (valid.length > 0) {
+        setNewsList(valid)
         try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(sheetNews))
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(valid))
         } catch {
           // ignore
         }

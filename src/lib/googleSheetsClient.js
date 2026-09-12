@@ -11,7 +11,7 @@ export const GOOGLE_SPREADSHEET_URL =
   `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/edit`
 
 export const GVIZ_URL =
-  `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=Yangiliklar`
+  `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=Yangiliklar&headers=1`
 
 /**
  * Fetch all news from Google Sheet "Yangiliklar" tab
@@ -45,10 +45,10 @@ export async function fetchNewsFromSheet() {
                 i < c.length && c[i] && c[i].f !== null && c[i].f !== undefined ? c[i].f : getVal(i)
 
               const id = String(getVal(0) || '').trim()
-              if (!id) return null
+              if (!id || id.toLowerCase() === 'id') return null
 
               const title = String(getVal(1) || '').trim()
-              if (!title) return null
+              if (!title || title.toLowerCase() === 'title') return null
 
               const rawDate = getFmt(2) || getVal(2) || ''
               const dateStr = formatNewsDate(rawDate)
@@ -92,6 +92,14 @@ export async function fetchNewsFromSheet() {
     const data = await res.json()
     if (Array.isArray(data) && data.length > 0) {
       return data
+        .filter(
+          (item) =>
+            item &&
+            item.id &&
+            String(item.id).toLowerCase() !== 'id' &&
+            item.title &&
+            String(item.title).toLowerCase() !== 'title'
+        )
         .map((item) => ({
           ...item,
           date: formatNewsDate(item.date),

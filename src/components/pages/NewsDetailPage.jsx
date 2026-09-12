@@ -27,8 +27,20 @@ export default function NewsDetailPage() {
     window.scrollTo({ top: 0, behavior: 'auto' })
   }, [id])
 
-  const currentNews = getNewsById(id) || (newsList && newsList.find((item) => item.id === id)) || (newsList && newsList[0]) || {}
-  const otherNews = (newsList || []).filter((item) => item.id !== currentNews.id).slice(0, 3)
+  const currentNews =
+    getNewsById(id) ||
+    (newsList && newsList.find((item) => item.id === id && String(item.id).toLowerCase() !== 'id')) ||
+    (newsList && newsList.filter((item) => String(item.id).toLowerCase() !== 'id')[0]) ||
+    {}
+  const otherNews = (newsList || [])
+    .filter(
+      (item) =>
+        item &&
+        item.id !== currentNews.id &&
+        String(item.id).trim().toLowerCase() !== 'id' &&
+        String(item.title).trim().toLowerCase() !== 'title'
+    )
+    .slice(0, 3)
 
   const handleShare = async () => {
     try {
@@ -257,7 +269,7 @@ export default function NewsDetailPage() {
                     <span className="font-semibold text-emerald-600 dark:text-emerald-400">
                       {item.badge}
                     </span>
-                    <span>{item.date}</span>
+                    <span>{formatNewsDate(item.date)}</span>
                   </div>
                   <h3 className="mt-2 text-sm font-bold text-zinc-900 dark:text-zinc-100 line-clamp-2">
                     {item.title}
