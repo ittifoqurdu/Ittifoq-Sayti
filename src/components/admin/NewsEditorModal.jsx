@@ -13,7 +13,9 @@ import {
   Link as LinkIcon,
   ExternalLink,
   Eye,
+  RefreshCw,
 } from 'lucide-react'
+import { compressImage } from '../../lib/imageCompressor'
 
 const CATEGORIES = [
   'Eʼlon & Tanlov',
@@ -59,6 +61,8 @@ export default function NewsEditorModal({ isOpen, onClose, onSave, editItem = nu
   const [actionLabel, setActionLabel] = useState('')
   const [highlights, setHighlights] = useState([''])
   const [error, setError] = useState('')
+  const [isCompressing, setIsCompressing] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
     if (editItem) {
@@ -92,27 +96,26 @@ export default function NewsEditorModal({ isOpen, onClose, onSave, editItem = nu
       setHighlights([''])
     }
     setError('')
+    setIsSaving(false)
+    setIsCompressing(false)
   }, [editItem, isOpen])
 
   if (!isOpen) return null
 
-  const handleFileUpload = (e) => {
+  const handleFileUpload = async (e) => {
     const file = e.target.files?.[0]
     if (!file) return
 
-    if (file.size > 4 * 1024 * 1024) {
-      setError('Rasm hajmi juda katta (maksimal 4 MB). Iltimos, ixchamroq rasm tanlang.')
-      return
+    try {
+      setIsCompressing(true)
+      setError('')
+      const compressed = await compressImage(file, 900, 700, 0.72)
+      setImage(compressed)
+    } catch {
+      setError('Rasmni yuklashda xatolik yuz berdi. Iltimos, boshqa rasm tanlang.')
+    } finally {
+      setIsCompressing(false)
     }
-
-    const reader = new FileReader()
-    reader.onloadend = () => {
-      if (typeof reader.result === 'string') {
-        setImage(reader.result)
-        setError('')
-      }
-    }
-    reader.readAsDataURL(file)
   }
 
   const handleAddHighlight = () => {
@@ -131,7 +134,7 @@ export default function NewsEditorModal({ isOpen, onClose, onSave, editItem = nu
     setHighlights((prev) => prev.filter((_, i) => i !== index))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     if (!title.trim()) {
@@ -160,8 +163,15 @@ export default function NewsEditorModal({ isOpen, onClose, onSave, editItem = nu
       highlights: cleanHighlights,
     }
 
-    onSave(payload)
-    onClose()
+    try {
+      setIsSaving(true)
+      await onSave(payload)
+      onClose()
+    } catch {
+      setError('Google Sheets’ga saqlashda xatolik yuz berdi. Iltimos, qaytadan urinib ko‘ring.')
+    } finally {
+      setIsSaving(false)
+    }
   }
 
   return (
@@ -512,10 +522,25 @@ export default function NewsEditorModal({ isOpen, onClose, onSave, editItem = nu
             </button>
             <button
               type="submit"
-              className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-7 py-2.5 text-xs font-bold uppercase tracking-wider text-zinc-950 hover:bg-emerald-400 shadow-md transition cursor-pointer"
+              disabled={isSaving || isCompressing}
+              className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-7 py-2.5 text-xs font-bold uppercase tracking-wider text-zinc-950 hover:bg-emerald-400 disabled:opacity-60 disabled:cursor-not-allowed shadow-md transition cursor-pointer"
             >
-              <Check size={15} />
-              {editItem ? 'O‘zgarishlarni Saqlash' : 'Eʼlonni Chop Etish'}
+              {isSaving ? (
+                <>
+                  <RefreshCw size={15} className="animate-spin" />
+                  <span>Google Sheets’ga saqlanmoqda...</span>
+                </>
+              ) : isCompressing ? (
+                <>
+                  <RefreshCw size={15} className="animate-spin" />
+                  <span>Rasm tayyorlanmoqda...</span>
+                </>
+              ) : (
+                <>
+                  <Check size={15} />
+                  <span>{editItem ? 'O‘zgarishlarni Saqlash' : 'Eʼlonni Chop Etish'}</span>
+                </>
+              )}
             </button>
           </div>
         </form>

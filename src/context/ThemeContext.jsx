@@ -1,23 +1,23 @@
 import { createContext, useContext, useEffect, useState, useMemo } from 'react'
 
 const ThemeContext = createContext({
-  theme: 'dark',
-  isDark: true,
+  theme: 'light',
+  isDark: false,
   toggleTheme: () => {},
   setTheme: () => {},
 })
 
-const THEME_STORAGE_KEY = 'urdu_theme_mode'
+const THEME_STORAGE_KEY = 'urdu_theme_v2'
 
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
-    if (typeof window === 'undefined') return 'dark'
+    if (typeof window === 'undefined') return 'light'
     try {
       const stored = localStorage.getItem(THEME_STORAGE_KEY)
-      if (stored === 'light') return 'light'
-      return 'dark'
+      if (stored === 'dark') return 'dark'
+      return 'light'
     } catch {
-      return 'dark'
+      return 'light'
     }
   })
 

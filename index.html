@@ -1,19 +1,19 @@
 <!doctype html>
-<html lang="uz" class="dark">
+<html lang="uz" class="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#07090d" />
+    <meta name="theme-color" content="#FAF8F5" />
     <script>
       (function() {
         try {
-          var mode = localStorage.getItem('urdu_theme_mode');
-          if (mode === 'light') {
-            document.documentElement.classList.remove('dark');
-            document.documentElement.classList.add('light');
-          } else {
+          var mode = localStorage.getItem('urdu_theme_v2');
+          if (mode === 'dark') {
             document.documentElement.classList.remove('light');
             document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
           }
         } catch (e) {}
       })();

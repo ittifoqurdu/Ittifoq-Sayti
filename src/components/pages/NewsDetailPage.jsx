@@ -13,6 +13,7 @@ import {
   Check,
 } from 'lucide-react'
 import { useNews } from '../../context/NewsContext'
+import { formatNewsDate } from '../../lib/utils'
 import { socialLinks } from '../../data/siteData'
 import FooterSection from '../sections/FooterSection'
 
@@ -91,7 +92,7 @@ export default function NewsDetailPage() {
             </span>
             <span className="flex items-center gap-1 text-xs text-zinc-500 dark:text-zinc-400">
               <CalendarDays size={13} className="text-emerald-500" />
-              {currentNews.date}
+              {formatNewsDate(currentNews.date)}
             </span>
             {currentNews.readTime && (
               <span className="flex items-center gap-1 text-xs text-zinc-400 dark:text-zinc-500">

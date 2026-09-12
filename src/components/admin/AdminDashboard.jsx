@@ -86,20 +86,20 @@ export default function AdminDashboard() {
     setIsEditorOpen(true)
   }
 
-  const handleSaveNews = (payload) => {
+  const handleSaveNews = async (payload) => {
     if (editingItem) {
-      updateNews(editingItem.id, payload)
-      showToast('Eʼlon muvaffaqiyatli yangilandi!')
+      await updateNews(editingItem.id, payload)
+      showToast('Eʼlon Google Sheets’da yangilandi!')
     } else {
-      addNews(payload)
-      showToast('Yangi eʼlon muvaffaqiyatli chop etildi!')
+      await addNews(payload)
+      showToast('Yangi eʼlon Google Sheets’ga muvaffaqiyatli saqlandi!')
     }
   }
 
-  const handleDeleteNews = (id, title) => {
+  const handleDeleteNews = async (id, title) => {
     if (window.confirm(`Rostdan ham "${title}" eʼlonini o‘chirmoqchimisiz?`)) {
-      deleteNews(id)
-      showToast('Eʼlon o‘chirildi!')
+      await deleteNews(id)
+      showToast('Eʼlon Google Sheets’dan o‘chirildi!')
     }
   }
 

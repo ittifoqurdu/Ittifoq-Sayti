@@ -100,57 +100,80 @@ export function NewsProvider({ children }) {
     return { success: true }
   }, [])
 
-  const addNews = useCallback((item) => {
-    const id = `news-${Date.now()}`
-    const today = new Date()
-    const months = [
-      'Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun',
-      'Iyul', 'Avgust', 'Sentabr', 'Oktabr', 'Noyabr', 'Dekabr'
-    ]
-    const defaultDate = `${today.getDate()}-${months[today.getMonth()]}, ${today.getFullYear()}`
+  const addNews = useCallback(
+    async (item) => {
+      const id = `news-${Date.now()}`
+      const today = new Date()
+      const months = [
+        'Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun',
+        'Iyul', 'Avgust', 'Sentabr', 'Oktabr', 'Noyabr', 'Dekabr'
+      ]
+      const defaultDate = `${today.getDate()}-${months[today.getMonth()]}, ${today.getFullYear()}`
 
-    const newItem = {
-      id,
-      title: item.title?.trim() || 'Yangi eʼlon',
-      date: item.date?.trim() || defaultDate,
-      category: item.category?.trim() || 'Eʼlon & Tanlov',
-      badge: item.badge?.trim() || '🔴 Muhim Eʼlon',
-      readTime: item.readTime?.trim() || '3 daqiqa',
-      summary: item.summary?.trim() || '',
-      content: item.content?.trim() || '',
-      highlights: Array.isArray(item.highlights) && item.highlights.length > 0 ? item.highlights : [],
-      image: item.image?.trim() || '',
-      actionUrl: item.actionUrl?.trim() || '',
-      actionLabel: item.actionLabel?.trim() || 'Batafsil maʼlumot',
-      createdAt: Date.now(),
-    }
+      const newItem = {
+        id,
+        title: item.title?.trim() || 'Yangi eʼlon',
+        date: item.date?.trim() || defaultDate,
+        category: item.category?.trim() || 'Eʼlon & Tanlov',
+        badge: item.badge?.trim() || '🔴 Muhim Eʼlon',
+        readTime: item.readTime?.trim() || '3 daqiqa',
+        summary: item.summary?.trim() || '',
+        content: item.content?.trim() || '',
+        highlights: Array.isArray(item.highlights) && item.highlights.length > 0 ? item.highlights : [],
+        image: item.image?.trim() || '',
+        actionUrl: item.actionUrl?.trim() || '',
+        actionLabel: item.actionLabel?.trim() || 'Batafsil maʼlumot',
+        createdAt: Date.now(),
+      }
 
-    setNewsList((prev) => [newItem, ...prev])
-    addNewsToSheet(newItem)
-    return newItem
-  }, [])
+      setNewsList((prev) => [newItem, ...prev.filter((n) => n.id !== id)])
+      await addNewsToSheet(newItem)
 
-  const updateNews = useCallback((id, updatedFields) => {
-    setNewsList((prev) =>
-      prev.map((item) => {
-        if (item.id === id) {
-          const updated = {
-            ...item,
-            ...updatedFields,
-            updatedAt: Date.now(),
+      setTimeout(() => {
+        syncFromSheet()
+      }, 1000)
+
+      return newItem
+    },
+    [syncFromSheet]
+  )
+
+  const updateNews = useCallback(
+    async (id, updatedFields) => {
+      let updatedItem = null
+      setNewsList((prev) =>
+        prev.map((item) => {
+          if (item.id === id) {
+            updatedItem = {
+              ...item,
+              ...updatedFields,
+              updatedAt: Date.now(),
+            }
+            return updatedItem
           }
-          updateNewsInSheet(updated)
-          return updated
-        }
-        return item
-      })
-    )
-  }, [])
+          return item
+        })
+      )
+      if (updatedItem) {
+        await updateNewsInSheet(updatedItem)
+        setTimeout(() => {
+          syncFromSheet()
+        }, 1000)
+      }
+    },
+    [syncFromSheet]
+  )
 
-  const deleteNews = useCallback((id) => {
-    setNewsList((prev) => prev.filter((item) => item.id !== id))
-    deleteNewsFromSheet(id)
-  }, [])
+  const deleteNews = useCallback(
+    async (id) => {
+      setNewsList((prev) => prev.filter((item) => item.id !== id))
+      await deleteNewsFromSheet(id)
+      setTimeout(() => {
+        syncFromSheet()
+      }, 1000)
+    },
+    [syncFromSheet]
+  )
 
   const resetToDefaults = useCallback(() => {
     setNewsList(defaultNewsEvents)

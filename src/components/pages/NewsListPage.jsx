@@ -10,6 +10,7 @@ import {
   Newspaper,
 } from 'lucide-react'
 import { useNews } from '../../context/NewsContext'
+import { formatNewsDate } from '../../lib/utils'
 import FooterSection from '../sections/FooterSection'
 
 export default function NewsListPage() {
@@ -156,7 +157,7 @@ export default function NewsListPage() {
 
                       <span className="flex items-center gap-1 text-xs text-zinc-500 dark:text-zinc-400">
                         <CalendarDays size={13} className="text-zinc-400 dark:text-zinc-500" />
-                        {item.date}
+                        {formatNewsDate(item.date)}
                       </span>
                     </div>
                   )}
@@ -169,7 +170,7 @@ export default function NewsListPage() {
                       </span>
                       <span className="flex items-center gap-1 text-zinc-400">
                         <CalendarDays size={12} />
-                        {item.date}
+                        {formatNewsDate(item.date)}
                       </span>
                     </div>
                   )}

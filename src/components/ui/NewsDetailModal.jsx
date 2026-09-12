@@ -12,6 +12,7 @@ import {
   ArrowRight,
 } from 'lucide-react'
 import { socialLinks } from '../../data/siteData'
+import { formatNewsDate } from '../../lib/utils'
 
 export default function NewsDetailModal({ isOpen, onClose, newsItem }) {
   useEffect(() => {
@@ -83,7 +84,7 @@ export default function NewsDetailModal({ isOpen, onClose, newsItem }) {
               <div className="mt-3 flex items-center gap-4 text-xs text-zinc-500 dark:text-zinc-400">
                 <span className="flex items-center gap-1.5">
                   <CalendarDays size={13} className="text-emerald-500" />
-                  {newsItem.date}
+                  {formatNewsDate(newsItem.date)}
                 </span>
                 {newsItem.readTime && (
                   <span className="flex items-center gap-1.5">
@@ -96,6 +97,17 @@ export default function NewsDetailModal({ isOpen, onClose, newsItem }) {
 
             {/* Modal Body */}
             <div className="overflow-y-auto p-6 sm:p-8 space-y-5">
+              {/* Cover Image if available */}
+              {newsItem.image && (
+                <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 shadow-sm">
+                  <img
+                    src={newsItem.image}
+                    alt={newsItem.title}
+                    className="h-full w-full object-cover object-center"
+                  />
+                </div>
+              )}
+
               {/* Summary Lead */}
               <div className="rounded-2xl border-l-4 border-emerald-500 bg-white/80 p-4 shadow-sm dark:bg-zinc-900/60">
                 <p className="text-sm font-medium leading-relaxed text-zinc-800 dark:text-zinc-200">

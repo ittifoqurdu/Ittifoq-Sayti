@@ -25,6 +25,7 @@ import {
 import { fadeUp } from '../../lib/animations'
 import { profile, socialLinks, universityStats } from '../../data/siteData'
 import { useNews } from '../../context/NewsContext'
+import { formatNewsDate, getCategoryFallbackImage } from '../../lib/utils'
 import { Globe } from '../ui/globe'
 import InternationalPartnersModal from '../ui/InternationalPartnersModal'
 import NewsDetailModal from '../ui/NewsDetailModal'
@@ -42,6 +43,7 @@ function TopCardsSection() {
   const [isNewsModalOpen, setIsNewsModalOpen] = useState(false)
   const [activeNewsIndex, setActiveNewsIndex] = useState(0)
   const [isNewsPaused, setIsNewsPaused] = useState(false)
+  const currentNews = newsEvents[activeNewsIndex] || newsEvents[0] || {}
 
   useEffect(() => {
     const timer = window.setInterval(() => setNow(new Date()), 60000)
@@ -296,62 +298,106 @@ function TopCardsSection() {
           </div>
 
           {/* Current News Slide */}
-          <div className="my-auto py-5">
+          <div className="my-auto py-4">
             <AnimatePresence mode="wait">
               <motion.div
-                key={newsEvents[activeNewsIndex]?.id || activeNewsIndex}
+                key={currentNews?.id || activeNewsIndex}
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.32, ease: 'easeOut' }}
+                className="flex flex-col sm:flex-row gap-5 items-stretch"
               >
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">
-                    {newsEvents[activeNewsIndex]?.badge}
-                  </span>
-                  <span className="flex items-center gap-1 text-xs text-zinc-500 dark:text-zinc-400">
-                    <CalendarDays size={12} className="text-emerald-500" />
-                    {newsEvents[activeNewsIndex]?.date}
-                  </span>
-                  {newsEvents[activeNewsIndex]?.readTime && (
-                    <span className="text-xs text-zinc-400 dark:text-zinc-500">
-                      • {newsEvents[activeNewsIndex]?.readTime}
+                {/* 1. Prominent News Image with Floating Tag/Badge */}
+                <Link
+                  to={`/yangiliklar/${currentNews?.id || 'news-1'}`}
+                  className="relative group w-full sm:w-44 md:w-52 h-44 sm:h-auto min-h-[165px] shrink-0 rounded-2xl overflow-hidden border border-zinc-200/80 dark:border-zinc-800/80 bg-zinc-100 dark:bg-zinc-900 shadow-sm block"
+                  aria-label={currentNews?.title || 'Yangilik rasmi'}
+                >
+                  <img
+                    src={currentNews?.image || getCategoryFallbackImage(currentNews?.category)}
+                    alt={currentNews?.title || 'Yangilik'}
+                    className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null
+                      e.currentTarget.src = getCategoryFallbackImage(currentNews?.category)
+                    }}
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
+
+                  {/* Asosiy Tag Yozuvi (Floating Glass Badge on Image) */}
+                  <div className="absolute top-2.5 left-2.5 z-10">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-emerald-600/95 backdrop-blur-md px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-md">
+                      <Sparkles size={11} className="text-emerald-200" />
+                      {currentNews?.badge || 'Yangilik'}
                     </span>
+                  </div>
+
+                  {/* Reading Time Pill on bottom-right of image */}
+                  {currentNews?.readTime && (
+                    <div className="absolute bottom-2 right-2 z-10">
+                      <span className="rounded-md bg-black/65 backdrop-blur-sm px-2 py-0.5 text-[10px] font-medium text-white/90">
+                        {currentNews.readTime}
+                      </span>
+                    </div>
                   )}
+                </Link>
+
+                {/* 2. News Information & Details */}
+                <div className="flex flex-1 flex-col justify-between min-w-0">
+                  <div>
+                    {/* Category and Date Row */}
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
+                      <span className="rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">
+                        {currentNews?.category || 'UrDU Yoshlari'}
+                      </span>
+                      <span className="flex items-center gap-1 text-xs text-zinc-500 dark:text-zinc-400">
+                        <CalendarDays size={12} className="text-emerald-500" />
+                        {formatNewsDate(currentNews?.date)}
+                      </span>
+                    </div>
+
+                    {/* Headline */}
+                    <h3 className="text-base sm:text-lg lg:text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 line-clamp-2 leading-snug">
+                      <Link
+                        to={`/yangiliklar/${currentNews?.id || 'news-1'}`}
+                        className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                      >
+                        {currentNews?.title}
+                      </Link>
+                    </h3>
+
+                    {/* Summary */}
+                    <p className="mt-2 text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 line-clamp-2 sm:line-clamp-3 leading-relaxed">
+                      {currentNews?.summary}
+                    </p>
+                  </div>
+
+                  {/* Pagination Dots */}
+                  <div className="mt-4 flex items-center gap-1.5">
+                    {newsEvents.map((item, idx) => (
+                      <button
+                        key={item.id || idx}
+                        type="button"
+                        onClick={() => setActiveNewsIndex(idx)}
+                        aria-label={`${idx + 1}-yangilik`}
+                        className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                          activeNewsIndex === idx
+                            ? 'w-7 bg-emerald-500'
+                            : 'w-2 bg-zinc-300 dark:bg-zinc-700 hover:bg-zinc-400'
+                        }`}
+                      />
+                    ))}
+                  </div>
                 </div>
-
-                <h3 className="mt-3 text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 line-clamp-2 leading-snug">
-                  {newsEvents[activeNewsIndex]?.title}
-                </h3>
-
-                <p className="mt-2.5 text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 line-clamp-3 leading-relaxed">
-                  {newsEvents[activeNewsIndex]?.summary}
-                </p>
               </motion.div>
             </AnimatePresence>
-
-            {/* Pagination Dots */}
-            <div className="mt-5 flex items-center gap-1.5">
-              {newsEvents.map((item, idx) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => setActiveNewsIndex(idx)}
-                  aria-label={`${idx + 1}-yangilik`}
-                  className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                    activeNewsIndex === idx
-                      ? 'w-7 bg-emerald-500'
-                      : 'w-2 bg-zinc-300 dark:bg-zinc-700 hover:bg-zinc-400'
-                  }`}
-                />
-              ))}
-            </div>
           </div>
 
           {/* Bottom Actions: Batafsil & Barcha yangiliklar */}
           <div className="flex flex-wrap items-center justify-between gap-3 border-t border-zinc-200/80 pt-4 dark:border-zinc-800">
             <Link
-              to={`/yangiliklar/${newsEvents[activeNewsIndex]?.id || 'news-1'}`}
+              to={`/yangiliklar/${currentNews?.id || 'news-1'}`}
               className="inline-flex items-center gap-2 rounded-full bg-zinc-900 px-6 py-3 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-950 dark:hover:bg-white shadow-md active:scale-95"
             >
               Batafsil o‘qish
