@@ -85,10 +85,57 @@
           }
         ]
       }
-    </script>
+    <!-- Netlify Drawer / Feedback badge suppression -->
+    <style>
+      #netlify-drawer,
+      #netlify-badge,
+      [data-netlify-drawer],
+      [data-netlify-badge],
+      iframe[data-netlify-drawer],
+      iframe[data-netlify-badge],
+      iframe[src*="netlify"],
+      .netlify-drawer-container,
+      netlify-drawer,
+      div[class*="netlify-drawer"],
+      div[id*="netlify-drawer"],
+      div[id*="netlify-badge"],
+      div[id*="netlify-feedback"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        position: absolute !important;
+        z-index: -99999 !important;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      (function() {
+        var hideNetlify = function() {
+          var els = document.querySelectorAll(
+            '#netlify-drawer, #netlify-badge, [data-netlify-drawer], [data-netlify-badge], iframe[src*="netlify"], .netlify-drawer-container, netlify-drawer, div[id*="netlify-"]'
+          );
+          for (var i = 0; i < els.length; i++) {
+            els[i].style.setProperty('display', 'none', 'important');
+            els[i].style.setProperty('visibility', 'hidden', 'important');
+            try { els[i].remove(); } catch (e) {}
+          }
+        };
+        hideNetlify();
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', hideNetlify);
+        }
+        window.addEventListener('load', hideNetlify);
+        try {
+          var obs = new MutationObserver(hideNetlify);
+          obs.observe(document.documentElement, { childList: true, subtree: true });
+        } catch (e) {}
+      })();
+    </script>
   </body>
 </html>

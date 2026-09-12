@@ -1,4 +1,4 @@
-﻿@layer utilities {
+@layer utilities {
   .rounded-base {
     border-radius: var(--radius-lg);
   }
@@ -91,4 +91,29 @@
     @apply font-sans;
   }
 }
+
+/* Hide Netlify Drawer / Feedback badge */
+#netlify-drawer,
+#netlify-badge,
+[data-netlify-drawer],
+[data-netlify-badge],
+iframe[data-netlify-drawer],
+iframe[data-netlify-badge],
+iframe[src*="netlify"],
+.netlify-drawer-container,
+netlify-drawer,
+div[class*="netlify-drawer"],
+div[id*="netlify-drawer"],
+div[id*="netlify-badge"],
+div[id*="netlify-feedback"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  position: absolute !important;
+  z-index: -99999 !important;
+}
+
 
