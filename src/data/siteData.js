@@ -219,10 +219,10 @@ export const fakultetKoordinatorMembers = [
   {
     id: 'xorijiy-filologiya',
     name: 'Solayeva Dilafro‘z Karimbergan qizi',
-    role: "Xorijiy filologiya fakulteti yetakchisi",
+    role: "Xorijiy filologiya fakulteti koordinatori",
     category: 'fakultet',
     faculty: "Xorijiy filologiya fakulteti",
-    badge: 'Fakultet Yetakchisi',
+    badge: 'Fakultet Koordinatori',
     bio: "Fakultet talaba-yoshlarining intellektual, ilmiy va jamoat ishlaridagi faolligini oshirish, xorijiy tillarni o‘rganish loyihalari hamda yoshlar tashabbuslarini muvofiqlashtirish.",
     avatar: '/assets/team/dilafroz_portrait.jpg',
     email: 'salayevadilafruz6@gmail.com',
