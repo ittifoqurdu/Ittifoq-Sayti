@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
-import { ArrowRight, Instagram, Mail, Phone, Send, Sparkles, MapPin, CheckCircle2, ShieldCheck } from 'lucide-react'
+import { ArrowRight, Instagram, Mail, Phone, Send, Sparkles, MapPin, CheckCircle2, ShieldCheck, Navigation, ExternalLink } from 'lucide-react'
 import { footerColumns, profile, socialLinks } from '../../data/siteData'
 import { useTheme } from '../../context/ThemeContext'
 import { staggerContainer, fadeUpChild } from '../../lib/animations'
@@ -313,7 +313,7 @@ function FooterSection({ showContactForm = true } = {}) {
             </div>
           </div>
 
-          {footerColumns.map((column) => (
+          {footerColumns.slice(0, 3).map((column) => (
             <div key={column.title}>
               <p className="mb-4 text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">{column.title}</p>
               <ul className="space-y-3 text-sm text-zinc-600 dark:text-zinc-400">
@@ -331,6 +331,68 @@ function FooterSection({ showContactForm = true } = {}) {
               </ul>
             </div>
           ))}
+
+          {/* Row 2: Aloqa & Manzil */}
+          {footerColumns[3] ? (
+            <div className="pr-6">
+              <p className="mb-4 text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">{footerColumns[3].title}</p>
+              <ul className="space-y-3 text-sm text-zinc-600 dark:text-zinc-400">
+                {footerColumns[3].links.map((link) => (
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      target={link.href.startsWith('http') ? '_blank' : undefined}
+                      rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      className="transition-colors hover:text-emerald-700 dark:hover:text-white flex items-center gap-1.5"
+                    >
+                      <ArrowRight size={12} className="text-zinc-400 dark:text-zinc-600 shrink-0" />
+                      <span className="truncate">{link.label}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+
+          {/* Row 2: Interactive Google Maps Card */}
+          <div className="md:col-span-1 xl:col-span-3">
+            <a
+              href="https://www.google.com/maps/dir/?api=1&destination=Urganch+Davlat+Universiteti"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative block overflow-hidden rounded-2xl border border-zinc-200/80 bg-white/70 dark:border-zinc-800 dark:bg-zinc-950/70 p-3 shadow-md transition-all hover:border-emerald-500/60 hover:shadow-xl"
+              title="Google Maps orqali UrDUga yo‘nalish olish"
+            >
+              <div className="relative h-44 sm:h-52 w-full overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-900">
+                <iframe
+                  title="Urganch Davlat Universiteti Xaritasi"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2988.3742468728515!2d60.62768407659556!3d41.54924768590684!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x41dfc92fa3b8c3ab%3A0x6a2c2ef7e0cb3a0!2sUrganch%20davlat%20universiteti!5e0!3m2!1suz!2suz!4v1710000000000!5m2!1suz!2suz"
+                  className="h-full w-full border-0 pointer-events-none filter contrast-105 opacity-90 transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
+                />
+
+                {/* Floating Map Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent flex flex-col justify-between p-3.5 sm:p-4 pointer-events-none">
+                  <div className="flex items-center justify-between">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 dark:bg-zinc-900/90 px-3 py-1 text-[11px] font-bold text-zinc-900 dark:text-zinc-100 shadow-md backdrop-blur-md">
+                      <MapPin size={13} className="text-emerald-500" />
+                      UrDU Bosh binosi
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500 px-3 py-1 text-xs font-bold text-zinc-950 shadow-md transition-all group-hover:bg-emerald-400 group-hover:scale-105">
+                      <Navigation size={12} />
+                      Google Maps'da yo‘nalish olish
+                      <ExternalLink size={11} />
+                    </span>
+                  </div>
+
+                  <div className="text-white text-xs">
+                    <p className="font-semibold text-white drop-shadow">Xorazm viloyati, Urganch shahri, Hamid Olimjon ko‘chasi, 14-uy</p>
+                    <p className="text-[11px] text-zinc-300 drop-shadow mt-0.5">Xaritani bosib, Google Maps orqali to‘g‘ridan-to‘g‘ri yo‘nalish (marshrut) chizishingiz mumkin</p>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
         </div>
 
         {/* Bottom copyright */}
@@ -338,15 +400,6 @@ function FooterSection({ showContactForm = true } = {}) {
           <p>© 2026 {profile.university.toUpperCase()} YOSHLAR ITTIFOQI. BARCHA HUQUQLAR HIMOYALANGAN.</p>
 
           <div className="flex flex-wrap items-center gap-4">
-            <Link
-              to="/admin"
-              className="inline-flex items-center gap-1.5 font-semibold text-zinc-500 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400 transition-colors"
-              title="UrDU Yoshlar Ittifoqi Boshqaruv Tizimi"
-            >
-              <ShieldCheck size={14} className="text-emerald-500" />
-              Admin Panel
-            </Link>
-
             <div className="flex items-center gap-3">
               {quickLinks.map((item) => {
                 const Icon = item.icon
