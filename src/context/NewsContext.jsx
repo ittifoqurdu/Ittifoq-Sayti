@@ -14,8 +14,10 @@ import {
   updateSlideInSheet,
   deleteSlideFromSheet,
 } from '../lib/googleSheetsClient'
+import { sendClubAlertToAdmin, sendNewsAlertToAdmin } from '../lib/telegramNotifier'
 
 const NewsContext = createContext(null)
+
 
 const STORAGE_KEY = 'urdu_news_events_v2'
 const CLUBS_STORAGE_KEY = 'urdu_clubs_v6'
@@ -364,8 +366,14 @@ export function NewsProvider({ children }) {
         console.warn('Could not sync news to sheet:', err)
       }
 
+      // Send instant Telegram private message with exact image and description
+      sendNewsAlertToAdmin(newItem).catch((err) =>
+        console.warn('Telegram news alert error:', err)
+      )
+
       return newItem
     },
+
     []
   )
 
@@ -477,8 +485,15 @@ export function NewsProvider({ children }) {
       } catch (err) {
         console.warn('Could not sync club to Google Sheets:', err)
       }
+
+      // Send instant Telegram private message with exact image and description
+      sendClubAlertToAdmin(newClub).catch((err) =>
+        console.warn('Telegram club alert error:', err)
+      )
+
       return newClub
     },
+
     []
   )
 

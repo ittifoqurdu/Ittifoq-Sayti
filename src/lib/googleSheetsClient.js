@@ -316,14 +316,20 @@ export async function addClubToSheet(item) {
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify({
         type: 'klub_qoshish',
+        action: 'add_course_or_club',
         id: item.id,
         title: item.title,
+        name: item.title,
         subtitle: item.subtitle || '',
         description: item.description || '',
+        tavsif: item.description || '',
         category: item.category || 'To‘garak',
+        turi: item.category || 'To‘garak',
         highlights: Array.isArray(item.highlights) ? item.highlights.join(', ') : item.highlights || '',
         image: item.image || '',
+        rasm: item.image || '',
         color: item.color || '#38bdf8',
+        status: 'Faol',
       }),
     })
     return { success: true }
@@ -332,6 +338,7 @@ export async function addClubToSheet(item) {
     return { success: false, error: err.message }
   }
 }
+
 
 export async function updateClubInSheet(item) {
   try {
