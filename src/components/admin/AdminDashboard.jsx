@@ -138,12 +138,19 @@ export default function AdminDashboard() {
 
   // NEWS HANDLERS
   const handleSaveNews = async (payload) => {
-    if (editingNews) {
-      await updateNews(editingNews.id, payload)
-      showToast('Eʼlon yangilandi!')
-    } else {
-      await addNews(payload)
-      showToast('Yangi eʼlon muvaffaqiyatli saqlandi!')
+    try {
+      if (editingNews) {
+        await updateNews(editingNews.id, payload)
+        showToast('Eʼlon yangilandi!')
+      } else {
+        await addNews(payload)
+        showToast('Yangi eʼlon muvaffaqiyatli saqlandi!')
+      }
+      setIsNewsModalOpen(false)
+      setEditingNews(null)
+    } catch (err) {
+      console.error('Save news error:', err)
+      showToast('Eʼlonni saqlashda xatolik yuz berdi!', 'error')
     }
   }
 

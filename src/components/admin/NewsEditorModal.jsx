@@ -119,7 +119,7 @@ export default function NewsEditorModal({ isOpen, onClose, onSave, editItem = nu
     try {
       setIsCompressing(true)
       setError('')
-      const compressed = await compressImage(file, 900, 700, 0.72)
+      const compressed = await compressImage(file, 800, 500, 0.68)
       setImage(compressed)
     } catch {
       setError('Rasmni yuklashda xatolik yuz berdi. Iltimos, boshqa rasm tanlang.')

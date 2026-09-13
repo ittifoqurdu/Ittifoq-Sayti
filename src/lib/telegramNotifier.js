@@ -4,7 +4,7 @@
  */
 
 export const BOT_TOKEN = '8763105008:AAH8qOyJrwNLRamWrgPVR5l0x1DIbvlToBg'
-export const ADMIN_CHAT_ID = '6956456422'
+export const ADMIN_CHAT_IDS = ['6956456422', '7768917422']
 export const WEBSITE_URL = 'https://ittifoq.ursu.uz'
 
 /**
@@ -43,7 +43,7 @@ export async function sendTelegramPrivateMessage(chatId, text, photoUrl = '') {
       if (blob) {
         const formData = new FormData()
         formData.append('chat_id', chatId)
-        formData.append('photo', blob, 'club_photo.jpg')
+        formData.append('photo', blob, 'photo.jpg')
         formData.append('caption', safeCaption)
         formData.append('parse_mode', 'HTML')
 
@@ -115,7 +115,10 @@ export async function sendClubAlertToAdmin(club) {
     highlightsText +
     `\n\n🌐 <a href="${WEBSITE_URL}/klublar">Saytda to‘garaklar sahifasini ko‘rish ↗️</a>`
 
-  return sendTelegramPrivateMessage(ADMIN_CHAT_ID, caption, club.image)
+  const promises = ADMIN_CHAT_IDS.map((id) =>
+    sendTelegramPrivateMessage(id, caption, club.image)
+  )
+  return Promise.allSettled(promises)
 }
 
 /**
@@ -133,5 +136,8 @@ export async function sendNewsAlertToAdmin(news) {
     `📂 <b>Rukn:</b> ${news.category || 'Umumiy'}\n\n` +
     `🌐 <a href="${WEBSITE_URL}/yangiliklar">Saytda batafsil o‘qish ↗️</a>`
 
-  return sendTelegramPrivateMessage(ADMIN_CHAT_ID, caption, news.image)
+  const promises = ADMIN_CHAT_IDS.map((id) =>
+    sendTelegramPrivateMessage(id, caption, news.image)
+  )
+  return Promise.allSettled(promises)
 }
