@@ -100,6 +100,16 @@ export default function NewsEditorModal({ isOpen, onClose, onSave, editItem = nu
     setIsCompressing(false)
   }, [editItem, isOpen])
 
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [isOpen])
+
   if (!isOpen) return null
 
   const handleFileUpload = async (e) => {
@@ -174,16 +184,19 @@ export default function NewsEditorModal({ isOpen, onClose, onSave, editItem = nu
     }
   }
 
+  // Remove early return if any, not present here, but ensure AnimatePresence works
+  if (!isOpen) return null
+  
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-black/75 p-3 sm:p-5 backdrop-blur-md">
+    <div className="fixed inset-0 z-[100] bg-[#F5F0E8] dark:bg-zinc-950 flex flex-col overflow-hidden">
       <motion.div
-        initial={{ opacity: 0, scale: 0.96, y: 15 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.96, y: 15 }}
-        className="relative my-6 w-full max-w-4xl overflow-hidden rounded-3xl border border-zinc-200/90 bg-[#F5F0E8] shadow-2xl dark:border-zinc-800 dark:bg-zinc-950 max-h-[92vh] flex flex-col"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 50 }}
+        className="flex flex-col h-full w-full relative"
       >
         {/* Modal Header */}
-        <div className="flex items-center justify-between border-b border-zinc-200/80 bg-white/70 px-6 py-4 backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-900/80 sticky top-0 z-20">
+        <div className="flex-shrink-0 flex items-center justify-between border-b border-zinc-200/80 bg-white/90 px-4 sm:px-6 py-4 backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-900/90 z-20">
           <div className="flex items-center gap-2.5">
             <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">
               <Sparkles size={18} />
@@ -201,15 +214,17 @@ export default function NewsEditorModal({ isOpen, onClose, onSave, editItem = nu
           <button
             type="button"
             onClick={onClose}
-            className="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-200/70 text-zinc-600 transition hover:bg-zinc-300 hover:text-zinc-900 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-zinc-100"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-200/70 text-zinc-600 transition hover:bg-zinc-300 hover:text-zinc-900 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-zinc-100 cursor-pointer"
           >
             <X size={18} />
           </button>
         </div>
 
         {/* Modal Body with Form */}
-        <form onSubmit={handleSubmit} className="overflow-y-auto p-6 space-y-6 flex-1">
-          {error && (
+        <form onSubmit={handleSubmit} className="flex-1 flex flex-col overflow-hidden w-full relative">
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 w-full">
+            <div className="max-w-5xl mx-auto space-y-6">
+              {error && (
             <div className="rounded-2xl border border-rose-500/30 bg-rose-500/10 p-3.5 text-xs font-semibold text-rose-600 dark:text-rose-400">
               {error}
             </div>
@@ -511,8 +526,11 @@ export default function NewsEditorModal({ isOpen, onClose, onSave, editItem = nu
             </div>
           </div>
 
+            </div>
+          </div>
+
           {/* Modal Footer Actions */}
-          <div className="border-t border-zinc-200/80 pt-4 flex items-center justify-end gap-3 dark:border-zinc-800">
+          <div className="flex-shrink-0 border-t border-zinc-200/80 p-4 sm:px-6 flex items-center justify-end gap-3 dark:border-zinc-800 bg-white dark:bg-zinc-950 z-20">
             <button
               type="button"
               onClick={onClose}

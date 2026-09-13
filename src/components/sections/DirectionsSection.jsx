@@ -1,6 +1,8 @@
+import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
-import { CheckCircle2, Compass, ArrowRight } from 'lucide-react'
+import { CheckCircle2, Compass, ArrowRight, ArrowUpRight } from 'lucide-react'
 import { useNews, defaultClubsList } from '../../context/NewsContext'
+import { socialLinks } from '../../data/siteData'
 import { fadeUp, staggerContainer, fadeUpChild } from '../../lib/animations'
 
 const MotionSection = motion.section
@@ -84,35 +86,54 @@ export default function DirectionsSection() {
                 )
               })()}
 
-              <div className={`p-6 sm:p-7 ${dir.image ? 'pt-8' : ''}`}>
-                <h3 className="text-xl font-bold tracking-tight text-zinc-900 group-hover:text-cyan-600 transition-colors dark:text-zinc-100 dark:group-hover:text-cyan-400">
-                  {dir.title}
-                </h3>
-                <p className="mt-1 text-xs font-semibold text-cyan-600 dark:text-cyan-400">
-                  {dir.subtitle}
-                </p>
-                <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-                  {dir.description}
-                </p>
+              <div className={`p-6 sm:p-7 ${dir.image ? 'pt-8' : ''} flex-1 flex flex-col justify-between`}>
+                <div>
+                  <h3 className="text-xl font-bold tracking-tight text-zinc-900 group-hover:text-cyan-600 transition-colors dark:text-zinc-100 dark:group-hover:text-cyan-400">
+                    {dir.title}
+                  </h3>
+                  <p className="mt-1 text-xs font-semibold text-cyan-600 dark:text-cyan-400">
+                    {dir.subtitle}
+                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400 line-clamp-3">
+                    {dir.description}
+                  </p>
 
-                {/* Highlights list */}
-                <div className="mt-6 space-y-2 border-t border-zinc-200/80 pt-4 dark:border-zinc-800/60">
-                  {highlights.map((h) => (
-                    <div key={h} className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300">
-                      <CheckCircle2 size={13} className="text-emerald-600 dark:text-emerald-400 shrink-0" />
-                      <span>{h}</span>
+                  {/* Highlights list */}
+                  {highlights.length > 0 && (
+                    <div className="mt-5 space-y-2 border-t border-zinc-200/80 pt-4 dark:border-zinc-800/60">
+                      {highlights.slice(0, 3).map((h) => (
+                        <div key={h} className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300">
+                          <CheckCircle2 size={13} className="text-emerald-600 dark:text-emerald-400 shrink-0" />
+                          <span className="truncate">{h}</span>
+                        </div>
+                      ))}
+                      {highlights.length > 3 && (
+                        <p className="text-[11px] font-medium text-cyan-600 dark:text-cyan-400">
+                          +{highlights.length - 3} ta qo‘shimcha imkoniyat
+                        </p>
+                      )}
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
 
-              {/* Card Footer */}
-              <div className="mt-8 pt-4 border-t border-zinc-200/80 flex items-center justify-between dark:border-zinc-800/60">
-                <a
-                  href="#contact"
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-600 transition-colors group-hover:text-cyan-600 dark:text-zinc-400 dark:group-hover:text-cyan-300"
+              {/* Card Footer with prominent, fully visible Batafsil o‘qish button */}
+              <div className="px-6 sm:px-7 pb-6 pt-4 border-t border-zinc-200/80 flex items-center justify-between gap-3 dark:border-zinc-800/80 bg-zinc-50/60 dark:bg-zinc-900/40">
+                <Link
+                  to={`/klublar/${dir.id}`}
+                  className="inline-flex items-center gap-2 rounded-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-4 sm:px-5 py-2.5 text-xs font-bold uppercase tracking-wider shadow-md hover:shadow-lg hover:shadow-emerald-500/25 active:scale-95 transition-all cursor-pointer"
                 >
-                  Safga qo‘shilish
+                  <span>Batafsil o‘qish</span>
+                  <ArrowUpRight size={14} className="shrink-0" />
+                </Link>
+
+                <a
+                  href={socialLinks.telegramBot || socialLinks.telegram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-600 hover:text-cyan-600 dark:text-zinc-400 dark:hover:text-cyan-400 transition-colors"
+                >
+                  <span>Safga qo‘shilish</span>
                   <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
                 </a>
               </div>
@@ -123,3 +144,4 @@ export default function DirectionsSection() {
     </MotionSection>
   )
 }
+

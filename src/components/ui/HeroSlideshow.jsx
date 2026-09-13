@@ -45,33 +45,33 @@ export default function HeroSlideshow() {
         isCenter: true,
       }
     }
-    // Yuqoridagi kelayotgan karta
+    // Yuqoridagi kelayotgan karta (dumaloq qirralari to'liq ko'rinadi)
     if (offset === -1) {
       return {
-        y: -155,
-        scale: 0.88,
-        opacity: 0.42,
+        y: -105,
+        scale: 0.9,
+        opacity: 0.55,
         zIndex: 10,
-        filter: 'blur(0.5px)',
+        filter: 'blur(0.4px)',
         isCenter: false,
       }
     }
-    // Pastdagi ketayotgan karta
+    // Pastdagi ketayotgan karta (dumaloq qirralari to'liq ko'rinadi)
     if (offset === 1) {
       return {
-        y: 155,
-        scale: 0.88,
-        opacity: 0.42,
+        y: 105,
+        scale: 0.9,
+        opacity: 0.55,
         zIndex: 10,
-        filter: 'blur(0.5px)',
+        filter: 'blur(0.4px)',
         isCenter: false,
       }
     }
     // Yuqoridan kirishga tayyor turgan
     if (offset === -2) {
       return {
-        y: -260,
-        scale: 0.75,
+        y: -210,
+        scale: 0.78,
         opacity: 0,
         zIndex: 0,
         filter: 'blur(2px)',
@@ -80,8 +80,8 @@ export default function HeroSlideshow() {
     }
     // Pastga chiqib ketgan
     return {
-      y: 260,
-      scale: 0.75,
+      y: 210,
+      scale: 0.78,
       opacity: 0,
       zIndex: 0,
       filter: 'blur(2px)',
@@ -90,12 +90,12 @@ export default function HeroSlideshow() {
   }
 
   return (
-    <div className="relative w-full max-w-[540px] xl:max-w-[580px] mx-auto select-none py-2">
+    <div className="relative w-full max-w-[540px] xl:max-w-[580px] mx-auto select-none py-4">
       {/* Orqa fon yumshoq emerald nur */}
-      <div className="absolute inset-x-4 top-1/2 -translate-y-1/2 h-[320px] rounded-[2.5rem] bg-gradient-to-r from-emerald-500/20 via-teal-500/15 to-emerald-500/20 blur-3xl opacity-70 pointer-events-none" />
+      <div className="absolute inset-x-6 top-1/2 -translate-y-1/2 h-[340px] rounded-[3rem] bg-gradient-to-r from-emerald-500/20 via-teal-500/15 to-emerald-500/20 blur-3xl opacity-70 pointer-events-none" />
 
-      {/* Vertikal Oqim Karuseli - Butunlay sinxron, hech qanday bug va miltillashsiz */}
-      <div className="relative h-[440px] sm:h-[480px] lg:h-[490px] w-full flex items-center justify-center overflow-hidden">
+      {/* Vertikal Oqim Karuseli - Yuqori va pastki kartalar burchaklari kesilmay, to'liq dumaloq ko'rinadi */}
+      <div className="relative h-[490px] sm:h-[530px] lg:h-[550px] w-full flex items-center justify-center overflow-visible">
         {items.map((item, i) => {
           const style = getCardStyle(i)
 
@@ -113,10 +113,10 @@ export default function HeroSlideshow() {
                 duration: 0.75,
                 ease: [0.22, 1, 0.36, 1], // Butunlay silliq, tabiiy oqim
               }}
-              className={`absolute w-full h-[290px] sm:h-[330px] lg:h-[345px] rounded-[2rem] sm:rounded-[2.25rem] overflow-hidden shadow-2xl ${
+              className={`absolute w-[94%] sm:w-[96%] h-[270px] sm:h-[305px] lg:h-[320px] rounded-[2rem] sm:rounded-[2.25rem] overflow-hidden shadow-2xl transition-shadow ${
                 style.isCenter
-                  ? 'border-2 border-emerald-500/50 dark:border-emerald-400/40 ring-1 ring-emerald-500/20'
-                  : 'border border-white/20 dark:border-white/10'
+                  ? 'border-2 border-emerald-500/60 dark:border-emerald-400/50 ring-2 ring-emerald-500/20 shadow-[0_20px_50px_rgba(0,0,0,0.55)]'
+                  : 'border border-white/30 dark:border-white/20 shadow-[0_12px_30px_rgba(0,0,0,0.35)]'
               }`}
             >
               {/* Rasm */}

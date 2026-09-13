@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
-import { X, Sparkles, Image as ImageIcon } from 'lucide-react'
+import { X, Sparkles, Image as ImageIcon, Upload, Trash2 } from 'lucide-react'
+import { compressImage } from '../../lib/imageCompressor'
 
 const SUGGESTED_TAGS = [
   'Yashil Makon',
@@ -14,9 +15,11 @@ const SUGGESTED_TAGS = [
 ]
 
 export default function SlideEditorModal({ isOpen, onClose, onSave, editItem }) {
+  const fileInputRef = useRef(null)
   const [title, setTitle] = useState('')
   const [tag, setTag] = useState('Yashil Makon')
   const [image, setImage] = useState('')
+  const [isCompressing, setIsCompressing] = useState(false)
 
   useEffect(() => {
     if (editItem) {
@@ -30,7 +33,30 @@ export default function SlideEditorModal({ isOpen, onClose, onSave, editItem }) 
     }
   }, [editItem, isOpen])
 
-  if (!isOpen) return null
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [isOpen])
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    try {
+      setIsCompressing(true)
+      const compressed = await compressImage(file, 1200, 800, 0.75)
+      setImage(compressed)
+    } catch {
+      alert('Rasmni yuklashda xatolik yuz berdi. Iltimos, boshqa rasm tanlang.')
+    } finally {
+      setIsCompressing(false)
+    }
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -44,17 +70,21 @@ export default function SlideEditorModal({ isOpen, onClose, onSave, editItem }) 
     onClose()
   }
 
+  // Remove early return, AnimatePresence needs it
+  // if (!isOpen) return null
+
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm overflow-y-auto">
+      {isOpen && (
+      <div className="fixed inset-0 z-[100] bg-white dark:bg-zinc-950 flex flex-col overflow-hidden">
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative my-8 w-full max-w-lg rounded-3xl border border-zinc-200 bg-white p-6 shadow-2xl dark:border-zinc-800 dark:bg-zinc-950 sm:p-8"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 50 }}
+          className="flex flex-col h-full w-full relative"
         >
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-zinc-100 pb-4 dark:border-zinc-800">
+          <div className="flex-shrink-0 flex items-center justify-between border-b border-zinc-200/80 bg-white/85 px-6 py-4 backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-900/85 z-20">
             <div className="flex items-center gap-2">
               <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">
                 <Sparkles size={18} />
@@ -71,14 +101,16 @@ export default function SlideEditorModal({ isOpen, onClose, onSave, editItem }) 
             <button
               type="button"
               onClick={onClose}
-              className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-100 text-zinc-500 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 text-zinc-500 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700 cursor-pointer"
             >
               <X size={16} />
             </button>
           </div>
 
-          <form onSubmit={handleSubmit} className="mt-5 space-y-4">
-            {/* Title */}
+          <form onSubmit={handleSubmit} className="flex-1 flex flex-col overflow-hidden w-full relative">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 w-full">
+              <div className="max-w-3xl mx-auto space-y-5">
+                {/* Title */}
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-300 mb-1">
                 Qisqa va Aniq Sarlavha *
@@ -125,25 +157,92 @@ export default function SlideEditorModal({ isOpen, onClose, onSave, editItem }) 
               </div>
             </div>
 
-            {/* Image URL */}
-            <div>
-              <div className="flex items-center justify-between mb-1">
-                <label className="block text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-300">
-                  Rasm URL yoki Fayl Havolasi *
+            {/* Image URL & Computer Upload */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <label className="block text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-300 flex items-center gap-1.5">
+                  <ImageIcon size={14} className="text-emerald-500" />
+                  Slayd Rasmi *
                 </label>
-                <span className="text-[10px] text-zinc-500 font-medium">Masalan: /slide/photo_...jpg yoki https://</span>
+                <span className="text-[10px] text-zinc-500 font-medium">16:9 nisbat tavsiya etiladi</span>
               </div>
-              <input
-                type="text"
-                required
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-                placeholder="/slide/photo_...jpg yoki https://..."
-                className="w-full rounded-2xl border border-zinc-200 bg-zinc-50 px-4 py-2.5 text-xs text-zinc-900 outline-none focus:border-emerald-500 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100"
-              />
+
+              {/* Live Image Preview */}
+              <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border-2 border-dashed border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-950 shadow-inner group">
+                {image ? (
+                  <>
+                    <img
+                      src={image}
+                      alt="Preview"
+                      className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                      onError={(e) => {
+                        e.currentTarget.src = ''
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-4 text-white">
+                      <span className="text-[10px] font-bold text-emerald-400">{tag}</span>
+                      <p className="text-sm font-bold truncate">{title || 'Sarlavha namoyishi'}</p>
+                    </div>
+                  </>
+                ) : (
+                  <div className="flex h-full w-full flex-col items-center justify-center p-4 text-center text-zinc-400">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-200/80 dark:bg-zinc-800 mb-2 text-zinc-500">
+                      <ImageIcon size={24} />
+                    </div>
+                    <p className="text-xs font-bold text-zinc-700 dark:text-zinc-300">
+                      Hozircha slayd rasmi tanlanmagan
+                    </p>
+                    <p className="text-[11px] text-zinc-500 mt-0.5">
+                      Quyidagi tugma orqali kompyuterdan rasm yuklang yoki havolasini kiriting.
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Upload controls */}
+              <div className="flex flex-col sm:flex-row gap-2.5 items-center">
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  accept="image/*"
+                  onChange={handleFileUpload}
+                  className="hidden"
+                />
+                <button
+                  type="button"
+                  disabled={isCompressing}
+                  onClick={() => fileInputRef.current?.click()}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-zinc-900 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-950 dark:hover:bg-white transition-all shrink-0 cursor-pointer shadow-sm disabled:opacity-50"
+                >
+                  <Upload size={14} />
+                  <span>{isCompressing ? 'Yuklanmoqda...' : 'Kompyuterdan Rasm Yuklash'}</span>
+                </button>
+
+                <div className="relative w-full">
+                  <input
+                    type="text"
+                    required
+                    value={image}
+                    onChange={(e) => setImage(e.target.value)}
+                    placeholder="/slide/...jpg yoki https://..."
+                    className="w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-xs text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-emerald-500 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+                  />
+                </div>
+
+                {image && (
+                  <button
+                    type="button"
+                    onClick={() => setImage('')}
+                    title="Rasmni tozalash"
+                    className="rounded-xl border border-zinc-300 p-2.5 text-zinc-500 hover:bg-rose-50 hover:text-rose-600 dark:border-zinc-700 dark:hover:bg-rose-950/40 dark:hover:text-rose-400 transition cursor-pointer"
+                  >
+                    <Trash2 size={15} />
+                  </button>
+                )}
+              </div>
 
               {/* Quick Slide Image Presets */}
-              <div className="mt-2 flex flex-wrap items-center gap-1.5">
+              <div className="flex flex-wrap items-center gap-1.5 pt-1">
                 <span className="text-[10px] font-semibold text-zinc-500">Slide papkasi rasmlari:</span>
                 {[
                   { label: 'Forum & Taqdirlash', url: '/slide/photo_2026-08-19_17-46-57.jpg' },
@@ -158,7 +257,7 @@ export default function SlideEditorModal({ isOpen, onClose, onSave, editItem }) 
                     key={preset.label}
                     type="button"
                     onClick={() => setImage(preset.url)}
-                    className="rounded-full border border-zinc-200/90 bg-zinc-100 px-2.5 py-0.5 text-[10px] font-medium text-zinc-600 transition-colors hover:border-emerald-500 hover:bg-emerald-50 hover:text-emerald-700 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:border-emerald-500/50 dark:hover:bg-emerald-950/40 dark:hover:text-emerald-300"
+                    className="rounded-full border border-zinc-200/90 bg-zinc-100 px-2.5 py-0.5 text-[10px] font-medium text-zinc-600 transition-colors hover:border-emerald-500 hover:bg-emerald-50 hover:text-emerald-700 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:border-emerald-500/50 dark:hover:bg-emerald-950/40 dark:hover:text-emerald-300 cursor-pointer"
                   >
                     + {preset.label}
                   </button>
@@ -166,29 +265,11 @@ export default function SlideEditorModal({ isOpen, onClose, onSave, editItem }) 
               </div>
             </div>
 
-            {/* Live Image Preview */}
-            {image && (
-              <div>
-                <p className="text-[11px] font-bold text-zinc-500 mb-1">Rasm Preview:</p>
-                <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-950">
-                  <img
-                    src={image}
-                    alt="Preview"
-                    className="h-full w-full object-cover object-center"
-                    onError={(e) => {
-                      e.currentTarget.src = ''
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-4 text-white">
-                    <span className="text-[10px] font-bold text-emerald-400">{tag}</span>
-                    <p className="text-sm font-bold truncate">{title || 'Sarlavha namoyishi'}</p>
-                  </div>
-                </div>
               </div>
-            )}
+            </div>
 
             {/* Action Buttons */}
-            <div className="flex items-center justify-end gap-3 pt-4 border-t border-zinc-100 dark:border-zinc-800">
+            <div className="flex-shrink-0 flex items-center justify-end gap-3 p-4 sm:px-6 border-t border-zinc-200/80 bg-white dark:bg-zinc-950 dark:border-zinc-800 z-20">
               <button
                 type="button"
                 onClick={onClose}
@@ -198,7 +279,8 @@ export default function SlideEditorModal({ isOpen, onClose, onSave, editItem }) 
               </button>
               <button
                 type="submit"
-                className="rounded-2xl bg-emerald-500 px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-zinc-950 hover:bg-emerald-400 shadow-md transition cursor-pointer"
+                disabled={isCompressing}
+                className="rounded-2xl bg-emerald-500 px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-zinc-950 hover:bg-emerald-400 shadow-md transition cursor-pointer disabled:opacity-50"
               >
                 {editItem ? 'O‘zgarishlarni Saqlash' : 'Slaydni Saqlash'}
               </button>
@@ -206,6 +288,7 @@ export default function SlideEditorModal({ isOpen, onClose, onSave, editItem }) 
           </form>
         </motion.div>
       </div>
+      )}
     </AnimatePresence>
   )
 }

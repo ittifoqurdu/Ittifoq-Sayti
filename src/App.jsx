@@ -21,6 +21,7 @@ import NewsListPage from './components/pages/NewsListPage'
 import AdminPage from './components/pages/AdminPage'
 import TuzilmaPage from './components/pages/TuzilmaPage'
 import KlublarPage from './components/pages/KlublarPage'
+import ClubDetailPage from './components/pages/ClubDetailPage'
 import ContactPage from './components/pages/ContactPage'
 import { NewsProvider } from './context/NewsContext'
 
@@ -124,7 +125,12 @@ function App() {
         description:
           'Urganch davlat universiteti Yoshlar ittifoqi boshlang‘ich tashkiloti yetakchilari, boshqaruv va fakultet koordinatorlari.',
       }
-    } else if (normalizedPath === '/klublar' || normalizedPath === '/yonalishlar') {
+    } else if (
+      normalizedPath === '/klublar' ||
+      normalizedPath === '/yonalishlar' ||
+      normalizedPath.startsWith('/klublar/') ||
+      normalizedPath.startsWith('/yonalishlar/')
+    ) {
       seo = {
         ...seo,
         title: `Klublar va To‘garaklar | ${profile.brand}`,
@@ -209,7 +215,9 @@ function App() {
                 <Route path="/tuzilma" element={<TuzilmaPage />} />
                 <Route path="/team" element={<TuzilmaPage />} />
                 <Route path="/klublar" element={<KlublarPage />} />
+                <Route path="/klublar/:id" element={<ClubDetailPage />} />
                 <Route path="/yonalishlar" element={<KlublarPage />} />
+                <Route path="/yonalishlar/:id" element={<ClubDetailPage />} />
                 <Route path="/boglanish" element={<ContactPage />} />
                 <Route path="/hamkorlik" element={<PartnershipsPage />} />
                 <Route path="/yangiliklar" element={<NewsListPage />} />

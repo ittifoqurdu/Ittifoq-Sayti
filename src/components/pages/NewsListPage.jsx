@@ -53,13 +53,12 @@ export default function NewsListPage() {
             <span className="font-semibold text-zinc-800 dark:text-zinc-200 truncate">Yangiliklar & Tadbirlar</span>
           </div>
 
-          <Link
-            to="/"
-            className="inline-flex items-center gap-1.5 rounded-full bg-zinc-200/80 px-3.5 py-1.5 text-xs font-semibold text-zinc-800 hover:bg-zinc-300 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 transition-colors shrink-0 shadow-sm"
-          >
-            <ArrowLeft size={13} />
-            <span>Bosh sahifaga qaytish</span>
-          </Link>
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-3 py-1 text-[11px] font-bold text-emerald-700 dark:text-emerald-300">
+              <Sparkles size={12} />
+              Matbuot Xizmati
+            </span>
+          </div>
         </div>
       </div>
 
