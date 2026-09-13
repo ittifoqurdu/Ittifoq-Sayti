@@ -595,12 +595,21 @@ export default function AdminDashboard() {
             </div>
 
             {/* Clubs Grid */}
-            <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {filteredClubs.map((club) => (
-                <div
-                  key={club.id}
-                  className="flex flex-col justify-between overflow-hidden rounded-3xl border border-zinc-200/90 bg-white/95 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/50 hover:shadow-xl dark:border-zinc-800 dark:bg-zinc-900/60"
-                >
+            {filteredClubs.length === 0 ? (
+              <div className="mt-8 rounded-3xl border border-dashed border-zinc-300 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/30 p-12 text-center">
+                <Compass size={36} className="mx-auto text-zinc-400 mb-3" />
+                <h3 className="text-base font-bold text-zinc-800 dark:text-zinc-200">Hozircha to‘garaklar qo‘shilmagan</h3>
+                <p className="mt-1.5 text-xs text-zinc-500 dark:text-zinc-400 max-w-md mx-auto">
+                  Barcha eski soxta to‘garaklar tozalandi. Yuqoridagi "Yangi To‘garak Qo‘shish" tugmasini bosib, o‘zingizning haqiqiy to‘garak va klublaringizni qo‘shishingiz mumkin.
+                </p>
+              </div>
+            ) : (
+              <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                {filteredClubs.map((club) => (
+                  <div
+                    key={club.id}
+                    className="flex flex-col justify-between overflow-hidden rounded-3xl border border-zinc-200/90 bg-white/95 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/50 hover:shadow-xl dark:border-zinc-800 dark:bg-zinc-900/60"
+                  >
                   <div>
                     {/* Club Banner Thumbnail */}
                     <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl bg-zinc-100 dark:bg-zinc-950 mb-4 border border-zinc-200/70 dark:border-zinc-800">
@@ -695,6 +704,7 @@ export default function AdminDashboard() {
                 </div>
               ))}
             </div>
+            )}
           </div>
         )}
 

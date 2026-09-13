@@ -33,14 +33,40 @@ export default function DirectionsSection() {
           Yo‘nalishlar va <span className="bg-gradient-to-r from-cyan-600 via-sky-600 to-indigo-600 bg-clip-text text-transparent dark:from-cyan-400 dark:via-sky-300 dark:to-indigo-400">Tashabbuslar</span>
         </h2>
         <p className="mx-auto mt-4 max-w-2xl text-base text-zinc-600 sm:text-lg dark:text-zinc-400">
-          Har bir talaba o‘zining iqtidori, kasbiy qiziqishi va yetakchilik salohiyatini kashf etishi uchun {list.length} ta asosiy yo‘nalish va to‘garaklar.
+          {list.length > 0
+            ? `Har bir talaba o‘zining iqtidori, kasbiy qiziqishi va yetakchilik salohiyatini kashf etishi uchun ${list.length} ta asosiy yo‘nalish va to‘garaklar.`
+            : 'Universitetimizda yangi o‘quv yili uchun talabalar klublari va to‘garaklar ro‘yxati shakllantirilmoqda.'}
         </p>
       </MotionDiv>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {list.map((dir) => {
-          const Icon = dir.icon || Compass
-          const highlights = Array.isArray(dir.highlights) ? dir.highlights : []
+      {list.length === 0 ? (
+        <div className="mx-auto max-w-lg text-center py-16 px-8 rounded-3xl border border-dashed border-zinc-300 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/30 backdrop-blur-md">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 mb-4">
+            <Compass size={28} />
+          </div>
+          <h3 className="text-xl font-bold text-zinc-800 dark:text-zinc-200">
+            Klublar va to‘garaklar tez orada eʼlon qilinadi
+          </h3>
+          <p className="mt-2.5 text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
+            Hozirda rasmiy klublar va to‘garaklar dasturi yangilanmoqda. Tez orada barcha qabul yo‘nalishlari va bot orqali aʼzo bo‘lish ochiladi!
+          </p>
+          <div className="mt-6">
+            <a
+              href={socialLinks.telegram || 'https://t.me/UrDU_Yoshlari_BT'}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-6 py-2.5 text-xs font-bold text-zinc-950 hover:bg-emerald-400 transition"
+            >
+              Kanalimizda kuzatib boring
+              <ArrowRight size={14} />
+            </a>
+          </div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {list.map((dir) => {
+            const Icon = dir.icon || Compass
+            const highlights = Array.isArray(dir.highlights) ? dir.highlights : []
           return (
             <MotionDiv
               key={dir.id}
@@ -141,6 +167,7 @@ export default function DirectionsSection() {
           )
         })}
       </div>
+      )}
     </MotionSection>
   )
 }

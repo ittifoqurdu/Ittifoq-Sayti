@@ -18,33 +18,14 @@ import {
 const NewsContext = createContext(null)
 
 const STORAGE_KEY = 'urdu_news_events_v2'
-const CLUBS_STORAGE_KEY = 'urdu_clubs_v2'
+const CLUBS_STORAGE_KEY = 'urdu_clubs_v4'
 const SLIDES_STORAGE_KEY = 'urdu_slides_v2'
 const AUTH_KEY = 'urdu_admin_authenticated'
 const PASSWORD_KEY = 'urdu_admin_password'
 const DEFAULT_PASSWORD = 'admin2026'
 
-const CLUB_BANNER_IMAGES = {
-  'science-education': 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=1200&auto=format&fit=crop&q=80',
-  'it-innovation': 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1200&auto=format&fit=crop&q=80',
-  'debate-intellect': 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&auto=format&fit=crop&q=80',
-  'volunteering': 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1200&auto=format&fit=crop&q=80',
-  'culture-art': 'https://images.unsplash.com/photo-1460723237483-7a6dc9d0b212?w=1200&auto=format&fit=crop&q=80',
-  'sports-health': 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=1200&auto=format&fit=crop&q=80',
-}
-
-// Default fallback clubs mapped from directionsData with banner images
-export const defaultClubsList = directionsData.map((d) => ({
-  id: d.id,
-  title: d.title,
-  subtitle: d.subtitle,
-  description: d.description,
-  category: 'Asosiy Yo‘nalish',
-  highlights: d.highlights || [],
-  image: CLUB_BANNER_IMAGES[d.id] || 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&auto=format&fit=crop&q=80',
-  color: d.color || '#38bdf8',
-  gradient: d.gradient || 'from-cyan-500/20 via-sky-500/10 to-transparent',
-}))
+// Soxta klublar olib tashlandi, faqat foydalanuvchi/admin o'zi kiritgan haqiqiy klublar ko'rsatiladi
+export const defaultClubsList = []
 
 // Real UrDU Yoshlar Ittifoqi slides from the slide folder
 export const defaultSlidesList = [
