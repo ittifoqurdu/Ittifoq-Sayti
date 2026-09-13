@@ -244,3 +244,248 @@ export async function deleteNewsFromSheet(id) {
     return { success: false, error: err.message }
   }
 }
+
+// ---------------------------------------------------------------------------
+// KLUBLAR VA TO‘GARAKLAR (Clubs & Student Initiatives)
+// ---------------------------------------------------------------------------
+
+export const GVIZ_KLUBLAR_URL =
+  `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=Klublar&headers=1`
+
+export async function fetchClubsFromSheet() {
+  try {
+    const res = await fetch(`${GVIZ_KLUBLAR_URL}&_t=${Date.now()}`, {
+      method: 'GET',
+      headers: { Accept: 'text/plain,application/json' },
+    })
+    if (res.ok) {
+      const text = await res.text()
+      const match = text.match(/google\.visualization\.Query\.setResponse\((.*)\);/s)
+      if (match && match[1]) {
+        const parsed = JSON.parse(match[1])
+        const rows = parsed?.table?.rows || []
+        if (rows.length > 0) {
+          const items = rows
+            .map((row) => {
+              const c = row.c || []
+              const getVal = (i) =>
+                i < c.length && c[i] && c[i].v !== null && c[i].v !== undefined ? c[i].v : ''
+              const id = String(getVal(0) || '').trim()
+              if (!id || id.toLowerCase() === 'id') return null
+              const title = String(getVal(1) || '').trim()
+              if (!title || title.toLowerCase() === 'title') return null
+
+              const subtitle = String(getVal(2) || '').trim()
+              const description = String(getVal(3) || '').trim()
+              const category = String(getVal(4) || 'To‘garak').trim()
+              const highlightsRaw = String(getVal(5) || '').trim()
+              const highlights = highlightsRaw
+                ? highlightsRaw.split(/[,;\n]+/).map((s) => s.trim()).filter(Boolean)
+                : []
+              const image = String(getVal(6) || '').trim()
+              const color = String(getVal(7) || '#38bdf8').trim()
+
+              return {
+                id,
+                title,
+                subtitle,
+                description,
+                category,
+                highlights,
+                image,
+                color,
+              }
+            })
+            .filter(Boolean)
+
+          if (items.length > 0) return items
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('Could not fetch clubs from Google Sheets:', err)
+  }
+  return null
+}
+
+export async function addClubToSheet(item) {
+  try {
+    await fetch(GOOGLE_SHEETS_API_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        type: 'klub_qoshish',
+        id: item.id,
+        title: item.title,
+        subtitle: item.subtitle || '',
+        description: item.description || '',
+        category: item.category || 'To‘garak',
+        highlights: Array.isArray(item.highlights) ? item.highlights.join(', ') : item.highlights || '',
+        image: item.image || '',
+        color: item.color || '#38bdf8',
+      }),
+    })
+    return { success: true }
+  } catch (err) {
+    console.error('Error adding club to Google Sheets:', err)
+    return { success: false, error: err.message }
+  }
+}
+
+export async function updateClubInSheet(item) {
+  try {
+    await fetch(GOOGLE_SHEETS_API_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        type: 'klub_tahrirlash',
+        id: item.id,
+        title: item.title,
+        subtitle: item.subtitle || '',
+        description: item.description || '',
+        category: item.category || 'To‘garak',
+        highlights: Array.isArray(item.highlights) ? item.highlights.join(', ') : item.highlights || '',
+        image: item.image || '',
+        color: item.color || '#38bdf8',
+      }),
+    })
+    return { success: true }
+  } catch (err) {
+    console.error('Error updating club in Google Sheets:', err)
+    return { success: false, error: err.message }
+  }
+}
+
+export async function deleteClubFromSheet(id) {
+  try {
+    await fetch(GOOGLE_SHEETS_API_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        type: 'klub_ochirish',
+        id,
+      }),
+    })
+    return { success: true }
+  } catch (err) {
+    console.error('Error deleting club from Google Sheets:', err)
+    return { success: false, error: err.message }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// BOSH SAHIFA SLIDE SHOW (Hero Slideshow)
+// ---------------------------------------------------------------------------
+
+export const GVIZ_SLIDESHOW_URL =
+  `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=Slideshow&headers=1`
+
+export async function fetchSlideshowFromSheet() {
+  try {
+    const res = await fetch(`${GVIZ_SLIDESHOW_URL}&_t=${Date.now()}`, {
+      method: 'GET',
+      headers: { Accept: 'text/plain,application/json' },
+    })
+    if (res.ok) {
+      const text = await res.text()
+      const match = text.match(/google\.visualization\.Query\.setResponse\((.*)\);/s)
+      if (match && match[1]) {
+        const parsed = JSON.parse(match[1])
+        const rows = parsed?.table?.rows || []
+        if (rows.length > 0) {
+          const items = rows
+            .map((row) => {
+              const c = row.c || []
+              const getVal = (i) =>
+                i < c.length && c[i] && c[i].v !== null && c[i].v !== undefined ? c[i].v : ''
+              const id = String(getVal(0) || '').trim()
+              if (!id || id.toLowerCase() === 'id') return null
+              const title = String(getVal(1) || '').trim()
+              if (!title || title.toLowerCase() === 'title') return null
+
+              const tag = String(getVal(2) || 'Yutuq').trim()
+              const image = String(getVal(3) || '').trim()
+
+              if (!image) return null
+
+              return {
+                id,
+                title,
+                tag,
+                image,
+              }
+            })
+            .filter(Boolean)
+
+          if (items.length > 0) return items
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('Could not fetch slideshow from Google Sheets:', err)
+  }
+  return null
+}
+
+export async function addSlideToSheet(item) {
+  try {
+    await fetch(GOOGLE_SHEETS_API_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        type: 'slide_qoshish',
+        id: item.id,
+        title: item.title,
+        tag: item.tag || 'Yutuq',
+        image: item.image,
+      }),
+    })
+    return { success: true }
+  } catch (err) {
+    console.error('Error adding slide to Google Sheets:', err)
+    return { success: false, error: err.message }
+  }
+}
+
+export async function updateSlideInSheet(item) {
+  try {
+    await fetch(GOOGLE_SHEETS_API_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        type: 'slide_tahrirlash',
+        id: item.id,
+        title: item.title,
+        tag: item.tag || 'Yutuq',
+        image: item.image,
+      }),
+    })
+    return { success: true }
+  } catch (err) {
+    console.error('Error updating slide in Google Sheets:', err)
+    return { success: false, error: err.message }
+  }
+}
+
+export async function deleteSlideFromSheet(id) {
+  try {
+    await fetch(GOOGLE_SHEETS_API_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        type: 'slide_ochirish',
+        id,
+      }),
+    })
+    return { success: true }
+  } catch (err) {
+    console.error('Error deleting slide from Google Sheets:', err)
+    return { success: false, error: err.message }
+  }
+}

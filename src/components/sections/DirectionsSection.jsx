@@ -1,12 +1,15 @@
 import { motion } from 'motion/react'
 import { CheckCircle2, Compass, ArrowRight } from 'lucide-react'
-import { directionsData } from '../../data/siteData'
+import { useNews, defaultClubsList } from '../../context/NewsContext'
 import { fadeUp, staggerContainer, fadeUpChild } from '../../lib/animations'
 
 const MotionSection = motion.section
 const MotionDiv = motion.div
 
 export default function DirectionsSection() {
+  const { clubsList } = useNews()
+  const list = clubsList && clubsList.length > 0 ? clubsList : defaultClubsList
+
   return (
     <MotionSection
       variants={staggerContainer}
@@ -28,37 +31,61 @@ export default function DirectionsSection() {
           Yo‘nalishlar va <span className="bg-gradient-to-r from-cyan-600 via-sky-600 to-indigo-600 bg-clip-text text-transparent dark:from-cyan-400 dark:via-sky-300 dark:to-indigo-400">Tashabbuslar</span>
         </h2>
         <p className="mx-auto mt-4 max-w-2xl text-base text-zinc-600 sm:text-lg dark:text-zinc-400">
-          Har bir talaba o‘zining iqtidori, kasbiy qiziqishi va yetakchilik salohiyatini kashf etishi uchun 6 ta asosiy yo‘nalish.
+          Har bir talaba o‘zining iqtidori, kasbiy qiziqishi va yetakchilik salohiyatini kashf etishi uchun {list.length} ta asosiy yo‘nalish va to‘garaklar.
         </p>
       </MotionDiv>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {directionsData.map((dir) => {
-          const Icon = dir.icon
+        {list.map((dir) => {
+          const Icon = dir.icon || Compass
+          const highlights = Array.isArray(dir.highlights) ? dir.highlights : []
           return (
             <MotionDiv
               key={dir.id}
               variants={fadeUpChild}
-              className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-zinc-200/80 bg-white/90 p-8 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-1.5 hover:border-zinc-300 hover:shadow-2xl sm:p-9 dark:border-zinc-800/80 dark:bg-zinc-900/40 dark:hover:border-zinc-700/80"
+              className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-zinc-200/80 bg-white/90 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-1.5 hover:border-zinc-300 hover:shadow-2xl dark:border-zinc-800/80 dark:bg-zinc-900/40 dark:hover:border-zinc-700/80"
             >
               {/* Dynamic top gradient bar */}
-              <div className={`pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${dir.gradient} opacity-40 transition-opacity duration-300 group-hover:opacity-100`} />
+              <div className={`pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${dir.gradient || 'from-cyan-500/20 via-sky-500/10 to-transparent'} opacity-40 transition-opacity duration-300 group-hover:opacity-100 z-10`} />
 
-              <div>
-                {/* Icon box */}
-                <div className="mb-6 flex items-center justify-between">
-                  <div
-                    className="flex h-14 w-14 items-center justify-center rounded-2xl border border-zinc-200/60 shadow-md backdrop-blur-md dark:border-white/10"
-                    style={{ backgroundColor: `${dir.color}15`, color: dir.color }}
-                  >
-                    <Icon size={28} />
+              {/* Banner Image */}
+              {(() => {
+                const bannerImg = dir.image || 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&auto=format&fit=crop&q=80'
+                return (
+                  <div className="relative aspect-[16/9] w-full overflow-hidden bg-zinc-100 dark:bg-zinc-950">
+                    <img
+                      src={bannerImg}
+                      alt={dir.title}
+                      className="h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-108"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.src = 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&auto=format&fit=crop&q=80'
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
+
+                    {/* Floating category badge inside banner */}
+                    <div className="absolute top-3.5 right-3.5 z-10">
+                      <span className="rounded-full bg-black/65 border border-white/20 px-3 py-1 text-[11px] font-bold text-white/90 backdrop-blur-md shadow-sm">
+                        {dir.category || 'To‘garak'}
+                      </span>
+                    </div>
+
+                    {/* Icon floating on bottom of banner */}
+                    <div className="absolute -bottom-5 left-6 z-10">
+                      <div
+                        className="flex h-12 w-12 items-center justify-center rounded-2xl border border-zinc-200/80 bg-white shadow-lg backdrop-blur-md dark:border-zinc-700 dark:bg-zinc-900"
+                        style={{ color: dir.color }}
+                      >
+                        <Icon size={24} />
+                      </div>
+                    </div>
                   </div>
-                  <span className="rounded-full border border-zinc-200 bg-zinc-100/90 px-3 py-1 text-[11px] font-semibold text-zinc-600 dark:border-zinc-800 dark:bg-zinc-900/90 dark:text-zinc-400">
-                    UrDU Kengashi
-                  </span>
-                </div>
+                )
+              })()}
 
-                <h3 className="text-xl font-bold tracking-tight text-zinc-900 group-hover:text-emerald-700 transition-colors dark:text-zinc-100 dark:group-hover:text-white">
+              <div className={`p-6 sm:p-7 ${dir.image ? 'pt-8' : ''}`}>
+                <h3 className="text-xl font-bold tracking-tight text-zinc-900 group-hover:text-cyan-600 transition-colors dark:text-zinc-100 dark:group-hover:text-cyan-400">
                   {dir.title}
                 </h3>
                 <p className="mt-1 text-xs font-semibold text-cyan-600 dark:text-cyan-400">
@@ -70,7 +97,7 @@ export default function DirectionsSection() {
 
                 {/* Highlights list */}
                 <div className="mt-6 space-y-2 border-t border-zinc-200/80 pt-4 dark:border-zinc-800/60">
-                  {dir.highlights.map((h) => (
+                  {highlights.map((h) => (
                     <div key={h} className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300">
                       <CheckCircle2 size={13} className="text-emerald-600 dark:text-emerald-400 shrink-0" />
                       <span>{h}</span>

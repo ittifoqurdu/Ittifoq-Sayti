@@ -157,7 +157,7 @@ export const koordinatorMembers = [
     badge: 'Besh Tashabbus Koordinatori',
     bio: "Prezidentimiz tashabbusi bilan ilgari surilgan 'Besh muhim tashabbus' doirasida universitet talaba-yoshlarining madaniyat, san'at, sport, axborot texnologiyalari va kitobxonlik loyihalarini muvofiqlashtirish hamda iqtidorlarini ro'yobga chiqarish.",
     avatar: '/assets/team/roshkajon_portrait.jpg',
-    email: 'ittifoqurdu@gmail.com',
+    email: 'oroskajon@gmail.com',
     telegram: 'https://t.me/Otaboyeva2006',
     telegramHandle: '@Otaboyeva2006',
     phone: '+998880922313',
