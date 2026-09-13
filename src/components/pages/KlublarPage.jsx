@@ -45,18 +45,18 @@ export default function KlublarPage() {
           <img
             src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=2000&q=85"
             alt="UrDU Talabalar Klublari"
-            className="h-full w-full object-cover object-center filter brightness-[0.4] contrast-[1.08] dark:brightness-[0.25]"
+            className="h-full w-full object-cover object-center filter brightness-[0.45] contrast-[1.05] dark:brightness-[0.3]"
           />
-          {/* Multi-layer Gradient Overlay for aesthetic depth */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#F5F0E8] via-zinc-950/70 to-zinc-950/90 dark:from-[#07090d] dark:via-black/75 dark:to-black/90" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-500/20 via-transparent to-transparent" />
+          {/* Crisp, deep cinematic overlay without foggy washouts */}
+          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/95 via-zinc-950/70 to-zinc-950/85" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-500/20 via-transparent to-transparent" />
         </div>
 
         {/* Content Container */}
         <div className="relative z-10 mx-auto max-w-[1320px] px-4 py-20 sm:px-7 sm:py-24 lg:py-28">
           <div className="max-w-3xl">
             {/* Top Badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-400/40 bg-cyan-500/15 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-cyan-300 backdrop-blur-md shadow-lg">
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/15 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-emerald-300 backdrop-blur-md shadow-lg">
               <Compass size={14} />
               Faoliyatimiz & Talabalar Klublari
             </div>
@@ -64,7 +64,7 @@ export default function KlublarPage() {
             {/* Hero Heading */}
             <h1 className="mt-5 text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.15]">
               Talabalar Klublari va{' '}
-              <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-300 bg-clip-text text-transparent">
                 Ijodiy To‘garaklar
               </span>
             </h1>
@@ -76,20 +76,20 @@ export default function KlublarPage() {
 
             {/* KPI Metric Badges on Banner */}
             <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-              <div className="rounded-2xl border border-white/15 bg-white/10 p-3.5 backdrop-blur-md text-center">
-                <p className="text-2xl font-black text-cyan-300">6+</p>
+              <div className="rounded-2xl border border-white/15 bg-black/40 p-3.5 backdrop-blur-md text-center">
+                <p className="text-2xl font-black text-emerald-400">6+</p>
                 <p className="text-[11px] font-semibold text-zinc-300 mt-0.5">Asosiy Yo‘nalish</p>
               </div>
-              <div className="rounded-2xl border border-white/15 bg-white/10 p-3.5 backdrop-blur-md text-center">
-                <p className="text-2xl font-black text-emerald-300">2,500+</p>
+              <div className="rounded-2xl border border-white/15 bg-black/40 p-3.5 backdrop-blur-md text-center">
+                <p className="text-2xl font-black text-teal-300">2,500+</p>
                 <p className="text-[11px] font-semibold text-zinc-300 mt-0.5">Faol Talabalar</p>
               </div>
-              <div className="rounded-2xl border border-white/15 bg-white/10 p-3.5 backdrop-blur-md text-center">
+              <div className="rounded-2xl border border-white/15 bg-black/40 p-3.5 backdrop-blur-md text-center">
                 <p className="text-2xl font-black text-amber-300">100%</p>
                 <p className="text-[11px] font-semibold text-zinc-300 mt-0.5">Bepul Aʼzolik</p>
               </div>
-              <div className="rounded-2xl border border-white/15 bg-white/10 p-3.5 backdrop-blur-md text-center">
-                <p className="text-2xl font-black text-purple-300">50+</p>
+              <div className="rounded-2xl border border-white/15 bg-black/40 p-3.5 backdrop-blur-md text-center">
+                <p className="text-2xl font-black text-emerald-300">50+</p>
                 <p className="text-[11px] font-semibold text-zinc-300 mt-0.5">Yillik Loyihalar</p>
               </div>
             </div>
@@ -98,7 +98,7 @@ export default function KlublarPage() {
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <a
                 href="#directions"
-                className="inline-flex items-center gap-2 rounded-full bg-cyan-500 px-6 py-3 text-xs font-bold uppercase tracking-wider text-zinc-950 shadow-xl shadow-cyan-500/25 transition-all hover:bg-cyan-400 hover:scale-[1.02] active:scale-95"
+                className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-6 py-3 text-xs font-bold uppercase tracking-wider text-zinc-950 shadow-xl shadow-emerald-500/25 transition-all hover:bg-emerald-400 hover:scale-[1.02] active:scale-95 cursor-pointer"
               >
                 <span>To‘garaklar Ro‘yxati</span>
                 <ArrowRight size={14} />
@@ -109,7 +109,7 @@ export default function KlublarPage() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3 text-xs font-semibold text-white backdrop-blur-md transition-all hover:bg-white/20 hover:border-white/30"
               >
-                <Send size={14} className="text-cyan-400" />
+                <Send size={14} className="text-emerald-400" />
                 <span>Telegram orqali aʼzo bo‘lish</span>
               </a>
             </div>

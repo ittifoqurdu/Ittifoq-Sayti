@@ -22,15 +22,15 @@ export default function DirectionsSection() {
       id="directions"
     >
       {/* Background decoration */}
-      <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-transparent dark:bg-blue-500/10 blur-[140px]" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-500/5 dark:bg-emerald-500/10 blur-[140px]" />
 
       <MotionDiv variants={fadeUp} className="mb-14 text-center">
-        <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 dark:text-cyan-300">
+        <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">
           <Compass size={14} />
           Faoliyatimiz & Klublar
         </div>
         <h2 className="mt-4 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl lg:text-5xl dark:text-zinc-100">
-          Yo‘nalishlar va <span className="bg-gradient-to-r from-cyan-600 via-sky-600 to-indigo-600 bg-clip-text text-transparent dark:from-cyan-400 dark:via-sky-300 dark:to-indigo-400">Tashabbuslar</span>
+          Yo‘nalishlar va <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600 bg-clip-text text-transparent dark:from-emerald-400 dark:via-teal-300 dark:to-emerald-400">Tashabbuslar</span>
         </h2>
         <p className="mx-auto mt-4 max-w-2xl text-base text-zinc-600 sm:text-lg dark:text-zinc-400">
           {list.length > 0
@@ -41,7 +41,7 @@ export default function DirectionsSection() {
 
       {list.length === 0 ? (
         <div className="mx-auto max-w-lg text-center py-16 px-8 rounded-3xl border border-dashed border-zinc-300 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/30 backdrop-blur-md">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 mb-4">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 mb-4">
             <Compass size={28} />
           </div>
           <h3 className="text-xl font-bold text-zinc-800 dark:text-zinc-200">
@@ -74,7 +74,7 @@ export default function DirectionsSection() {
               className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-zinc-200/80 bg-white/90 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-1.5 hover:border-zinc-300 hover:shadow-2xl dark:border-zinc-800/80 dark:bg-zinc-900/40 dark:hover:border-zinc-700/80"
             >
               {/* Dynamic top gradient bar */}
-              <div className={`pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${dir.gradient || 'from-cyan-500/20 via-sky-500/10 to-transparent'} opacity-40 transition-opacity duration-300 group-hover:opacity-100 z-10`} />
+              <div className={`pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${dir.gradient || 'from-emerald-500/30 via-teal-500/20 to-transparent'} opacity-40 transition-opacity duration-300 group-hover:opacity-100 z-10`} />
 
               {/* Banner Image */}
               {(() => {
@@ -114,10 +114,10 @@ export default function DirectionsSection() {
 
               <div className={`p-6 sm:p-7 ${dir.image ? 'pt-8' : ''} flex-1 flex flex-col justify-between`}>
                 <div>
-                  <h3 className="text-xl font-bold tracking-tight text-zinc-900 group-hover:text-cyan-600 transition-colors dark:text-zinc-100 dark:group-hover:text-cyan-400">
+                  <h3 className="text-xl font-bold tracking-tight text-zinc-900 group-hover:text-emerald-600 transition-colors dark:text-zinc-100 dark:group-hover:text-emerald-400">
                     {dir.title}
                   </h3>
-                  <p className="mt-1 text-xs font-semibold text-cyan-600 dark:text-cyan-400">
+                  <p className="mt-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
                     {dir.subtitle}
                   </p>
                   <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400 line-clamp-3">
@@ -134,7 +134,7 @@ export default function DirectionsSection() {
                         </div>
                       ))}
                       {highlights.length > 3 && (
-                        <p className="text-[11px] font-medium text-cyan-600 dark:text-cyan-400">
+                        <p className="text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
                           +{highlights.length - 3} ta qo‘shimcha imkoniyat
                         </p>
                       )}
@@ -157,7 +157,7 @@ export default function DirectionsSection() {
                   href={socialLinks.telegramBot || socialLinks.telegram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-600 hover:text-cyan-600 dark:text-zinc-400 dark:hover:text-cyan-400 transition-colors"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-600 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400 transition-colors"
                 >
                   <span>Safga qo‘shilish</span>
                   <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
