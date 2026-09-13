@@ -95,21 +95,22 @@ export default function KlublarPage() {
             </div>
 
             {/* CTAs */}
-            <div className="mt-8 flex flex-wrap items-center gap-4">
+            <div className="mt-8 flex flex-wrap items-center gap-3.5">
               <a
                 href="#directions"
-                className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-6 py-3 text-xs font-bold uppercase tracking-wider text-zinc-950 shadow-xl shadow-emerald-500/25 transition-all hover:bg-emerald-400 hover:scale-[1.02] active:scale-95 cursor-pointer"
+                className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-emerald-500 px-7 py-3.5 text-xs font-bold uppercase tracking-[0.16em] text-zinc-950 shadow-[0_12px_30px_rgba(16,185,129,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-emerald-400 hover:shadow-[0_16px_36px_rgba(16,185,129,0.45)] active:scale-95 cursor-pointer"
               >
                 <span>To‘garaklar Ro‘yxati</span>
-                <ArrowRight size={14} />
+                <ArrowRight size={15} className="transition-transform duration-200 group-hover:translate-x-1" />
               </a>
+
               <a
                 href={socialLinks.telegram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3 text-xs font-semibold text-white backdrop-blur-md transition-all hover:bg-white/20 hover:border-white/30"
+                className="group inline-flex items-center justify-center gap-2.5 rounded-full border border-zinc-700/80 bg-zinc-950/90 px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-100 shadow-[0_12px_30px_rgba(0,0,0,0.4)] backdrop-blur-xl transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-500/60 hover:bg-zinc-900 hover:text-emerald-300 active:scale-95"
               >
-                <Send size={14} className="text-emerald-400" />
+                <Send size={14} className="text-emerald-400 transition-transform duration-200 group-hover:scale-110" />
                 <span>Telegram orqali aʼzo bo‘lish</span>
               </a>
             </div>
