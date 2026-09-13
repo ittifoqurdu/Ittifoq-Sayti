@@ -18,7 +18,7 @@ import {
 const NewsContext = createContext(null)
 
 const STORAGE_KEY = 'urdu_news_events_v2'
-const CLUBS_STORAGE_KEY = 'urdu_clubs_v4'
+const CLUBS_STORAGE_KEY = 'urdu_clubs_v5'
 const SLIDES_STORAGE_KEY = 'urdu_slides_v2'
 const AUTH_KEY = 'urdu_admin_authenticated'
 const PASSWORD_KEY = 'urdu_admin_password'
