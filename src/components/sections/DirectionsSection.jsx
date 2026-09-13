@@ -27,15 +27,13 @@ export default function DirectionsSection() {
       <MotionDiv variants={fadeUp} className="mb-14 text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">
           <Compass size={14} />
-          Faoliyatimiz & Klublar
+          Talabalar Maydoni
         </div>
         <h2 className="mt-4 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl lg:text-5xl dark:text-zinc-100">
-          Yo‘nalishlar va <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600 bg-clip-text text-transparent dark:from-emerald-400 dark:via-teal-300 dark:to-emerald-400">Tashabbuslar</span>
+          To‘garaklar va <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600 bg-clip-text text-transparent dark:from-emerald-400 dark:via-teal-300 dark:to-emerald-400">Klublar</span>
         </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-base text-zinc-600 sm:text-lg dark:text-zinc-400">
-          {list.length > 0
-            ? `Har bir talaba o‘zining iqtidori, kasbiy qiziqishi va yetakchilik salohiyatini kashf etishi uchun ${list.length} ta asosiy yo‘nalish va to‘garaklar.`
-            : 'Universitetimizda yangi o‘quv yili uchun talabalar klublari va to‘garaklar ro‘yxati shakllantirilmoqda.'}
+        <p className="mx-auto mt-4 max-w-2xl text-base text-zinc-600 sm:text-lg dark:text-zinc-400 leading-relaxed">
+          O‘z iqtidoringizni kashf eting, yangi do‘stlar orttiring va yuksak marralar sari dadil qadam tashlang! Universitetimiz to‘garak va klublari — sizning yetakchilik, ilm-fan va yorqin kelajak sari boshlang‘ich parvoz maydoningizdir.
         </p>
       </MotionDiv>
 
