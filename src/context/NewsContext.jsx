@@ -18,11 +18,31 @@ import {
 const NewsContext = createContext(null)
 
 const STORAGE_KEY = 'urdu_news_events_v2'
-const CLUBS_STORAGE_KEY = 'urdu_clubs_v5'
+const CLUBS_STORAGE_KEY = 'urdu_clubs_v6'
+const DELETED_CLUBS_KEY = 'urdu_deleted_clubs_v2'
 const SLIDES_STORAGE_KEY = 'urdu_slides_v2'
 const AUTH_KEY = 'urdu_admin_authenticated'
 const PASSWORD_KEY = 'urdu_admin_password'
 const DEFAULT_PASSWORD = 'admin2026'
+
+const DUMMY_CLUB_IDS = new Set(['club-1', 'club-2'])
+const DUMMY_TITLES = ['ilm-fan va innovatsiyalar', 'it & raqamli texnologiyalar']
+
+function getDeletedClubIds() {
+  try {
+    const raw = localStorage.getItem(DELETED_CLUBS_KEY)
+    if (raw) return new Set(JSON.parse(raw))
+  } catch {}
+  return new Set()
+}
+
+function saveDeletedClubId(id) {
+  try {
+    const set = getDeletedClubIds()
+    set.add(id)
+    localStorage.setItem(DELETED_CLUBS_KEY, JSON.stringify(Array.from(set)))
+  } catch {}
+}
 
 // Soxta klublar olib tashlandi, faqat foydalanuvchi/admin o'zi kiritgan haqiqiy klublar ko'rsatiladi
 export const defaultClubsList = []
@@ -99,14 +119,17 @@ function filterValidNews(list) {
 
 function filterValidClubs(list) {
   if (!Array.isArray(list)) return []
-  return list.filter(
-    (item) =>
-      item &&
-      item.id &&
-      String(item.id).trim().toLowerCase() !== 'id' &&
-      item.title &&
-      String(item.title).trim().toLowerCase() !== 'title'
-  )
+  const deletedIds = getDeletedClubIds()
+  return list.filter((item) => {
+    if (!item || !item.id || !item.title) return false
+    const idStr = String(item.id).trim()
+    const titleLower = String(item.title).trim().toLowerCase()
+    if (idStr.toLowerCase() === 'id' || titleLower === 'title') return false
+    if (DUMMY_CLUB_IDS.has(idStr)) return false
+    if (DUMMY_TITLES.some((dt) => titleLower.includes(dt))) return false
+    if (deletedIds.has(idStr)) return false
+    return true
+  })
 }
 
 function filterValidSlides(list) {
@@ -141,11 +164,12 @@ export function NewsProvider({ children }) {
   // 2. Clubs state
   const [clubsList, setClubsList] = useState(() => {
     try {
-      const saved = localStorage.getItem(CLUBS_STORAGE_KEY)
+      const saved = localStorage.getItem(CLUBS_STORAGE_KEY) || localStorage.getItem('urdu_clubs_v5')
       if (saved) {
         const parsed = JSON.parse(saved)
         const valid = filterValidClubs(parsed)
-        if (valid.length > 0) return valid
+        localStorage.setItem(CLUBS_STORAGE_KEY, JSON.stringify(valid))
+        return valid
       }
     } catch {
       // Fallback
@@ -183,40 +207,52 @@ export function NewsProvider({ children }) {
   const syncFromSheet = useCallback(async () => {
     setIsSyncing(true)
     try {
-      // 1. Sync News
+      // 1. Sync News (Merge safely)
       const sheetNews = await fetchNewsFromSheet()
-      const validNews = filterValidNews(sheetNews)
-      if (validNews.length > 0) {
-        setNewsList(validNews)
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(validNews))
-        } catch {
-          // ignore
-        }
+      if (sheetNews && Array.isArray(sheetNews)) {
+        const validNews = filterValidNews(sheetNews)
+        setNewsList((prev) => {
+          const currentValid = filterValidNews(prev)
+          const sheetIds = new Set(validNews.map((n) => n.id))
+          const localOnly = currentValid.filter((n) => !sheetIds.has(n.id))
+          const merged = [...validNews, ...localOnly]
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(merged))
+          } catch {}
+          return merged
+        })
       }
 
-      // 2. Sync Clubs
+      // 2. Sync Clubs (Merge safely, filter dummy clubs)
       const sheetClubs = await fetchClubsFromSheet()
-      const validClubs = filterValidClubs(sheetClubs)
-      if (validClubs.length > 0) {
-        setClubsList(validClubs)
-        try {
-          localStorage.setItem(CLUBS_STORAGE_KEY, JSON.stringify(validClubs))
-        } catch {
-          // ignore
-        }
+      if (sheetClubs && Array.isArray(sheetClubs)) {
+        const validClubs = filterValidClubs(sheetClubs)
+        setClubsList((prev) => {
+          const currentValid = filterValidClubs(prev)
+          const sheetIds = new Set(validClubs.map((c) => c.id))
+          const localOnly = currentValid.filter((c) => !sheetIds.has(c.id))
+          const merged = [...validClubs, ...localOnly]
+          try {
+            localStorage.setItem(CLUBS_STORAGE_KEY, JSON.stringify(merged))
+          } catch {}
+          return merged
+        })
       }
 
-      // 3. Sync Slideshow
+      // 3. Sync Slideshow (Merge safely)
       const sheetSlides = await fetchSlideshowFromSheet()
-      const validSlides = filterValidSlides(sheetSlides)
-      if (validSlides.length > 0) {
-        setSlidesList(validSlides)
-        try {
-          localStorage.setItem(SLIDES_STORAGE_KEY, JSON.stringify(validSlides))
-        } catch {
-          // ignore
-        }
+      if (sheetSlides && Array.isArray(sheetSlides)) {
+        const validSlides = filterValidSlides(sheetSlides)
+        setSlidesList((prev) => {
+          const currentValid = filterValidSlides(prev)
+          const sheetIds = new Set(validSlides.map((s) => s.id))
+          const localOnly = currentValid.filter((s) => !sheetIds.has(s.id))
+          const merged = [...validSlides, ...localOnly]
+          try {
+            localStorage.setItem(SLIDES_STORAGE_KEY, JSON.stringify(merged))
+          } catch {}
+          return merged
+        })
       }
 
       setLastSynced(new Date())
@@ -224,6 +260,7 @@ export function NewsProvider({ children }) {
       setIsSyncing(false)
     }
   }, [])
+
 
   useEffect(() => {
     syncFromSheet()
@@ -311,23 +348,32 @@ export function NewsProvider({ children }) {
         createdAt: Date.now(),
       }
 
-      setNewsList((prev) => [newItem, ...prev.filter((n) => n.id !== id)])
-      await addNewsToSheet(newItem)
+      setNewsList((prev) => {
+        const next = [newItem, ...prev.filter((n) => n.id !== id)]
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
+        } catch (err) {
+          console.warn('LocalStorage save error:', err)
+        }
+        return next
+      })
 
-      setTimeout(() => {
-        syncFromSheet()
-      }, 1000)
+      try {
+        await addNewsToSheet(newItem)
+      } catch (err) {
+        console.warn('Could not sync news to sheet:', err)
+      }
 
       return newItem
     },
-    [syncFromSheet]
+    []
   )
 
   const updateNews = useCallback(
     async (id, updatedFields) => {
       let updatedItem = null
-      setNewsList((prev) =>
-        prev.map((item) => {
+      setNewsList((prev) => {
+        const next = prev.map((item) => {
           if (item.id === id) {
             updatedItem = {
               ...item,
@@ -338,26 +384,42 @@ export function NewsProvider({ children }) {
           }
           return item
         })
-      )
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
+        } catch (err) {
+          console.warn('LocalStorage save error:', err)
+        }
+        return next
+      })
       if (updatedItem) {
-        await updateNewsInSheet(updatedItem)
-        setTimeout(() => {
-          syncFromSheet()
-        }, 1000)
+        try {
+          await updateNewsInSheet(updatedItem)
+        } catch (err) {
+          console.warn('Could not update news in sheet:', err)
+        }
       }
     },
-    [syncFromSheet]
+    []
   )
 
   const deleteNews = useCallback(
     async (id) => {
-      setNewsList((prev) => prev.filter((item) => item.id !== id))
-      await deleteNewsFromSheet(id)
-      setTimeout(() => {
-        syncFromSheet()
-      }, 1000)
+      setNewsList((prev) => {
+        const next = prev.filter((item) => item.id !== id)
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
+        } catch (err) {
+          console.warn('LocalStorage save error:', err)
+        }
+        return next
+      })
+      try {
+        await deleteNewsFromSheet(id)
+      } catch (err) {
+        console.warn('Could not delete news from sheet:', err)
+      }
     },
-    [syncFromSheet]
+    []
   )
 
   const resetToDefaults = useCallback(() => {
@@ -399,50 +461,83 @@ export function NewsProvider({ children }) {
         createdAt: Date.now(),
       }
 
-      setClubsList((prev) => [...prev.filter((c) => c.id !== id), newClub])
-      await addClubToSheet(newClub)
-      setTimeout(() => syncFromSheet(), 1000)
+      setClubsList((prev) => {
+        const next = [newClub, ...prev.filter((c) => c.id !== id)]
+        try {
+          localStorage.setItem(CLUBS_STORAGE_KEY, JSON.stringify(next))
+        } catch (err) {
+          console.warn('LocalStorage save error:', err)
+        }
+        return next
+      })
+
+      // Sync to Google Sheets tab "Klublar" in background
+      try {
+        await addClubToSheet(newClub)
+      } catch (err) {
+        console.warn('Could not sync club to Google Sheets:', err)
+      }
       return newClub
     },
-    [syncFromSheet]
+    []
   )
 
   const updateClub = useCallback(
     async (id, updatedFields) => {
       let updated = null
-      setClubsList((prev) =>
-        prev.map((item) => {
+      setClubsList((prev) => {
+        const next = prev.map((item) => {
           if (item.id === id) {
             updated = { ...item, ...updatedFields, updatedAt: Date.now() }
             return updated
           }
           return item
         })
-      )
+        try {
+          localStorage.setItem(CLUBS_STORAGE_KEY, JSON.stringify(next))
+        } catch (err) {
+          console.warn('LocalStorage save error:', err)
+        }
+        return next
+      })
       if (updated) {
-        await updateClubInSheet(updated)
-        setTimeout(() => syncFromSheet(), 1000)
+        try {
+          await updateClubInSheet(updated)
+        } catch (err) {
+          console.warn('Could not update club in Google Sheets:', err)
+        }
       }
     },
-    [syncFromSheet]
+    []
   )
 
   const deleteClub = useCallback(
     async (id) => {
-      setClubsList((prev) => prev.filter((item) => item.id !== id))
-      await deleteClubFromSheet(id)
-      setTimeout(() => syncFromSheet(), 1000)
+      saveDeletedClubId(id)
+      setClubsList((prev) => {
+        const next = prev.filter((item) => item.id !== id)
+        try {
+          localStorage.setItem(CLUBS_STORAGE_KEY, JSON.stringify(next))
+        } catch (err) {
+          console.warn('LocalStorage save error:', err)
+        }
+        return next
+      })
+      try {
+        await deleteClubFromSheet(id)
+      } catch (err) {
+        console.warn('Could not delete club from Google Sheets:', err)
+      }
     },
-    [syncFromSheet]
+    []
   )
 
   const resetClubs = useCallback(() => {
-    setClubsList(defaultClubsList)
     try {
-      localStorage.setItem(CLUBS_STORAGE_KEY, JSON.stringify(defaultClubsList))
-    } catch {
-      // ignore
-    }
+      localStorage.removeItem(DELETED_CLUBS_KEY)
+      localStorage.setItem(CLUBS_STORAGE_KEY, JSON.stringify([]))
+    } catch {}
+    setClubsList([])
   }, [])
 
   // -------------------------------------------------------------------------
@@ -459,41 +554,73 @@ export function NewsProvider({ children }) {
         createdAt: Date.now(),
       }
 
-      setSlidesList((prev) => [...prev.filter((s) => s.id !== id), newSlide])
-      await addSlideToSheet(newSlide)
-      setTimeout(() => syncFromSheet(), 1000)
+      setSlidesList((prev) => {
+        const next = [...prev.filter((s) => s.id !== id), newSlide]
+        try {
+          localStorage.setItem(SLIDES_STORAGE_KEY, JSON.stringify(next))
+        } catch (err) {
+          console.warn('LocalStorage save error:', err)
+        }
+        return next
+      })
+
+      try {
+        await addSlideToSheet(newSlide)
+      } catch (err) {
+        console.warn('Could not sync slide to Google Sheets:', err)
+      }
       return newSlide
     },
-    [syncFromSheet]
+    []
   )
 
   const updateSlide = useCallback(
     async (id, updatedFields) => {
       let updated = null
-      setSlidesList((prev) =>
-        prev.map((item) => {
+      setSlidesList((prev) => {
+        const next = prev.map((item) => {
           if (item.id === id) {
             updated = { ...item, ...updatedFields, updatedAt: Date.now() }
             return updated
           }
           return item
         })
-      )
+        try {
+          localStorage.setItem(SLIDES_STORAGE_KEY, JSON.stringify(next))
+        } catch (err) {
+          console.warn('LocalStorage save error:', err)
+        }
+        return next
+      })
       if (updated) {
-        await updateSlideInSheet(updated)
-        setTimeout(() => syncFromSheet(), 1000)
+        try {
+          await updateSlideInSheet(updated)
+        } catch (err) {
+          console.warn('Could not update slide in Google Sheets:', err)
+        }
       }
     },
-    [syncFromSheet]
+    []
   )
 
   const deleteSlide = useCallback(
     async (id) => {
-      setSlidesList((prev) => prev.filter((item) => item.id !== id))
-      await deleteSlideFromSheet(id)
-      setTimeout(() => syncFromSheet(), 1000)
+      setSlidesList((prev) => {
+        const next = prev.filter((item) => item.id !== id)
+        try {
+          localStorage.setItem(SLIDES_STORAGE_KEY, JSON.stringify(next))
+        } catch (err) {
+          console.warn('LocalStorage save error:', err)
+        }
+        return next
+      })
+      try {
+        await deleteSlideFromSheet(id)
+      } catch (err) {
+        console.warn('Could not delete slide from Google Sheets:', err)
+      }
     },
-    [syncFromSheet]
+    []
   )
 
   const resetSlides = useCallback(() => {
@@ -504,6 +631,7 @@ export function NewsProvider({ children }) {
       // ignore
     }
   }, [])
+
 
   const value = {
     // News

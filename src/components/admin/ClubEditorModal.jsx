@@ -23,8 +23,12 @@ export default function ClubEditorModal({ isOpen, onClose, onSave, editItem }) {
   const [highlights, setHighlights] = useState(['', '', ''])
   const [image, setImage] = useState('')
   const [isCompressing, setIsCompressing] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
+  const [validationError, setValidationError] = useState('')
 
   useEffect(() => {
+    setValidationError('')
+    setIsSaving(false)
     if (editItem) {
       setTitle(editItem.title || '')
       setSubtitle(editItem.subtitle || '')
@@ -89,7 +93,8 @@ export default function ClubEditorModal({ isOpen, onClose, onSave, editItem }) {
 
     try {
       setIsCompressing(true)
-      const compressed = await compressImage(file, 1200, 800, 0.75)
+      setValidationError('')
+      const compressed = await compressImage(file, 800, 500, 0.68)
       setImage(compressed)
     } catch {
       alert('Rasmni yuklashda xatolik yuz berdi. Iltimos, boshqa rasm tanlang.')
@@ -98,25 +103,33 @@ export default function ClubEditorModal({ isOpen, onClose, onSave, editItem }) {
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!title.trim()) return
+    if (!title.trim()) {
+      setValidationError('Iltimos, klub yoki to‘garak nomini kiriting!')
+      return
+    }
 
-    onSave({
-      title: title.trim(),
-      subtitle: subtitle.trim(),
-      description: description.trim(),
-      category: category.trim(),
-      color,
-      gradient,
-      highlights: highlights.map((h) => h.trim()).filter(Boolean),
-      image: image.trim(),
-    })
-    onClose()
+    try {
+      setIsSaving(true)
+      setValidationError('')
+      await onSave({
+        title: title.trim(),
+        subtitle: subtitle.trim(),
+        description: description.trim(),
+        category: category.trim(),
+        color,
+        gradient,
+        highlights: highlights.map((h) => h.trim()).filter(Boolean),
+        image: image.trim(),
+      })
+      onClose()
+    } catch (err) {
+      setValidationError(err.message || 'Saqlashda xatolik yuz berdi')
+    } finally {
+      setIsSaving(false)
+    }
   }
-
-  // Remove early return, AnimatePresence needs it
-  // if (!isOpen) return null
 
   return (
     <AnimatePresence>
@@ -373,22 +386,30 @@ export default function ClubEditorModal({ isOpen, onClose, onSave, editItem }) {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex-shrink-0 flex items-center justify-end gap-3 p-4 sm:px-6 border-t border-zinc-200/80 bg-white dark:bg-zinc-950 dark:border-zinc-800 z-20">
-              <button
-                type="button"
-                onClick={onClose}
-                className="rounded-2xl border border-zinc-300 px-5 py-2.5 text-xs font-bold text-zinc-700 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800 transition cursor-pointer"
-              >
-                Bekor qilish
-              </button>
-              <button
-                type="submit"
-                disabled={isCompressing}
-                className="rounded-2xl bg-cyan-500 px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-zinc-950 hover:bg-cyan-400 shadow-md transition cursor-pointer disabled:opacity-50"
-              >
-                {editItem ? 'O‘zgarishlarni Saqlash' : 'Klubni Saqlash'}
-              </button>
+            <div className="flex-shrink-0 flex items-center justify-between gap-3 p-4 sm:px-6 border-t border-zinc-200/80 bg-white dark:bg-zinc-950 dark:border-zinc-800 z-20">
+              {validationError ? (
+                <p className="text-xs font-semibold text-rose-500">{validationError}</p>
+              ) : (
+                <span />
+              )}
+              <div className="flex items-center gap-2.5">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="rounded-2xl border border-zinc-300 px-5 py-2.5 text-xs font-bold text-zinc-700 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800 transition cursor-pointer"
+                >
+                  Bekor qilish
+                </button>
+                <button
+                  type="submit"
+                  disabled={isCompressing || isSaving}
+                  className="rounded-2xl bg-cyan-500 px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-zinc-950 hover:bg-cyan-400 shadow-md transition cursor-pointer disabled:opacity-50"
+                >
+                  {isSaving ? 'Saqlanmoqda...' : editItem ? 'O‘zgarishlarni Saqlash' : 'Klubni Saqlash'}
+                </button>
+              </div>
             </div>
+
           </form>
         </motion.div>
       </div>

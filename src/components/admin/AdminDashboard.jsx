@@ -156,12 +156,20 @@ export default function AdminDashboard() {
 
   // CLUBS HANDLERS
   const handleSaveClub = async (payload) => {
-    if (editingClub) {
-      await updateClub(editingClub.id, payload)
-      showToast('To‘garak yangilandi!')
-    } else {
-      await addClub(payload)
-      showToast('Yangi to‘garak qo‘shildi!')
+    try {
+      if (editingClub) {
+        await updateClub(editingClub.id, payload)
+        showToast('To‘garak muvaffaqiyatli yangilandi!')
+      } else {
+        await addClub(payload)
+        showToast('Yangi to‘garak muvaffaqiyatli saqlandi!')
+      }
+      setIsClubModalOpen(false)
+      setEditingClub(null)
+    } catch (err) {
+      console.error('Save club error:', err)
+      showToast('Xatolik: ' + (err.message || 'Saqlab bo‘lmadi'))
+      throw err
     }
   }
 
@@ -171,6 +179,7 @@ export default function AdminDashboard() {
       showToast('To‘garak o‘chirildi!')
     }
   }
+
 
   // SLIDE HANDLERS
   const handleSaveSlide = async (payload) => {

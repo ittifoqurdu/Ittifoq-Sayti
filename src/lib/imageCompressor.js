@@ -3,7 +3,7 @@
  * Resizes large images to fit within max dimensions and compresses to lightweight JPEG
  * Prevents Google Sheets cell quota issues (50,000 char limit) and ensures sub-second sync
  */
-export async function compressImage(file, maxWidth = 900, maxHeight = 700, quality = 0.72) {
+export async function compressImage(file, maxWidth = 800, maxHeight = 500, quality = 0.68) {
   return new Promise((resolve, reject) => {
     if (!file || !(file instanceof Blob)) {
       return reject(new Error('Yaroqsiz rasm fayli'))
@@ -36,9 +36,36 @@ export async function compressImage(file, maxWidth = 900, maxHeight = 700, quali
         // Fill background white for transparent PNGs converted to JPEG
         ctx.fillStyle = '#FFFFFF'
         ctx.fillRect(0, 0, width, height)
-
         ctx.drawImage(img, 0, 0, width, height)
-        const compressedBase64 = canvas.toDataURL('image/jpeg', quality)
+
+        let curQuality = quality
+        let compressedBase64 = canvas.toDataURL('image/jpeg', curQuality)
+
+        // Ensure string length is under 42,000 characters to safely fit in Google Sheets cell (<50,000) & LocalStorage
+        let attempts = 0
+        while (compressedBase64.length > 42000 && attempts < 4) {
+          attempts++
+          curQuality = Math.max(0.35, curQuality - 0.15)
+          // Also downscale canvas if still large
+          const tempCanvas = document.createElement('canvas')
+          const scale = 0.85
+          tempCanvas.width = Math.round(canvas.width * scale)
+          tempCanvas.height = Math.round(canvas.height * scale)
+          const tempCtx = tempCanvas.getContext('2d')
+          if (tempCtx) {
+            tempCtx.fillStyle = '#FFFFFF'
+            tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height)
+            tempCtx.drawImage(canvas, 0, 0, tempCanvas.width, tempCanvas.height)
+            compressedBase64 = tempCanvas.toDataURL('image/jpeg', curQuality)
+            canvas.width = tempCanvas.width
+            canvas.height = tempCanvas.height
+            const freshCtx = canvas.getContext('2d')
+            freshCtx?.drawImage(tempCanvas, 0, 0)
+          } else {
+            compressedBase64 = canvas.toDataURL('image/jpeg', curQuality)
+          }
+        }
+
         resolve(compressedBase64)
       }
       img.onerror = (err) => reject(err)
@@ -48,3 +75,4 @@ export async function compressImage(file, maxWidth = 900, maxHeight = 700, quali
     reader.readAsDataURL(file)
   })
 }
+
