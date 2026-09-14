@@ -17,7 +17,7 @@ const INITIAL_FORM = {
   message: '',
 }
 
-function FooterSection({ showContactForm = true } = {}) {
+function FooterSection({ showContactForm = true, isStandalone = false } = {}) {
   const { isDark } = useTheme()
   const [formValues, setFormValues] = useState(INITIAL_FORM)
   const [errors, setErrors] = useState({})
@@ -154,14 +154,21 @@ function FooterSection({ showContactForm = true } = {}) {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.15 }}
-      className="mx-auto flex w-full max-w-[1520px] flex-col justify-center px-4 py-16 pb-10 md:px-8 lg:py-24"
+      className={`mx-auto flex w-full max-w-[1520px] flex-col justify-center px-4 ${
+        isStandalone ? 'pt-4 pb-10 sm:pt-6' : 'py-16 pb-10 lg:py-24'
+      } md:px-8`}
       id="contact"
     >
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-zinc-300 to-transparent dark:via-zinc-800" />
+      {!isStandalone && (
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-zinc-300 to-transparent dark:via-zinc-800" />
+      )}
 
       {/* Call to Action Banner */}
       {showContactForm ? (
-        <MotionDiv variants={fadeUpChild} className="mt-20 flex flex-col items-center text-center">
+        <MotionDiv
+          variants={fadeUpChild}
+          className={`${isStandalone ? 'mt-4 sm:mt-6' : 'mt-20'} flex flex-col items-center text-center`}
+        >
           <div className="mb-6 flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-xs font-semibold tracking-widest text-emerald-700 dark:text-emerald-300">
             <Sparkles size={14} className="text-emerald-600 dark:text-emerald-400" />
             YOSHLAR BOSH QABULI

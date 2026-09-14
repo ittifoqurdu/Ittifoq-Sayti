@@ -1,14 +1,19 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Menu, X, Send, Sun, Moon } from 'lucide-react'
-import { navItems, profile } from '../../data/siteData'
+import { Sun, Moon, Menu, X } from 'lucide-react'
+import { profile } from '../../data/siteData'
 import { useTheme } from '../../context/ThemeContext'
-import NavPill from '../ui/NavPill'
-import Magnetic from '../ui/Magnetic'
 
 const MotionNav = motion.nav
-const HOME_SECTION = 'hero'
+
+const navItems = [
+  { label: 'Bosh sahifa', path: '/', id: 'hero' },
+  { label: 'Tuzilma', path: '/tuzilma', id: 'team' },
+  { label: 'To‘garaklar va klublar', path: '/klublar', id: 'directions' },
+  { label: 'Yangiliklar va tanlovlar', path: '/yangiliklar', id: 'news' },
+  { label: 'Aloqa', path: '/boglanish', id: 'contact' },
+]
 
 function HeaderNav() {
   const { isDark, toggleTheme } = useTheme()
@@ -18,7 +23,7 @@ function HeaderNav() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40)
+    const handleScroll = () => setScrolled(window.scrollY > 20)
     handleScroll()
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
@@ -27,7 +32,7 @@ function HeaderNav() {
   const getActiveId = useCallback(() => {
     const path = location.pathname
     if (path === '/tuzilma' || path === '/team') return 'team'
-    if (path === '/klublar' || path === '/yonalishlar') return 'directions'
+    if (path === '/klublar' || path === '/yonalishlar' || path.startsWith('/klublar/')) return 'directions'
     if (path.startsWith('/yangiliklar')) return 'news'
     if (path === '/boglanish') return 'contact'
     return 'hero'
@@ -44,187 +49,136 @@ function HeaderNav() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [location.pathname, navigate])
 
-  const handleNavClick = useCallback((item) => {
-    setMenuOpen(false)
-    const targetPath = item.path || (item.id === 'hero' ? '/' : `/${item.id}`)
-    if (location.pathname === targetPath) {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-      return
-    }
-    navigate(targetPath)
-  }, [location.pathname, navigate])
-
-  const handleContactClick = useCallback(() => {
-    setMenuOpen(false)
-    if (location.pathname === '/boglanish') {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-      return
-    }
-    navigate('/boglanish')
-  }, [location.pathname, navigate])
+  const handleNavClick = useCallback(
+    (item) => {
+      setMenuOpen(false)
+      const targetPath = item.path || (item.id === 'hero' ? '/' : `/${item.id}`)
+      if (location.pathname === targetPath) {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        return
+      }
+      navigate(targetPath)
+    },
+    [location.pathname, navigate]
+  )
 
   return (
     <header
-      className={`fixed inset-x-0 z-50 transition-all duration-300 ${scrolled ? 'top-3' : 'top-5'}`}
+      className={`fixed top-0 inset-x-0 z-50 w-full transition-all duration-200 bg-white/95 dark:bg-[#07090d]/95 backdrop-blur-md border-b border-zinc-200/90 dark:border-zinc-800/90 ${
+        scrolled ? 'shadow-md py-2 sm:py-2.5' : 'shadow-xs py-2.5 sm:py-3.5'
+      }`}
     >
-      <div className="mx-auto flex w-full max-w-[1320px] items-center justify-between px-4 md:px-7">
-        {/* Brand Logo */}
+      <div className="mx-auto flex w-full max-w-[1360px] items-center justify-between px-4 sm:px-6 lg:px-8">
+        {/* Brand Logo & Name */}
         <button
           type="button"
           onClick={handleLogoClick}
-          className="group inline-flex items-center gap-3 rounded-full border border-zinc-300/80 bg-white/90 px-4 py-2 text-sm font-bold text-zinc-900 shadow-[0_8px_30px_rgba(120,105,85,0.08)] backdrop-blur-xl transition hover:border-emerald-500/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 dark:border-zinc-700/80 dark:bg-zinc-950/90 dark:text-zinc-100 dark:shadow-[0_10px_40px_rgba(0,0,0,0.5)]"
+          className="group inline-flex items-center gap-2.5 sm:gap-3 text-left focus-visible:outline-none"
         >
           <img
             src={isDark ? '/img/logo-oq.png' : '/img/logo-oq1.png'}
             alt={profile.brand}
-            className="h-7 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+            className="h-8 sm:h-9 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
           />
-          <span className="hidden tracking-tight font-semibold sm:inline text-zinc-800 dark:text-zinc-200">
-            {profile.brand}
-          </span>
+          <div className="flex flex-col">
+            <span className="text-xs sm:text-sm font-bold tracking-tight text-zinc-900 dark:text-zinc-100 uppercase leading-none">
+              UrDU Yoshlar Ittifoqi
+            </span>
+            <span className="hidden sm:block text-[10px] text-zinc-500 dark:text-zinc-400 font-medium tracking-wide mt-0.5">
+              Boshlang‘ich tashkiloti
+            </span>
+          </div>
         </button>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden items-center gap-1 rounded-full border border-zinc-300/80 bg-white/90 p-1.5 shadow-[0_8px_30px_rgba(120,105,85,0.08)] backdrop-blur-xl md:flex dark:border-zinc-700/80 dark:bg-zinc-950/85 dark:shadow-[0_10px_40px_rgba(0,0,0,0.5)]">
-          {navItems.map((item) => (
-            <Magnetic key={item.id}>
-              <NavPill
-                active={activeSection === item.id}
+        {/* Desktop Navigation Links (Text only, no icons) */}
+        <nav className="hidden md:flex items-center gap-1.5 xl:gap-3">
+          {navItems.map((item) => {
+            const isActive = activeSection === item.id
+            return (
+              <button
+                key={item.id}
+                type="button"
                 onClick={() => handleNavClick(item)}
-                isCurrent={activeSection === item.id}
+                className={`relative px-3 py-1.5 xl:px-4 xl:py-2 text-xs xl:text-[13.5px] transition-colors focus-visible:outline-none ${
+                  isActive
+                    ? 'text-[#0d613d] dark:text-emerald-400 font-bold'
+                    : 'text-zinc-700 hover:text-[#0d613d] dark:text-zinc-300 dark:hover:text-emerald-400 font-medium'
+                }`}
               >
-                {item.label}
-              </NavPill>
-            </Magnetic>
-          ))}
-
-          {/* Theme Toggle Button */}
-          <Magnetic>
-            <button
-              type="button"
-              onClick={toggleTheme}
-              aria-label={isDark ? "Kunduzgi rejimga o'tish (Qaymoq rang)" : "Kechki rejimga o'tish"}
-              title={isDark ? "Kunduzgi rejim (Qaymoq rang)" : "Kechki rejim"}
-              className="ml-1 inline-flex h-8 w-8 items-center justify-center rounded-full border border-zinc-300/80 bg-zinc-100/90 text-zinc-700 transition-all duration-300 hover:scale-105 hover:border-emerald-500/50 hover:bg-white hover:text-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 dark:border-zinc-700/80 dark:bg-zinc-900/90 dark:text-zinc-300 dark:hover:border-emerald-500/60 dark:hover:bg-zinc-800 dark:hover:text-emerald-300"
-            >
-              {isDark ? (
-                <Sun size={15} className="text-amber-400 transition-transform duration-300 hover:rotate-45" />
-              ) : (
-                <Moon size={15} className="text-emerald-700 transition-transform duration-300 hover:-rotate-12" />
-              )}
-            </button>
-          </Magnetic>
-
-          <Magnetic>
-            <button
-              type="button"
-              onClick={handleContactClick}
-              className={`ml-1.5 inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-all ${
-                activeSection === 'contact'
-                  ? 'border-emerald-500 bg-emerald-500 text-zinc-950 font-bold shadow-md'
-                  : 'border-emerald-500/30 bg-emerald-500/15 text-emerald-600 hover:border-emerald-500/60 hover:bg-emerald-500/25 hover:text-emerald-700 dark:text-emerald-300 dark:hover:text-white'
-              }`}
-            >
-              <Send size={12} />
-              Bog‘lanish
-            </button>
-          </Magnetic>
+                <span>{item.label}</span>
+                {isActive && (
+                  <span className="absolute -bottom-1.5 left-2 right-2 h-[2.5px] bg-[#0d613d] dark:bg-emerald-400 rounded-full" />
+                )}
+              </button>
+            )
+          })}
         </nav>
 
-        {/* Mobile Menu & Theme Triggers */}
-        <div className="flex items-center gap-2 md:hidden">
+        {/* Right Actions: Theme switch & Mobile menu toggle */}
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          {/* Theme Switcher */}
           <button
             type="button"
             onClick={toggleTheme}
-            aria-label={isDark ? "Kunduzgi rejimga o'tish (Qaymoq rang)" : "Kechki rejimga o'tish"}
-            title={isDark ? "Kunduzgi rejim (Qaymoq rang)" : "Kechki rejim"}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-zinc-300/80 bg-white/90 text-zinc-700 shadow-[0_8px_30px_rgba(120,105,85,0.08)] backdrop-blur-xl transition hover:text-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 dark:border-zinc-700/80 dark:bg-zinc-950/90 dark:text-zinc-200 dark:hover:text-zinc-100"
+            aria-label={isDark ? "Kunduzgi rejimga o'tish" : "Kechki rejimga o'tish"}
+            title={isDark ? 'Kunduzgi rejim' : 'Kechki rejim'}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-200/90 bg-zinc-50 text-zinc-700 transition hover:border-emerald-500/50 hover:bg-white hover:text-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 dark:border-zinc-800 dark:bg-zinc-900/90 dark:text-zinc-300 dark:hover:border-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-emerald-300"
           >
-            {isDark ? <Sun size={17} className="text-amber-400" /> : <Moon size={17} className="text-emerald-700" />}
+            {isDark ? (
+              <Sun size={16} className="text-amber-400" />
+            ) : (
+              <Moon size={16} className="text-emerald-700" />
+            )}
           </button>
 
+          {/* Mobile Menu Toggle Button */}
           <button
             type="button"
-            aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}
+            aria-label={menuOpen ? 'Menyuni yopish' : 'Menyuni ochish'}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((prev) => !prev)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-zinc-300/80 bg-white/90 text-zinc-700 shadow-[0_8px_30px_rgba(120,105,85,0.08)] backdrop-blur-xl transition hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 dark:border-zinc-700/80 dark:bg-zinc-950/90 dark:text-zinc-200 dark:hover:text-zinc-100"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-200/90 bg-zinc-50 text-zinc-700 transition hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 dark:border-zinc-800 dark:bg-zinc-900/90 dark:text-zinc-200 dark:hover:text-white md:hidden"
           >
-            {menuOpen ? <X size={16} /> : <Menu size={16} />}
+            {menuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </div>
 
       {/* Mobile Navigation Dropdown */}
       <AnimatePresence>
-        {menuOpen ? (
+        {menuOpen && (
           <MotionNav
             key="mobile-nav"
-            initial={{ opacity: 0, y: -14 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -14 }}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="mx-4 mt-3 rounded-3xl border border-zinc-300/80 bg-white/95 p-3.5 shadow-2xl backdrop-blur-2xl dark:border-zinc-700/80 dark:bg-zinc-950/95 md:hidden"
+            className="overflow-hidden border-t border-zinc-200/90 bg-white/98 shadow-xl backdrop-blur-2xl dark:border-zinc-800/90 dark:bg-[#07090d]/98 md:hidden"
           >
-            <ul className="grid gap-1.5">
-              {navItems.map((item) => (
-                <li key={item.id}>
+            <div className="mx-auto max-w-[1360px] px-4 py-4 space-y-1.5">
+              {navItems.map((item) => {
+                const isActive = activeSection === item.id
+                return (
                   <button
+                    key={item.id}
                     type="button"
                     onClick={() => handleNavClick(item)}
-                    className={`w-full rounded-2xl px-4 py-3 text-left text-sm font-semibold transition ${
-                      activeSection === item.id
-                        ? 'bg-emerald-500 text-zinc-950 shadow-md font-bold'
-                        : 'bg-zinc-100/90 text-zinc-700 hover:bg-zinc-200/80 hover:text-zinc-950 dark:bg-zinc-900/50 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-zinc-100'
+                    className={`flex w-full items-center rounded-xl px-4 py-3 text-left text-sm transition ${
+                      isActive
+                        ? 'text-[#0d613d] dark:text-emerald-400 font-bold border-l-4 border-[#0d613d] dark:border-emerald-400 pl-3 bg-zinc-50 dark:bg-zinc-900/40'
+                        : 'text-zinc-700 hover:bg-zinc-100/70 dark:text-zinc-300 dark:hover:bg-zinc-800/60 font-medium'
                     }`}
                   >
-                    {item.label}
+                    <span>{item.label}</span>
                   </button>
-                </li>
-              ))}
-
-              {/* Bog'lanish in Mobile Menu */}
-              <li>
-                <button
-                  type="button"
-                  onClick={handleContactClick}
-                  className={`w-full rounded-2xl px-4 py-3 text-left text-sm font-semibold transition flex items-center justify-between ${
-                    activeSection === 'contact'
-                      ? 'bg-emerald-500 text-zinc-950 shadow-md font-bold'
-                      : 'bg-emerald-500/15 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300'
-                  }`}
-                >
-                  <span className="flex items-center gap-2">
-                    <Send size={15} />
-                    Bog‘lanish
-                  </span>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                    Aloqa
-                  </span>
-                </button>
-              </li>
-
-              {/* Theme Toggle Row in Mobile Menu */}
-              <li className="mt-2 border-t border-zinc-200/80 pt-2 dark:border-zinc-800/80">
-                <button
-                  type="button"
-                  onClick={toggleTheme}
-                  className="flex w-full items-center justify-between rounded-2xl border border-zinc-200 bg-zinc-100/90 px-4 py-3 text-sm font-semibold text-zinc-800 dark:border-zinc-800 dark:bg-zinc-900/80 dark:text-zinc-200"
-                >
-                  <span className="flex items-center gap-2">
-                    {isDark ? <Sun size={16} className="text-amber-400" /> : <Moon size={16} className="text-emerald-600" />}
-                    <span>Rejim: {isDark ? 'Kechki (Asosiy)' : 'Kunduzgi (Qaymoq rang)'}</span>
-                  </span>
-                  <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">O‘zgartirish</span>
-                </button>
-              </li>
-            </ul>
+                )
+              })}
+            </div>
           </MotionNav>
-        ) : null}
+        )}
       </AnimatePresence>
     </header>
   )
 }
 
 export default HeaderNav
-

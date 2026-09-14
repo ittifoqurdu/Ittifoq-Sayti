@@ -292,7 +292,7 @@ export default function TeamSection() {
 
   return (
     <section
-      className="relative isolate mx-auto w-full max-w-[1340px] px-4 py-20 md:px-7 lg:py-28"
+      className="relative isolate mx-auto w-full max-w-[1340px] px-4 pt-6 pb-20 md:px-7 sm:pt-8 lg:pb-24"
       id="team"
     >
       {/* Background Glow */}

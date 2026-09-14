@@ -13,30 +13,7 @@ export default function KlublarPage() {
   }, [])
 
   return (
-    <div className="min-h-screen pt-20 sm:pt-24 bg-[#F5F0E8] dark:bg-[#07090d] text-zinc-900 dark:text-zinc-100 transition-colors duration-300">
-      {/* Top Breadcrumb Bar */}
-      <div className="border-b border-zinc-200/80 bg-white/60 backdrop-blur-md dark:border-zinc-800/80 dark:bg-zinc-900/40 relative z-20">
-        <div className="mx-auto flex max-w-[1320px] items-center justify-between gap-4 px-4 py-3.5 sm:px-7">
-          <div className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400 min-w-0">
-            <Link
-              to="/"
-              className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1 font-medium shrink-0"
-            >
-              <ArrowLeft size={14} />
-              Bosh sahifa
-            </Link>
-            <span className="shrink-0 text-zinc-400">/</span>
-            <span className="font-semibold text-zinc-800 dark:text-zinc-200 truncate">Klublar va To‘garaklar</span>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-3 py-1 text-[11px] font-bold text-emerald-700 dark:text-emerald-300">
-              <Sparkles size={12} />
-              Talabalar Markazi
-            </span>
-          </div>
-        </div>
-      </div>
+    <div className="min-h-screen pt-14 sm:pt-16 bg-[#F5F0E8] dark:bg-[#07090d] text-zinc-900 dark:text-zinc-100 transition-colors duration-300">
 
       {/* Grand Hero Banner with Image */}
       <section className="relative overflow-hidden border-b border-zinc-200/80 dark:border-zinc-800/80">
@@ -53,7 +30,7 @@ export default function KlublarPage() {
         </div>
 
         {/* Content Container */}
-        <div className="relative z-10 mx-auto max-w-[1320px] px-4 py-20 sm:px-7 sm:py-24 lg:py-28">
+        <div className="relative z-10 mx-auto max-w-[1320px] px-4 pt-8 sm:pt-12 pb-14 sm:px-7 sm:pb-16 lg:pt-12 lg:pb-20">
           <div className="max-w-3xl">
             {/* Top Badge */}
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/15 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-emerald-300 backdrop-blur-md shadow-lg">
