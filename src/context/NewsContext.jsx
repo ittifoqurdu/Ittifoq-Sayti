@@ -519,7 +519,14 @@ export function NewsProvider({ children }) {
   // -------------------------------------------------------------------------
   const addClub = useCallback(
     async (item) => {
-      const id = `club-${Date.now()}`
+      const catLower = String(item.category || '').toLowerCase()
+      const isTogarak =
+        catLower.includes('to‘garak') ||
+        catLower.includes('to\'garak') ||
+        catLower.includes('togarak') ||
+        catLower.includes('kurs')
+      const prefix = isTogarak ? 'togarak' : 'club'
+      const id = `${prefix}-${Date.now()}`
       const newClub = {
         id,
         title: item.title?.trim() || 'Yangi to‘garak',

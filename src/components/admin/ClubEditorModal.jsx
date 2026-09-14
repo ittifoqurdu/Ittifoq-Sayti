@@ -168,11 +168,50 @@ export default function ClubEditorModal({ isOpen, onClose, onSave, editItem }) {
           <form onSubmit={handleSubmit} className="flex-1 flex flex-col overflow-hidden w-full relative">
             <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 w-full">
               <div className="max-w-4xl mx-auto space-y-6">
+                {/* Turi (To'garak yoki Klub) */}
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-300 mb-2">
+                    Yo‘nalish Turi (To‘garak yoki Klub) *
+                  </label>
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setCategory('To‘garak')}
+                      className={`flex items-center justify-center gap-2.5 rounded-2xl border p-3.5 text-xs font-bold transition cursor-pointer ${
+                        category === 'To‘garak'
+                          ? 'border-cyan-500 bg-cyan-500/15 text-cyan-700 dark:text-cyan-300 ring-2 ring-cyan-500/30 shadow-sm'
+                          : 'border-zinc-200 bg-zinc-50 text-zinc-600 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400'
+                      }`}
+                    >
+                      <span className="text-base">🎨</span>
+                      <span>To‘garak / O‘quv Kursi</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setCategory('Klub')}
+                      className={`flex items-center justify-center gap-2.5 rounded-2xl border p-3.5 text-xs font-bold transition cursor-pointer ${
+                        category === 'Klub'
+                          ? 'border-cyan-500 bg-cyan-500/15 text-cyan-700 dark:text-cyan-300 ring-2 ring-cyan-500/30 shadow-sm'
+                          : 'border-zinc-200 bg-zinc-50 text-zinc-600 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400'
+                      }`}
+                    >
+                      <span className="text-base">🏛</span>
+                      <span>Universitet Klubi</span>
+                    </button>
+                  </div>
+                  <p className="text-[11px] text-zinc-500 mt-1.5">
+                    {category === 'To‘garak' 
+                      ? 'ℹ️ Botda "🎨 To‘garaklar" bo‘limida ko‘rinadi va arizalar qabul qilinadi.' 
+                      : 'ℹ️ Botda "🏛 Universitet klublari" bo‘limida ko‘rinadi.'}
+                  </p>
+                </div>
+
                 {/* Title */}
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-300 mb-1">
-                Klub / To‘garak Nomi *
-              </label>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-300 mb-1">
+                    Nomi *
+                  </label>
               <input
                 type="text"
                 required
