@@ -12,7 +12,6 @@ const navItems = [
   { label: 'Tuzilma', path: '/tuzilma', id: 'team' },
   { label: 'To‘garaklar va klublar', path: '/klublar', id: 'directions' },
   { label: 'Yangiliklar va tanlovlar', path: '/yangiliklar', id: 'news' },
-  { label: 'Aloqa', path: '/boglanish', id: 'contact' },
 ]
 
 function HeaderNav() {
@@ -62,6 +61,15 @@ function HeaderNav() {
     [location.pathname, navigate]
   )
 
+  const handleAloqaClick = useCallback(() => {
+    setMenuOpen(false)
+    if (location.pathname === '/boglanish') {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      return
+    }
+    navigate('/boglanish')
+  }, [location.pathname, navigate])
+
   return (
     <header
       className={`fixed top-0 inset-x-0 z-50 w-full transition-all duration-200 bg-white/95 dark:bg-[#07090d]/95 backdrop-blur-md border-b border-zinc-200/90 dark:border-zinc-800/90 ${
@@ -90,7 +98,7 @@ function HeaderNav() {
           </div>
         </button>
 
-        {/* Desktop Navigation Links (Text only, no icons) */}
+        {/* Desktop Navigation Links */}
         <nav className="hidden md:flex items-center gap-1.5 xl:gap-3">
           {navItems.map((item) => {
             const isActive = activeSection === item.id
@@ -114,8 +122,8 @@ function HeaderNav() {
           })}
         </nav>
 
-        {/* Right Actions: Theme switch & Mobile menu toggle */}
-        <div className="flex items-center gap-2 sm:gap-2.5">
+        {/* Right Actions: Theme Switcher, Green Aloqa Button, Mobile Menu Toggle */}
+        <div className="flex items-center gap-2 sm:gap-3">
           {/* Theme Switcher */}
           <button
             type="button"
@@ -129,6 +137,19 @@ function HeaderNav() {
             ) : (
               <Moon size={16} className="text-emerald-700" />
             )}
+          </button>
+
+          {/* Green Aloqa Button (Right of Theme Switcher) */}
+          <button
+            type="button"
+            onClick={handleAloqaClick}
+            className={`inline-flex items-center justify-center rounded-lg px-4 py-2 text-xs xl:text-[13px] font-bold text-white shadow-sm transition-all duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 ${
+              activeSection === 'contact'
+                ? 'bg-[#09472c] shadow-md ring-2 ring-emerald-400/60'
+                : 'bg-[#0d613d] hover:bg-[#09472c] hover:shadow-md'
+            }`}
+          >
+            Aloqa
           </button>
 
           {/* Mobile Menu Toggle Button */}
@@ -155,7 +176,7 @@ function HeaderNav() {
             transition={{ duration: 0.2, ease: 'easeOut' }}
             className="overflow-hidden border-t border-zinc-200/90 bg-white/98 shadow-xl backdrop-blur-2xl dark:border-zinc-800/90 dark:bg-[#07090d]/98 md:hidden"
           >
-            <div className="mx-auto max-w-[1360px] px-4 py-4 space-y-1.5">
+            <div className="mx-auto max-w-[1360px] px-4 py-4 space-y-2">
               {navItems.map((item) => {
                 const isActive = activeSection === item.id
                 return (
@@ -173,6 +194,20 @@ function HeaderNav() {
                   </button>
                 )
               })}
+
+              <div className="pt-2 border-t border-zinc-200/80 dark:border-zinc-800/80">
+                <button
+                  type="button"
+                  onClick={handleAloqaClick}
+                  className={`flex w-full items-center justify-center rounded-xl py-3 text-sm font-bold text-white transition ${
+                    activeSection === 'contact'
+                      ? 'bg-[#09472c] ring-2 ring-emerald-400/60'
+                      : 'bg-[#0d613d] hover:bg-[#09472c]'
+                  }`}
+                >
+                  Aloqa
+                </button>
+              </div>
             </div>
           </MotionNav>
         )}
