@@ -96,48 +96,94 @@ export async function sendTelegramPrivateMessage(chatId, text, photoUrl = '') {
   }
 }
 
+import { fetchBotUserIds } from './googleSheetsClient'
+
 /**
- * Send instant alert with exact image, subtitle and full description when a club is added
+ * Utility to delay execution to comply with Telegram API rate limits (30 msgs/sec)
  */
-export async function sendClubAlertToAdmin(club) {
-  const highlightsText =
-    Array.isArray(club.highlights) && club.highlights.length > 0
-      ? `\n✨ <b>Yo‘nalishlar:</b> ${club.highlights.join(' • ')}`
-      : ''
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-  const caption =
-    `🎯 <b>YANGI TO‘GARAK / KLUB QO‘SHILDI!</b>\n` +
-    `━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
-    `📌 <b>Nomi:</b> ${club.title || 'Nomsiz'}\n` +
-    (club.subtitle ? `🔹 <i>${club.subtitle}</i>\n` : '') +
-    `📂 <b>Kategoriya:</b> ${club.category || 'To‘garak'}\n` +
-    (club.description ? `\n📝 <b>Tavsif:</b>\n${club.description}\n` : '') +
-    highlightsText +
-    `\n\n🌐 <a href="${WEBSITE_URL}/klublar">Saytda to‘garaklar sahifasini ko‘rish ↗️</a>`
+/**
+ * Broadcast an announcement or news to ALL bot users in private chat (lichkaga)
+ */
+export async function broadcastNewsToAllBotUsers(news) {
+  try {
+    const userIds = await fetchBotUserIds()
+    console.log(`[Broadcast] Starting broadcast for news to ${userIds.length} bot users...`)
 
-  const promises = ADMIN_CHAT_IDS.map((id) =>
-    sendTelegramPrivateMessage(id, caption, club.image)
-  )
-  return Promise.allSettled(promises)
+    const caption =
+      `📢 <b>YANGI EʼLON / TANLOV SAYTDA EʼLON QILINDI!</b>\n` +
+      `━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+      `🏷️ <b>${news.badge || '📌 Muhim eʼlon'}</b>\n` +
+      `📌 <b>${news.title || 'Nomsiz eʼlon'}</b>\n\n` +
+      (news.summary ? `<i>${news.summary}</i>\n\n` : '') +
+      (news.content ? `📝 <b>Batafsil:</b>\n${news.content.substring(0, 300)}...\n\n` : '') +
+      (news.date ? `🗓️ <b>Sana:</b> ${news.date}\n` : '') +
+      `📂 <b>Rukn:</b> ${news.category || 'Umumiy'}\n\n` +
+      `🌐 <a href="${WEBSITE_URL}/yangiliklar">Saytda batafsil o‘qish ↗️</a>`
+
+    let sentCount = 0
+    for (const chatId of userIds) {
+      try {
+        const res = await sendTelegramPrivateMessage(chatId, caption, news.image)
+        if (res.success) sentCount++
+      } catch (err) {
+        console.warn(`[Broadcast] Could not send to user ${chatId}:`, err)
+      }
+      // 40ms pause between messages to adhere strictly to Telegram 30 msgs/sec flood limit
+      await delay(40)
+    }
+
+    console.log(`[Broadcast] Finished sending news to ${sentCount}/${userIds.length} users.`)
+    return { success: true, sentCount, total: userIds.length }
+  } catch (err) {
+    console.error('[Broadcast] Global error in broadcastNewsToAllBotUsers:', err)
+    return { success: false, error: err.message }
+  }
 }
 
 /**
- * Send instant alert with exact image and text when an announcement/news is published
+ * Broadcast a new course or club to ALL bot users in private chat (lichkaga)
  */
-export async function sendNewsAlertToAdmin(news) {
-  const caption =
-    `📢 <b>YANGI EʼLON / TANLOV SAYTDA EʼLON QILINDI!</b>\n` +
-    `━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
-    `🏷️ <b>${news.badge || '📌 Muhim eʼlon'}</b>\n` +
-    `📌 <b>${news.title || 'Nomsiz eʼlon'}</b>\n\n` +
-    (news.summary ? `<i>${news.summary}</i>\n\n` : '') +
-    (news.content ? `📝 <b>Batafsil:</b>\n${news.content.substring(0, 300)}...\n\n` : '') +
-    (news.date ? `🗓️ <b>Sana:</b> ${news.date}\n` : '') +
-    `📂 <b>Rukn:</b> ${news.category || 'Umumiy'}\n\n` +
-    `🌐 <a href="${WEBSITE_URL}/yangiliklar">Saytda batafsil o‘qish ↗️</a>`
+export async function broadcastClubToAllBotUsers(club) {
+  try {
+    const userIds = await fetchBotUserIds()
+    console.log(`[Broadcast] Starting broadcast for club/course to ${userIds.length} bot users...`)
 
-  const promises = ADMIN_CHAT_IDS.map((id) =>
-    sendTelegramPrivateMessage(id, caption, news.image)
-  )
-  return Promise.allSettled(promises)
+    const highlightsText =
+      Array.isArray(club.highlights) && club.highlights.length > 0
+        ? `\n✨ <b>Yo‘nalishlar:</b> ${club.highlights.join(' • ')}`
+        : ''
+
+    const caption =
+      `🎯 <b>YANGI TO‘GARAK / KURS EʼLON QILINDI!</b>\n` +
+      `━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+      `📌 <b>Nomi:</b> ${club.title || 'Nomsiz'}\n` +
+      (club.subtitle ? `🔹 <i>${club.subtitle}</i>\n` : '') +
+      `📂 <b>Kategoriya:</b> ${club.category || 'To‘garak'}\n` +
+      (club.description ? `\n📝 <b>Tavsif:</b>\n${club.description}\n` : '') +
+      highlightsText +
+      `\n\n🌐 <a href="${WEBSITE_URL}/klublar">Saytda to‘garaklar sahifasini ko‘rish ↗️</a>`
+
+    let sentCount = 0
+    for (const chatId of userIds) {
+      try {
+        const res = await sendTelegramPrivateMessage(chatId, caption, club.image)
+        if (res.success) sentCount++
+      } catch (err) {
+        console.warn(`[Broadcast] Could not send to user ${chatId}:`, err)
+      }
+      await delay(40)
+    }
+
+    console.log(`[Broadcast] Finished sending club/course to ${sentCount}/${userIds.length} users.`)
+    return { success: true, sentCount, total: userIds.length }
+  } catch (err) {
+    console.error('[Broadcast] Global error in broadcastClubToAllBotUsers:', err)
+    return { success: false, error: err.message }
+  }
 }
+
+// Backward-compatible alias functions
+export const sendNewsAlertToAdmin = broadcastNewsToAllBotUsers
+export const sendClubAlertToAdmin = broadcastClubToAllBotUsers

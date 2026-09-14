@@ -4,7 +4,7 @@ import { formatNewsDate, getCategoryFallbackImage } from './utils'
 export const SPREADSHEET_ID = '1uZuaLsSpWfMrpoRf_IU0xp1fzdxMDfYqurhpDTkjcXk'
 
 export const GOOGLE_SHEETS_API_URL =
-  'https://script.google.com/macros/s/AKfycbywv_9lVBi7HZ-xTe01qhJbIAtEVZrIV2z1YrkPnO7JUO-7fj2v-sf5X1Z7yY6MaiRx6A/exec'
+  'https://script.google.com/macros/s/AKfycbwTGekA-DmYPTDPbt7bGZpFpztPuuRz33d9w6rRurSumyNxROD5dsHhVEWfJMG_fOKKWw/exec'
 
 export const GOOGLE_SPREADSHEET_URL =
   `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/edit`
@@ -498,4 +498,43 @@ export async function deleteSlideFromSheet(id) {
     console.error('Error deleting slide from Google Sheets:', err)
     return { success: false, error: err.message }
   }
+}
+
+/**
+ * Fetch all registered Telegram bot user IDs from Google Sheet '👥 Foydalanuvchilar'
+ * Used for direct broadcasting (lichkaga xabar yuborish)
+ */
+export async function fetchBotUserIds() {
+  const fallbackAdmins = ['6956456422', '7768917422']
+  const userIdsSet = new Set(fallbackAdmins)
+
+  try {
+    const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent('👥 Foydalanuvchilar')}&headers=1&_t=${Date.now()}`
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: { Accept: 'text/plain,application/json' },
+    })
+
+    if (res.ok) {
+      const text = await res.text()
+      const match = text.match(/google\.visualization\.Query\.setResponse\((.*)\);/s)
+      if (match && match[1]) {
+        const parsed = JSON.parse(match[1])
+        const rows = parsed?.table?.rows || []
+        for (const row of rows) {
+          const rawId = row?.c?.[0]?.v
+          if (rawId) {
+            const cleanId = String(rawId).trim()
+            if (/^\d+$/.test(cleanId) && cleanId !== '11223344') { // Ignore mock test user
+              userIdsSet.add(cleanId)
+            }
+          }
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('Error fetching bot user IDs from Google Sheets:', err)
+  }
+
+  return Array.from(userIdsSet)
 }

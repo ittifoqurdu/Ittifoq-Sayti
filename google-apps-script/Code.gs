@@ -33,6 +33,45 @@ function doPost(e) {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
 
     // ------------------------------------------------------------------------
+    // 0. BOT FOYDALANUVCHILARI (👥 Foydalanuvchilar varag'i)
+    // ------------------------------------------------------------------------
+    if (actionType === "add_user" || actionType === "user") {
+      var userCols = [
+        "user_id", "full_name", "username", "phone", "faculty", "specialty", "role", "joined_at"
+      ];
+      var sheetUsers = getOrCreateSheet(ss, "👥 Foydalanuvchilar", userCols);
+      var now = Utilities.formatDate(new Date(), "Asia/Tashkent", "yyyy-MM-dd HH:mm:ss");
+      var userId = String(data.user_id || "");
+
+      if (userId) {
+        var rowIdx = findRowIndexById(sheetUsers, userId);
+        if (rowIdx !== -1) {
+          // Mavjud foydalanuvchi ma'lumotlarini yangilash
+          if (data.full_name) sheetUsers.getRange(rowIdx, 2).setValue(data.full_name);
+          if (data.username) sheetUsers.getRange(rowIdx, 3).setValue(data.username);
+          if (data.phone) sheetUsers.getRange(rowIdx, 4).setValue(data.phone);
+          if (data.faculty) sheetUsers.getRange(rowIdx, 5).setValue(data.faculty);
+          if (data.specialty) sheetUsers.getRange(rowIdx, 6).setValue(data.specialty);
+          return createJsonResponse({ result: "success", message: "Foydalanuvchi yangilandi", user_id: userId });
+        } else {
+          // Yangi foydalanuvchi qo'shish
+          sheetUsers.appendRow([
+            userId,
+            data.full_name || "",
+            data.username || "",
+            data.phone || "",
+            data.faculty || "",
+            data.specialty || "",
+            data.role || "user",
+            now
+          ]);
+          return createJsonResponse({ result: "success", message: "Foydalanuvchi ro'yxatga olindi", user_id: userId });
+        }
+      }
+      return createJsonResponse({ result: "error", message: "user_id ko'rsatilmagan" });
+    }
+
+    // ------------------------------------------------------------------------
     // 1. TALABALAR MUROJAATLARI
     // ------------------------------------------------------------------------
     if (actionType === "murojaat") {
