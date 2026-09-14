@@ -19,16 +19,38 @@ import { sendClubAlertToAdmin, sendNewsAlertToAdmin } from '../lib/telegramNotif
 const NewsContext = createContext(null)
 
 
-const STORAGE_KEY = 'urdu_news_events_v2'
-const CLUBS_STORAGE_KEY = 'urdu_clubs_v6'
-const DELETED_CLUBS_KEY = 'urdu_deleted_clubs_v2'
-const SLIDES_STORAGE_KEY = 'urdu_slides_v2'
+const STORAGE_KEY = 'urdu_news_events_v4'
+const CLUBS_STORAGE_KEY = 'urdu_clubs_v8'
+const DELETED_CLUBS_KEY = 'urdu_deleted_clubs_v3'
+const SLIDES_STORAGE_KEY = 'urdu_slides_v3'
 const AUTH_KEY = 'urdu_admin_authenticated'
 const PASSWORD_KEY = 'urdu_admin_password'
 const DEFAULT_PASSWORD = 'admin2026'
 
+// Avvalgi eski kesh xotirani tozalash (boshqa kompyuterlarda soxta ma'lumotlar chiqmasligi uchun)
+try {
+  ;[
+    'urdu_news_events_v1',
+    'urdu_news_events_v2',
+    'urdu_news_events_v3',
+    'urdu_clubs_v1',
+    'urdu_clubs_v2',
+    'urdu_clubs_v5',
+    'urdu_clubs_v6',
+    'urdu_clubs_v7',
+  ].forEach((k) => localStorage.removeItem(k))
+} catch {}
+
 const DUMMY_CLUB_IDS = new Set(['club-1', 'club-2'])
-const DUMMY_TITLES = ['ilm-fan va innovatsiyalar', 'it & raqamli texnologiyalar']
+const DUMMY_TITLES = ['ilm-fan va innovatsiyalar', 'it & raqamli texnologiyalar', 'durdimatov']
+const DUMMY_NEWS_IDS = new Set(['news-1', 'news-2', 'news-3', 'news-4', 'news-5'])
+const DUMMY_NEWS_TITLES = [
+  'zakovat intellektual olimpiadasi',
+  'urdu hackathon',
+  'talabalar bahori',
+  'oltin qanot',
+  'erasmus+',
+]
 
 function getDeletedClubIds() {
   try {
@@ -46,8 +68,69 @@ function saveDeletedClubId(id) {
   } catch {}
 }
 
-// Soxta klublar olib tashlandi, faqat foydalanuvchi/admin o'zi kiritgan haqiqiy klublar ko'rsatiladi
-export const defaultClubsList = []
+// Boshlang'ich klublar ro'yxati (Google Sheets bilan to'liq sinxron)
+export const defaultClubsList = [
+  {
+    id: 'club-zakovat',
+    title: 'Zakovat',
+    subtitle: "Intellektual o'yinlar va mantiqiy bellashuvlar",
+    description: "Zakovat intellektual o'yini, Breyn-ring, Erudit-kvartet va mantiqiy savol-javoblar bo'yicha talabalar jamoasi.",
+    category: 'Intellektual',
+    highlights: ['Universitet ligasi', 'Respublika bosqichi', 'Qimmatbaho sovrinlar'],
+    image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&auto=format&fit=crop&q=80',
+    color: '#3b82f6',
+  },
+  {
+    id: 'club-munozara',
+    title: 'Munozara',
+    subtitle: 'Notiqlik va parlament debat formati',
+    description: "Notiqlik san'ati, erkin fikrlash, dalillar bilan bahslashish va Karl Popper hamda Parlament debatlari.",
+    category: 'Notiqlik',
+    highlights: ['Debat turnirlari', 'Notiqlik mahorati', 'Xalqaro sertifikatlar'],
+    image: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=1200&auto=format&fit=crop&q=80',
+    color: '#8b5cf6',
+  },
+  {
+    id: 'club-sport',
+    title: 'Sport (futbol, basketbol, voleybol, tennis, shaxmat)',
+    subtitle: 'Futbol, basketbol, voleybol, tennis, shaxmat',
+    description: "Talabalar o'rtasida sog'lom turmush tarzi: futbol, basketbol, voleybol, stol tennisi va shaxmat to'garaklari.",
+    category: 'Sport',
+    highlights: ['Futbol', 'Basketbol', 'Voleybol', 'Stol tennisi', 'Shaxmat'],
+    image: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=1200&auto=format&fit=crop&q=80',
+    color: '#10b981',
+  },
+  {
+    id: 'club-qvz',
+    title: 'QVZ',
+    subtitle: 'Quvnoqlar va Zukkolar ligasi',
+    description: "Talabalar teatri, hazil-mutoyiba, QVZ oliy ligasi bellashuvlari va sahna ko'rinishlari.",
+    category: 'Ijodiy',
+    highlights: ['Universitet chempionati', 'Respublika QVZ festivali', 'Sahna mahorati'],
+    image: 'https://images.unsplash.com/photo-1514306191717-452ec28c7814?w=1200&auto=format&fit=crop&q=80',
+    color: '#f59e0b',
+  },
+  {
+    id: 'club-teatr',
+    title: 'Teatr',
+    subtitle: 'Talabalar teatr studiyasi',
+    description: 'Aktyorlik mahorati, sahna madaniyati, milliy va jahon dramaturgiyasi spektakllari hamda ijodiy chiqishlar.',
+    category: 'Madaniyat',
+    highlights: ['Talabalar teatr festivali', 'Sahna nutqi', 'Aktyorlik sirlari'],
+    image: 'https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=1200&auto=format&fit=crop&q=80',
+    color: '#ec4899',
+  },
+  {
+    id: 'club-smm',
+    title: 'SMM',
+    subtitle: 'Media, kontent yaratish va ijtimoiy tarmoqlar',
+    description: "Mobilografiya, video-montaj, target reklama, grafik dizayn va ijtimoiy tarmoqlarda sifatli media kontent tayyorlash to'garagi.",
+    category: 'Media',
+    highlights: ['Mobilografiya', 'Video-montaj', 'Grafik dizayn', 'Kopirayting'],
+    image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1200&auto=format&fit=crop&q=80',
+    color: '#06b6d4',
+  },
+]
 
 // Real UrDU Yoshlar Ittifoqi slides from the slide folder
 export const defaultSlidesList = [
@@ -109,14 +192,15 @@ export const defaultSlidesList = [
 
 function filterValidNews(list) {
   if (!Array.isArray(list)) return []
-  return list.filter(
-    (item) =>
-      item &&
-      item.id &&
-      String(item.id).trim().toLowerCase() !== 'id' &&
-      item.title &&
-      String(item.title).trim().toLowerCase() !== 'title'
-  )
+  return list.filter((item) => {
+    if (!item || !item.id || !item.title) return false
+    const idStr = String(item.id).trim()
+    const titleLower = String(item.title).trim().toLowerCase()
+    if (idStr.toLowerCase() === 'id' || titleLower === 'title') return false
+    if (DUMMY_NEWS_IDS.has(idStr)) return false
+    if (DUMMY_NEWS_TITLES && DUMMY_NEWS_TITLES.some((t) => titleLower.includes(t))) return false
+    return true
+  })
 }
 
 function filterValidClubs(list) {
@@ -148,10 +232,10 @@ function filterValidSlides(list) {
 }
 
 export function NewsProvider({ children }) {
-  // 1. News state
+  // 1. News state - Faqat Google Sheets ma'lumotlari
   const [newsList, setNewsList] = useState(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('urdu_news_events_v1')
+      const saved = localStorage.getItem(STORAGE_KEY)
       if (saved) {
         const parsed = JSON.parse(saved)
         const valid = filterValidNews(parsed)
@@ -160,23 +244,22 @@ export function NewsProvider({ children }) {
     } catch {
       // Fallback
     }
-    return defaultNewsEvents
+    return []
   })
 
-  // 2. Clubs state
+  // 2. Clubs state - Faqat Google Sheets ma'lumotlari
   const [clubsList, setClubsList] = useState(() => {
     try {
-      const saved = localStorage.getItem(CLUBS_STORAGE_KEY) || localStorage.getItem('urdu_clubs_v5')
+      const saved = localStorage.getItem(CLUBS_STORAGE_KEY)
       if (saved) {
         const parsed = JSON.parse(saved)
         const valid = filterValidClubs(parsed)
-        localStorage.setItem(CLUBS_STORAGE_KEY, JSON.stringify(valid))
-        return valid
+        if (valid.length > 0) return valid
       }
     } catch {
       // Fallback
     }
-    return defaultClubsList
+    return []
   })
 
   // 3. Slideshow state
@@ -205,56 +288,40 @@ export function NewsProvider({ children }) {
     }
   })
 
-  // Initial and on-demand background sync from Google Sheets
+  // Google Sheets bilan to'liq avtoritar sinxronizatsiya
   const syncFromSheet = useCallback(async () => {
     setIsSyncing(true)
     try {
-      // 1. Sync News (Merge safely)
+      // 1. Yangiliklarni Google Sheetsdan olish
       const sheetNews = await fetchNewsFromSheet()
       if (sheetNews && Array.isArray(sheetNews)) {
         const validNews = filterValidNews(sheetNews)
-        setNewsList((prev) => {
-          const currentValid = filterValidNews(prev)
-          const sheetIds = new Set(validNews.map((n) => n.id))
-          const localOnly = currentValid.filter((n) => !sheetIds.has(n.id))
-          const merged = [...validNews, ...localOnly]
-          try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(merged))
-          } catch {}
-          return merged
-        })
+        setNewsList(validNews)
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(validNews))
+        } catch {}
       }
 
-      // 2. Sync Clubs (Merge safely, filter dummy clubs)
+      // 2. Klublarni Google Sheetsdan olish
       const sheetClubs = await fetchClubsFromSheet()
       if (sheetClubs && Array.isArray(sheetClubs)) {
         const validClubs = filterValidClubs(sheetClubs)
-        setClubsList((prev) => {
-          const currentValid = filterValidClubs(prev)
-          const sheetIds = new Set(validClubs.map((c) => c.id))
-          const localOnly = currentValid.filter((c) => !sheetIds.has(c.id))
-          const merged = [...validClubs, ...localOnly]
-          try {
-            localStorage.setItem(CLUBS_STORAGE_KEY, JSON.stringify(merged))
-          } catch {}
-          return merged
-        })
+        setClubsList(validClubs)
+        try {
+          localStorage.setItem(CLUBS_STORAGE_KEY, JSON.stringify(validClubs))
+        } catch {}
       }
 
-      // 3. Sync Slideshow (Merge safely)
+      // 3. Slideshowni Google Sheetsdan olish
       const sheetSlides = await fetchSlideshowFromSheet()
-      if (sheetSlides && Array.isArray(sheetSlides)) {
+      if (sheetSlides && Array.isArray(sheetSlides) && sheetSlides.length > 0) {
         const validSlides = filterValidSlides(sheetSlides)
-        setSlidesList((prev) => {
-          const currentValid = filterValidSlides(prev)
-          const sheetIds = new Set(validSlides.map((s) => s.id))
-          const localOnly = currentValid.filter((s) => !sheetIds.has(s.id))
-          const merged = [...validSlides, ...localOnly]
+        if (validSlides.length > 0) {
+          setSlidesList(validSlides)
           try {
-            localStorage.setItem(SLIDES_STORAGE_KEY, JSON.stringify(merged))
+            localStorage.setItem(SLIDES_STORAGE_KEY, JSON.stringify(validSlides))
           } catch {}
-          return merged
-        })
+        }
       }
 
       setLastSynced(new Date())
@@ -262,7 +329,6 @@ export function NewsProvider({ children }) {
       setIsSyncing(false)
     }
   }, [])
-
 
   useEffect(() => {
     syncFromSheet()
@@ -431,13 +497,8 @@ export function NewsProvider({ children }) {
   )
 
   const resetToDefaults = useCallback(() => {
-    setNewsList(defaultNewsEvents)
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultNewsEvents))
-    } catch {
-      // Storage error
-    }
-  }, [])
+    syncFromSheet()
+  }, [syncFromSheet])
 
   const getNewsById = useCallback(
     (id) => {
@@ -689,7 +750,7 @@ export function useNews() {
   const context = useContext(NewsContext)
   if (!context) {
     return {
-      newsList: defaultNewsEvents,
+      newsList: [],
       clubsList: defaultClubsList,
       slidesList: defaultSlidesList,
       isSyncing: false,

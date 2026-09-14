@@ -298,22 +298,33 @@ function TopCardsSection() {
           </div>
 
           {/* Current News Slide */}
-          <div className="my-auto py-4">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentNews?.id || activeNewsIndex}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.32, ease: 'easeOut' }}
-                className="flex flex-col sm:flex-row gap-5 items-stretch"
-              >
-                {/* 1. Prominent News Image with Floating Tag/Badge */}
-                <Link
-                  to={`/yangiliklar/${currentNews?.id || 'news-1'}`}
-                  className="relative group w-full sm:w-44 md:w-52 h-44 sm:h-auto min-h-[165px] shrink-0 rounded-2xl overflow-hidden border border-zinc-200/80 dark:border-zinc-800/80 bg-zinc-100 dark:bg-zinc-900 shadow-sm block"
-                  aria-label={currentNews?.title || 'Yangilik rasmi'}
+          {newsEvents.length === 0 ? (
+            <div className="my-auto py-10 text-center">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 mb-3">
+                <Sparkles size={22} />
+              </div>
+              <p className="text-sm font-bold text-zinc-800 dark:text-zinc-200">Hozircha yangi eʼlonlar kiritilmagan</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 max-w-xs mx-auto">
+                Admin paneldan kiritilgan barcha yangilik va eʼlonlar bu yerda darhol aks etadi.
+              </p>
+            </div>
+          ) : (
+            <div className="my-auto py-4">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentNews?.id || activeNewsIndex}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.32, ease: 'easeOut' }}
+                  className="flex flex-col sm:flex-row gap-5 items-stretch"
                 >
+                  {/* 1. Prominent News Image with Floating Tag/Badge */}
+                  <Link
+                    to={`/yangiliklar/${currentNews?.id || 'news-1'}`}
+                    className="relative group w-full sm:w-44 md:w-52 h-44 sm:h-auto min-h-[165px] shrink-0 rounded-2xl overflow-hidden border border-zinc-200/80 dark:border-zinc-800/80 bg-zinc-100 dark:bg-zinc-900 shadow-sm block"
+                    aria-label={currentNews?.title || 'Yangilik rasmi'}
+                  >
                   <img
                     src={currentNews?.image || getCategoryFallbackImage(currentNews?.category)}
                     alt={currentNews?.title || 'Yangilik'}
@@ -393,6 +404,7 @@ function TopCardsSection() {
               </motion.div>
             </AnimatePresence>
           </div>
+          )}
 
           {/* Bottom Actions: Batafsil & Barcha yangiliklar */}
           <div className="flex flex-wrap items-center justify-between gap-3 border-t border-zinc-200/80 pt-4 dark:border-zinc-800">

@@ -4,8 +4,7 @@ import { formatNewsDate, getCategoryFallbackImage } from './utils'
 export const SPREADSHEET_ID = '1uZuaLsSpWfMrpoRf_IU0xp1fzdxMDfYqurhpDTkjcXk'
 
 export const GOOGLE_SHEETS_API_URL =
-  import.meta.env.VITE_GOOGLE_SHEETS_API_URL ||
-  'https://script.google.com/macros/s/AKfycbwgo_M_x-LyeNzPVouJYvIKuFijSZ-Rmv_wesNCRwbIH8lf2mnI1rGf-3NBrMJpQyB1/exec'
+  'https://script.google.com/macros/s/AKfycbywv_9lVBi7HZ-xTe01qhJbIAtEVZrIV2z1YrkPnO7JUO-7fj2v-sf5X1Z7yY6MaiRx6A/exec'
 
 export const GOOGLE_SPREADSHEET_URL =
   `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/edit`
@@ -76,7 +75,9 @@ export async function fetchNewsFromSheet() {
             // Newest added items to the sheet are at the bottom, so reverse to show newest first!
             return items.reverse()
           }
+          return []
         }
+        return []
       }
     }
   } catch (gvizErr) {
@@ -90,7 +91,7 @@ export async function fetchNewsFromSheet() {
     })
     if (!res.ok) throw new Error('Fetch failed')
     const data = await res.json()
-    if (Array.isArray(data) && data.length > 0) {
+    if (Array.isArray(data)) {
       return data
         .filter(
           (item) =>
@@ -113,10 +114,10 @@ export async function fetchNewsFromSheet() {
         }))
         .reverse()
     }
-    return null
+    return []
   } catch (err) {
-    console.warn('Could not load news from Google Sheets, using cached/default news:', err)
-    return null
+    console.warn('Could not load news from Google Sheets:', err)
+    return []
   }
 }
 
@@ -298,14 +299,16 @@ export async function fetchClubsFromSheet() {
             })
             .filter(Boolean)
 
-          if (items.length > 0) return items
+          if (items.length > 0) return items.reverse()
+          return []
         }
+        return []
       }
     }
   } catch (err) {
     console.warn('Could not fetch clubs from Google Sheets:', err)
   }
-  return null
+  return []
 }
 
 export async function addClubToSheet(item) {
