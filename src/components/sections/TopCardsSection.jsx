@@ -29,6 +29,7 @@ import { formatNewsDate, getCategoryFallbackImage } from '../../lib/utils'
 import { Globe } from '../ui/globe'
 import InternationalPartnersModal from '../ui/InternationalPartnersModal'
 import NewsDetailModal from '../ui/NewsDetailModal'
+import studentStats from '../../data/studentStats.json'
 
 const MotionSection = motion.section
 const EMAIL = profile.email
@@ -64,17 +65,6 @@ function TopCardsSection() {
     return () => window.clearTimeout(toastTimer)
   }, [copyToast])
 
-  const copyEmail = useCallback(async () => {
-    try {
-      if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(EMAIL)
-      }
-      setCopyToast('Email nusxalandi!')
-    } catch {
-      setCopyToast('Nusxalashda xatolik yuz berdi')
-    }
-  }, [])
-
   return (
     <MotionSection
       variants={fadeUp}
@@ -83,27 +73,29 @@ function TopCardsSection() {
       className="relative mx-auto flex w-full max-w-[1320px] flex-col justify-center px-4 py-16 md:px-7 lg:py-24"
       id="stats"
     >
-      {/* 3-Column Top Grid */}
-      <div className="grid gap-5 xl:grid-cols-[1fr_1.35fr_1fr]">
+      {/* 2-Column Expanded Top Grid */}
+      <div className="grid gap-5 lg:grid-cols-[380px_1fr] xl:grid-cols-[400px_1fr] items-stretch">
         {/* Card 1: UrDU Identity & Emblem */}
-        <article className="glass-card flex flex-col items-center py-8 text-center">
-          <div className="mb-4 flex h-24 w-24 items-center justify-center overflow-hidden rounded-2xl border-2 border-emerald-500/40 bg-white dark:bg-zinc-950 p-2 shadow-md">
-            <img
-              src="/img/logo2.png"
-              alt="Urganch Davlat Universiteti"
-              className="h-full w-full object-contain filter drop-shadow"
-              loading="eager"
-            />
+        <article className="glass-card flex flex-col items-center justify-between py-8 text-center">
+          <div className="flex flex-col items-center w-full">
+            <div className="mb-4 flex h-24 w-24 items-center justify-center overflow-hidden rounded-2xl border-2 border-emerald-500/40 bg-white dark:bg-zinc-950 p-2 shadow-md">
+              <img
+                src="/img/logo2.png"
+                alt="Urganch Davlat Universiteti"
+                className="h-full w-full object-contain filter drop-shadow"
+                loading="eager"
+              />
+            </div>
+            <h2 className="text-2xl font-bold leading-tight tracking-tight text-zinc-900 dark:text-zinc-100">
+              {profile.university}
+            </h2>
+            <p className="mt-2 text-xs uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400 font-semibold">
+              Tashkil topgan yili: {profile.foundedYear}
+            </p>
+            <p className="mt-1 text-[11px] uppercase tracking-[0.15em] text-zinc-500">
+              {profile.city.toUpperCase()}, O‘ZBEKISTON | {new Intl.DateTimeFormat('uz-UZ', { hour: '2-digit', minute: '2-digit', hour12: false }).format(now)}
+            </p>
           </div>
-          <h2 className="text-2xl font-bold leading-tight tracking-tight text-zinc-900 dark:text-zinc-100">
-            {profile.university}
-          </h2>
-          <p className="mt-2 text-xs uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400 font-semibold">
-            Tashkil topgan yili: {profile.foundedYear}
-          </p>
-          <p className="mt-1 text-[11px] uppercase tracking-[0.15em] text-zinc-500">
-            {profile.city.toUpperCase()}, O‘ZBEKISTON | {new Intl.DateTimeFormat('uz-UZ', { hour: '2-digit', minute: '2-digit', hour12: false }).format(now)}
-          </p>
 
           <div className="mt-6 w-full border-t border-zinc-200/80 dark:border-zinc-800/80 pt-5">
             <div className="flex justify-center gap-4 text-zinc-500 dark:text-zinc-400">
@@ -126,81 +118,133 @@ function TopCardsSection() {
           </div>
         </article>
 
-        {/* Card 2: Strategic Pillars & Youth Mission */}
-        <article className="glass-card relative overflow-hidden py-7">
+        {/* Card 2: Expanded Student Statistics Dashboard */}
+        <article className="glass-card relative overflow-hidden p-6 sm:p-8 flex flex-col justify-between">
           <div className="pointer-events-none absolute -left-1/2 -top-1/2 h-[200%] w-[200%] hidden dark:block bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.06)_0%,transparent_50%)]" />
-          <div className="mb-4 flex flex-wrap items-start justify-between gap-4">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-emerald-700 dark:text-emerald-300">
-              <Sparkles size={11} />
-              Yoshlar Harakati
-            </span>
-            <p className="text-[10px] uppercase tracking-[0.25em] text-zinc-400 dark:text-zinc-500">UrDU • 2026</p>
-          </div>
-          <h3 className="text-2xl font-extrabold leading-tight tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-3xl">
-            Iqtidor, Ilm va <span className="text-emerald-600 dark:text-emerald-400">Tashabbus</span>
-          </h3>
-          <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-            Universitetimiz talabalarining intellektual salohiyatini oshirish, ilm-fan olimpiadalari, respublika xakatonlari va ijtimoiy loyihalarda g‘oliblik sari yetaklaymiz.
-          </p>
-
-          {/* Mini Stats Bar */}
-          <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {universityStats.map((item) => (
-              <div key={item.label} className="rounded-2xl border border-zinc-200/80 bg-white/80 dark:border-zinc-800/80 dark:bg-zinc-950/60 p-3 text-center shadow-sm">
-                <p className="text-lg font-bold text-emerald-600 dark:text-emerald-300">{item.value}</p>
-                <p className="mt-0.5 text-[10px] text-zinc-600 dark:text-zinc-400 leading-snug">{item.label}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-6 flex flex-wrap gap-2">
-            {['12 ta Fakultet', 'Zakovat Ligasi', 'Oltin Qanot', 'IT Inkubator', 'Talabalar Bahori'].map((tag) => (
-              <span key={tag} className="rounded-full border border-zinc-200/80 bg-white/80 dark:border-zinc-800 dark:bg-zinc-900/80 px-3 py-1 text-[11px] font-medium text-zinc-700 dark:text-zinc-300 shadow-sm">
-                {tag}
+          
+          <div>
+            <div className="mb-4 flex flex-wrap items-start justify-between gap-4">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-emerald-700 dark:text-emerald-300">
+                <Sparkles size={11} />
+                Talabalar Kontingenti va Statistikasi
               </span>
-            ))}
+              <p className="text-[10px] uppercase tracking-[0.25em] text-zinc-400 dark:text-zinc-500">UrDU • 2026</p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
+              <h3 className="text-2xl font-extrabold leading-tight tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-3xl">
+                Iqtidor, Ilm va <span className="text-emerald-600 dark:text-emerald-400">Yoshlar Statistikasi</span>
+              </h3>
+              <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 w-fit">
+                {studentStats.totalStudents.toLocaleString()} nafar talaba
+              </span>
+            </div>
+
+            <p className="mt-2.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400 max-w-2xl">
+              Universitetimiz talabalarining umumiy soni, jinsi, ta'lim shakllari hamda fakultetlar kesimidagi tahliliy ko'rsatkichlari.
+            </p>
+
+            {/* Comprehensive Metrics Grid */}
+            <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {/* Jami talabalar */}
+              <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/5 p-3.5 shadow-sm">
+                <div className="flex items-center justify-between text-emerald-600 dark:text-emerald-400 mb-1">
+                  <span className="text-[10px] uppercase font-bold tracking-wider">Jami talabalar</span>
+                  <Users size={14} />
+                </div>
+                <p className="text-xl font-extrabold text-zinc-900 dark:text-zinc-100">
+                  {studentStats.totalStudents.toLocaleString()}
+                </p>
+                <p className="text-[10px] text-zinc-500 mt-0.5">Barcha kurslar</p>
+              </div>
+
+              {/* Qizlar soni */}
+              <div className="rounded-2xl border border-pink-500/30 bg-pink-500/5 p-3.5 shadow-sm">
+                <div className="flex items-center justify-between text-pink-600 dark:text-pink-400 mb-1">
+                  <span className="text-[10px] uppercase font-bold tracking-wider">Qizlar soni</span>
+                  <span className="text-[11px] font-bold">57.3%</span>
+                </div>
+                <p className="text-xl font-extrabold text-zinc-900 dark:text-zinc-100">
+                  {studentStats.girls.toLocaleString()}
+                </p>
+                <p className="text-[10px] text-zinc-500 mt-0.5">Talaba qizlar</p>
+              </div>
+
+              {/* O'g'il bolalar soni */}
+              <div className="rounded-2xl border border-blue-500/30 bg-blue-500/5 p-3.5 shadow-sm">
+                <div className="flex items-center justify-between text-blue-600 dark:text-blue-400 mb-1">
+                  <span className="text-[10px] uppercase font-bold tracking-wider">O'g'il bolalar</span>
+                  <span className="text-[11px] font-bold">42.7%</span>
+                </div>
+                <p className="text-xl font-extrabold text-zinc-900 dark:text-zinc-100">
+                  {studentStats.boys.toLocaleString()}
+                </p>
+                <p className="text-[10px] text-zinc-500 mt-0.5">Talaba yigitlar</p>
+              </div>
+
+              {/* 30 yoshgacha */}
+              <div className="rounded-2xl border border-amber-500/30 bg-amber-500/5 p-3.5 shadow-sm">
+                <div className="flex items-center justify-between text-amber-600 dark:text-amber-400 mb-1">
+                  <span className="text-[10px] uppercase font-bold tracking-wider">30 yoshgacha</span>
+                  <span className="text-[11px] font-bold">91.1%</span>
+                </div>
+                <p className="text-xl font-extrabold text-zinc-900 dark:text-zinc-100">
+                  {studentStats.under30.toLocaleString()}
+                </p>
+                <p className="text-[10px] text-zinc-500 mt-0.5">Yoshlar qatlami</p>
+              </div>
+            </div>
+
+            {/* Sub-metrics: Education Forms & Degrees */}
+            <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="rounded-xl border border-zinc-200/80 bg-white/80 dark:border-zinc-800/80 dark:bg-zinc-950/60 p-2.5 text-center">
+                <p className="text-[10px] uppercase tracking-wider text-zinc-500">Magistratura</p>
+                <p className="text-base font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                  {studentStats.degrees.Magistratura?.toLocaleString()} nafar
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-zinc-200/80 bg-white/80 dark:border-zinc-800/80 dark:bg-zinc-950/60 p-2.5 text-center">
+                <p className="text-[10px] uppercase tracking-wider text-zinc-500">Kunduzgi</p>
+                <p className="text-base font-bold text-zinc-900 dark:text-zinc-100 mt-0.5">
+                  {studentStats.educationForms.Kunduzgi?.toLocaleString()} nafar
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-zinc-200/80 bg-white/80 dark:border-zinc-800/80 dark:bg-zinc-950/60 p-2.5 text-center">
+                <p className="text-[10px] uppercase tracking-wider text-zinc-500">Sirtqi</p>
+                <p className="text-base font-bold text-zinc-900 dark:text-zinc-100 mt-0.5">
+                  {studentStats.educationForms.Sirtqi?.toLocaleString()} nafar
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-zinc-200/80 bg-white/80 dark:border-zinc-800/80 dark:bg-zinc-950/60 p-2.5 text-center">
+                <p className="text-[10px] uppercase tracking-wider text-zinc-500">Kechki</p>
+                <p className="text-base font-bold text-zinc-900 dark:text-zinc-100 mt-0.5">
+                  {studentStats.educationForms.Kechki?.toLocaleString()} nafar
+                </p>
+              </div>
+            </div>
           </div>
-        </article>
 
-        {/* Card 3: Contact & Join Funnel */}
-        <article className="glass-card relative flex flex-col py-7">
-          <div className="mb-4 flex items-center justify-between">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-[10px] text-emerald-700 dark:text-emerald-300 font-semibold uppercase tracking-wider">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
-              Doimiy Muloqot
-            </span>
-            <span className="text-xs text-zinc-500">Qabul 24/7</span>
+          {/* Bottom Action Section: Tags & Detailed Button */}
+          <div className="mt-6 pt-5 border-t border-zinc-200/80 dark:border-zinc-800/80 flex flex-wrap items-center justify-between gap-4">
+            <div className="flex flex-wrap items-center gap-2">
+              {['13 ta Fakultet', '10,381 TTJ talabalari', 'Masofaviy: 1,127', 'Iqtidorli yoshlar'].map((tag) => (
+                <span key={tag} className="rounded-full border border-zinc-200/80 bg-white/80 dark:border-zinc-800 dark:bg-zinc-900/80 px-3 py-1 text-[11px] font-medium text-zinc-700 dark:text-zinc-300 shadow-sm">
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            <Link
+              to="/statistika"
+              className="inline-flex items-center gap-2 rounded-full bg-emerald-500 hover:bg-emerald-400 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-zinc-950 shadow-md shadow-emerald-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
+            >
+              <span>Batafsil statistika</span>
+              <ArrowRight size={14} />
+            </Link>
           </div>
-
-          <h3 className="text-xl font-bold leading-snug tracking-tight text-zinc-900 dark:text-zinc-100">
-            Savol yoki taklifingiz
-            <br />
-            <span className="text-emerald-600 dark:text-emerald-400">bormi?</span>
-          </h3>
-          <p className="mt-2 text-xs text-zinc-600 dark:text-zinc-400">
-            Biz har bir talabaning fikri va tashabbusiga ochiqmiz.
-          </p>
-
-          <div className="my-4 h-px bg-zinc-200/80 dark:bg-zinc-800" />
-
-          <button
-            type="button"
-            onClick={copyEmail}
-            className="cursor-pointer text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
-          >
-            <p className="text-sm font-semibold text-zinc-800 dark:text-zinc-200 transition hover:text-emerald-600 dark:hover:text-emerald-300 break-all">{EMAIL}</p>
-            <p className="mt-1 text-[10px] uppercase tracking-[0.25em] text-zinc-400 dark:text-zinc-500">Emailni nusxalash</p>
-          </button>
-
-          <a
-            href={socialLinks.telegram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-emerald-500 px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-950 transition hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/20 font-bold"
-          >
-            <Send size={13} />
-            Telegramda yozish
-          </a>
         </article>
       </div>
 

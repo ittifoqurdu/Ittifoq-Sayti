@@ -23,6 +23,7 @@ import TuzilmaPage from './components/pages/TuzilmaPage'
 import KlublarPage from './components/pages/KlublarPage'
 import ClubDetailPage from './components/pages/ClubDetailPage'
 import ContactPage from './components/pages/ContactPage'
+import StatistikaPage from './components/pages/StatistikaPage'
 import { NewsProvider } from './context/NewsContext'
 
 const STATIC_SITE_URL = 'https://urdu.uz'
@@ -158,6 +159,13 @@ function App() {
         description:
           'Urganch davlat universiteti Yoshlar ittifoqi eng so‘nggi yangiliklari, xakatonlar, tanlovlar va eʼlonlar.',
       }
+    } else if (normalizedPath === '/statistika') {
+      seo = {
+        ...seo,
+        title: `Talabalar Kontingenti va Statistikasi | ${profile.brand}`,
+        description:
+          'Urganch davlat universiteti talabalar kontingenti to‘liq tahlili, fakultetlar, taʼlim shakllari, jins va yosh ko‘rsatkichlari.',
+      }
     } else if (normalizedPath === '/admin') {
       seo = {
         ...seo,
@@ -212,6 +220,7 @@ function App() {
             <main className="relative z-10 pb-0 pt-0" id="main-content">
               <Routes>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/statistika" element={<StatistikaPage />} />
                 <Route path="/tuzilma" element={<TuzilmaPage />} />
                 <Route path="/team" element={<TuzilmaPage />} />
                 <Route path="/klublar" element={<KlublarPage />} />

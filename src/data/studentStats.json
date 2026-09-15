@@ -1,0 +1,64 @@
+{
+  "totalStudents": 19121,
+  "boys": 8161,
+  "girls": 10960,
+  "under30": 17410,
+  "over30": 1711,
+  "degrees": {
+    "Bakalavr": 18691,
+    "Magistratura": 430
+  },
+  "educationForms": {
+    "Kunduzgi": 12107,
+    "Sirtqi": 5608,
+    "Masofaviy": 1127,
+    "Kechki": 279
+  },
+  "courses": {
+    "1-kurs": 4819,
+    "2-kurs": 5538,
+    "3-kurs": 6179,
+    "4-kurs": 2479,
+    "5-kurs": 106
+  },
+  "faculties": {
+    "Iqtisodiyot fakulteti": 3014,
+    "Intellektual ilmlar va texnologiyalar fakulteti": 2744,
+    "Texnika fakulteti": 2000,
+    "Fizika-matematika fakulteti": 1734,
+    "Xorijiy filologiya fakulteti": 1575,
+    "Tarix va huquq fakulteti": 1547,
+    "Tabiiy va qishloq xo'jaligi fanlari fakulteti": 1528,
+    "Filologiya fakulteti": 1327,
+    "Sport faoliyati fakulteti": 1196,
+    "Psixologiya va san'at fakulteti": 967,
+    "Kimyoviy texnologiya fakulteti": 862,
+    "Magistratura bo'limi": 430,
+    "Kompyuter injiniringi fakulteti": 187
+  },
+  "residenceTypes": {
+    "Talabalar turar joyida": 10381,
+    "O'z uyida": 8029,
+    "Ijaradagi uyda": 639,
+    "Qarindoshining uyida": 64,
+    "Tanishining uyida": 8
+  },
+  "regions": {
+    "Xorazm viloyati": 14992,
+    "Qoraqalpog'iston Respublikasi": 3450,
+    "Samarqand viloyati": 127,
+    "Qashqadaryo viloyati": 106,
+    "Toshkent shahri": 86,
+    "Surxondaryo viloyati": 60,
+    "Buxoro viloyati": 51,
+    "Farg'ona viloyati": 43,
+    "Navoiy viloyati": 40,
+    "Jizzax viloyati": 39,
+    "Toshkent viloyati": 34,
+    "Andijon viloyati": 29,
+    "Namangan viloyati": 21,
+    "Sirdaryo viloyati": 19,
+    "Boshqa": 24
+  },
+  "updatedAt": "15-sentyabr 2026-yil holatiga"
+}
