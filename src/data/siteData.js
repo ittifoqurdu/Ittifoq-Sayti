@@ -49,7 +49,7 @@ export const navItems = [
 
 export const universityStats = [
   {
-    value: '30,000+',
+    value: '20,000+',
     label: 'Talaba-yoshlar',
     description: 'Universitet bo‘ylab barcha fakultet talabalari',
     icon: Users,
@@ -63,7 +63,7 @@ export const universityStats = [
     color: '#34d399',
   },
   {
-    value: '12 ta',
+    value: '13 ta',
     label: 'Fakultet Yoshlar Kengashi',
     description: 'Har bir fakultetdagi doimiy yetakchilar guruhi',
     icon: Compass,

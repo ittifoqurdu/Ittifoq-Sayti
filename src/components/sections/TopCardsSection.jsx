@@ -230,7 +230,7 @@ function TopCardsSection() {
           {/* Bottom Action Section: Tags & Detailed Button */}
           <div className="mt-6 pt-5 border-t border-zinc-200/80 dark:border-zinc-800/80 flex flex-wrap items-center justify-between gap-4">
             <div className="flex flex-wrap items-center gap-2">
-              {['13 ta Fakultet', '10,381 TTJ talabalari', 'Masofaviy: 1,127', 'Iqtidorli yoshlar'].map((tag) => (
+              {['13 ta Fakultet', '3,362 TTJ talabalari', 'Masofaviy: 1,127', 'Iqtidorli yoshlar'].map((tag) => (
                 <span key={tag} className="rounded-full border border-zinc-200/80 bg-white/80 dark:border-zinc-800 dark:bg-zinc-900/80 px-3 py-1 text-[11px] font-medium text-zinc-700 dark:text-zinc-300 shadow-sm">
                   {tag}
                 </span>
