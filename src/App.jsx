@@ -10,7 +10,6 @@ import TeamSection from './components/sections/TeamSection'
 import DirectionsSection from './components/sections/DirectionsSection'
 import TopCardsSection from './components/sections/TopCardsSection'
 import NoiseLayer from './components/ui/NoiseLayer'
-import CustomCursor from './components/ui/CustomCursor'
 import SmoothScroll from './components/ui/SmoothScroll'
 import ScrollToTopButton from './components/ui/ScrollToTopButton'
 import { profile } from './data/siteData'
@@ -200,44 +199,42 @@ function App() {
   return (
     <NewsProvider>
       <SmoothScroll>
-        <CustomCursor>
-          <a
-            href="#main-content"
-            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[120] focus:rounded-full focus:bg-zinc-100 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-zinc-900"
-          >
-            Asosiy qismga o‘tish
-          </a>
-          <div className="relative isolate min-h-[100dvh] overflow-x-clip bg-[#07090d] dark:bg-[#07090d] text-zinc-900 dark:text-zinc-100" style={{ backgroundColor: 'var(--bg-base)' }}>
-            <NoiseLayer />
-            <div className="pointer-events-none fixed inset-0 -z-10 hidden dark:block">
-              <div className="absolute -left-[10%] -top-[8%] h-[38%] w-[38%] rounded-full bg-emerald-500/10 blur-[130px]" />
-              <div className="absolute right-[6%] top-[18%] h-[30%] w-[30%] rounded-full bg-cyan-400/10 blur-[120px]" />
-              <div className="absolute -bottom-[14%] -right-[12%] h-[40%] w-[40%] rounded-full bg-emerald-400/10 blur-[140px]" />
-            </div>
-            <div className="pointer-events-none absolute inset-0 -z-10 soft-grid opacity-50 dark:opacity-50 opacity-20" />
-            {!location.pathname.startsWith('/admin') && <HeaderNav />}
-
-            <main className="relative z-10 pb-0 pt-0" id="main-content">
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/statistika" element={<StatistikaPage />} />
-                <Route path="/tuzilma" element={<TuzilmaPage />} />
-                <Route path="/team" element={<TuzilmaPage />} />
-                <Route path="/klublar" element={<KlublarPage />} />
-                <Route path="/klublar/:id" element={<ClubDetailPage />} />
-                <Route path="/yonalishlar" element={<KlublarPage />} />
-                <Route path="/yonalishlar/:id" element={<ClubDetailPage />} />
-                <Route path="/boglanish" element={<ContactPage />} />
-                <Route path="/hamkorlik" element={<PartnershipsPage />} />
-                <Route path="/yangiliklar" element={<NewsListPage />} />
-                <Route path="/yangiliklar/:id" element={<NewsDetailPage />} />
-                <Route path="/admin" element={<AdminPage />} />
-                <Route path="*" element={<NotFoundPage />} />
-              </Routes>
-            </main>
-            <ScrollToTopButton />
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[120] focus:rounded-full focus:bg-zinc-100 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-zinc-900"
+        >
+          Asosiy qismga o‘tish
+        </a>
+        <div className="relative isolate min-h-[100dvh] overflow-x-clip bg-[#07090d] dark:bg-[#07090d] text-zinc-900 dark:text-zinc-100" style={{ backgroundColor: 'var(--bg-base)' }}>
+          <NoiseLayer />
+          <div className="pointer-events-none fixed inset-0 -z-10 hidden dark:block">
+            <div className="absolute -left-[10%] -top-[8%] h-[38%] w-[38%] rounded-full bg-emerald-500/10 blur-[130px]" />
+            <div className="absolute right-[6%] top-[18%] h-[30%] w-[30%] rounded-full bg-cyan-400/10 blur-[120px]" />
+            <div className="absolute -bottom-[14%] -right-[12%] h-[40%] w-[40%] rounded-full bg-emerald-400/10 blur-[140px]" />
           </div>
-        </CustomCursor>
+          <div className="pointer-events-none absolute inset-0 -z-10 soft-grid opacity-50 dark:opacity-50 opacity-20" />
+          {!location.pathname.startsWith('/admin') && <HeaderNav />}
+
+          <main className="relative z-10 pb-0 pt-0" id="main-content">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/statistika" element={<StatistikaPage />} />
+              <Route path="/tuzilma" element={<TuzilmaPage />} />
+              <Route path="/team" element={<TuzilmaPage />} />
+              <Route path="/klublar" element={<KlublarPage />} />
+              <Route path="/klublar/:id" element={<ClubDetailPage />} />
+              <Route path="/yonalishlar" element={<KlublarPage />} />
+              <Route path="/yonalishlar/:id" element={<ClubDetailPage />} />
+              <Route path="/boglanish" element={<ContactPage />} />
+              <Route path="/hamkorlik" element={<PartnershipsPage />} />
+              <Route path="/yangiliklar" element={<NewsListPage />} />
+              <Route path="/yangiliklar/:id" element={<NewsDetailPage />} />
+              <Route path="/admin" element={<AdminPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </main>
+          <ScrollToTopButton />
+        </div>
       </SmoothScroll>
     </NewsProvider>
   )

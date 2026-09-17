@@ -96,10 +96,6 @@ html.light body {
   min-height: 100vh;
 }
 
-.cursor-none-active,
-.cursor-none-active * {
-  cursor: none !important;
-}
 
 a:focus-visible,
 button:focus-visible {
