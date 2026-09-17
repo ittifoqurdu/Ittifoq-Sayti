@@ -194,6 +194,7 @@ function App() {
     upsertMeta('name', 'twitter:description', seo.description)
     upsertMeta('name', 'twitter:image', seo.image)
     upsertCanonical(seo.url)
+    document.body.classList.remove('cursor-none-active')
   }, [location.pathname])
 
   return (
