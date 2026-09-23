@@ -16,16 +16,25 @@ import {
   Check,
   Building2,
   Phone,
+  Edit3,
+  Lock,
+  X,
 } from 'lucide-react'
 import { useNews, defaultClubsList } from '../../context/NewsContext'
 import { socialLinks, profile } from '../../data/siteData'
 import FooterSection from '../sections/FooterSection'
+import ClubEditorModal from '../admin/ClubEditorModal'
 
 export default function ClubDetailPage() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { clubsList } = useNews()
+  const { clubsList, updateClub, isAuthenticated, adminLogin } = useNews()
   const [copied, setCopied] = useState(false)
+  const [isEditorOpen, setIsEditorOpen] = useState(false)
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
+  const [passwordInput, setPasswordInput] = useState('')
+  const [passwordError, setPasswordError] = useState('')
+  const [toastMessage, setToastMessage] = useState('')
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' })
@@ -33,10 +42,12 @@ export default function ClubDetailPage() {
 
   const allClubs = clubsList && clubsList.length > 0 ? clubsList : defaultClubsList
 
-  // Find active club by id or slug
+  // Find active club by id or slug (robust against hyphens, underscores, or partial match)
+  const norm = (s) => String(s || '').toLowerCase().replace(/[-_]/g, '')
   const currentClub =
-    allClubs.find((c) => String(c.id).toLowerCase() === String(id).toLowerCase()) ||
-    allClubs.find((c) => String(c.title).toLowerCase().includes(String(id).toLowerCase())) ||
+    allClubs.find((c) => norm(c.id) === norm(id)) ||
+    allClubs.find((c) => norm(c.id).includes(norm(id)) || norm(id).includes(norm(c.id))) ||
+    allClubs.find((c) => norm(c.title).includes(norm(id))) ||
     allClubs[0] ||
     {}
 
@@ -58,6 +69,35 @@ export default function ClubDetailPage() {
     } catch {
       // Ignore
     }
+  }
+
+  const handleOpenEditor = () => {
+    if (isAuthenticated) {
+      setIsEditorOpen(true)
+    } else {
+      setPasswordInput('')
+      setPasswordError('')
+      setIsAuthModalOpen(true)
+    }
+  }
+
+  const handleAdminLoginSubmit = (e) => {
+    e.preventDefault()
+    const res = adminLogin(passwordInput)
+    if (res.success) {
+      setIsAuthModalOpen(false)
+      setIsEditorOpen(true)
+      setPasswordInput('')
+      setPasswordError('')
+    } else {
+      setPasswordError(res.error || 'Parol noto‘g‘ri!')
+    }
+  }
+
+  const handleSaveClub = async (payload) => {
+    await updateClub(currentClub.id, payload)
+    setToastMessage('To‘garak maʼlumotlari muvaffaqiyatli saqlandi!')
+    setTimeout(() => setToastMessage(''), 3500)
   }
 
   return (
@@ -112,23 +152,35 @@ export default function ClubDetailPage() {
                 </span>
               </div>
 
-              <button
-                type="button"
-                onClick={handleShare}
-                className="inline-flex items-center gap-1.5 rounded-full border border-zinc-300/80 bg-white/80 px-3.5 py-1.5 text-xs font-medium text-zinc-700 shadow-sm transition hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900/80 dark:text-zinc-300 dark:hover:bg-zinc-800"
-              >
-                {copied ? (
-                  <>
-                    <Check size={13} className="text-emerald-500" />
-                    <span>Nusxa olindi!</span>
-                  </>
-                ) : (
-                  <>
-                    <Share2 size={13} />
-                    <span>Ulashish</span>
-                  </>
-                )}
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleOpenEditor}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3.5 py-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300 shadow-sm transition hover:bg-emerald-500 hover:text-zinc-950 cursor-pointer"
+                  title="To‘garak narxi va maʼlumotlarini tahrirlash"
+                >
+                  <Edit3 size={13} />
+                  <span>Tahrirlash</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleShare}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-zinc-300/80 bg-white/80 px-3.5 py-1.5 text-xs font-medium text-zinc-700 shadow-sm transition hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900/80 dark:text-zinc-300 dark:hover:bg-zinc-800 cursor-pointer"
+                >
+                  {copied ? (
+                    <>
+                      <Check size={13} className="text-emerald-500" />
+                      <span>Nusxa olindi!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Share2 size={13} />
+                      <span>Ulashish</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
 
             <div className="flex items-start gap-4">
@@ -165,18 +217,35 @@ export default function ClubDetailPage() {
               <span className="font-semibold drop-shadow-md">
                 Urganch Davlat Universiteti Yoshlar Ittifoqi
               </span>
-              <span className="rounded-full bg-black/60 px-3.5 py-1 font-mono text-xs backdrop-blur-md border border-white/20">
-                Aʼzolik Bepul
-              </span>
+              <button
+                type="button"
+                onClick={handleOpenEditor}
+                title="Aʼzolik holatini tahrirlash"
+                className="group inline-flex items-center gap-1.5 rounded-full bg-black/60 px-3.5 py-1 font-mono text-xs backdrop-blur-md border border-white/20 hover:border-emerald-400 hover:text-emerald-300 transition-colors cursor-pointer"
+              >
+                <span>{currentClub.membershipBadge || (currentClub.price ? `Aʼzolik: ${currentClub.price}` : 'Aʼzolik Bepul')}</span>
+                <Edit3 size={11} className="opacity-0 group-hover:opacity-100 transition-opacity text-emerald-400" />
+              </button>
             </div>
           </div>
 
           {/* Key Parameters Cards */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 sm:gap-4">
-            <div className="rounded-2xl border border-zinc-200/80 bg-white/80 p-4 text-center shadow-sm dark:border-zinc-800 dark:bg-zinc-900/60">
-              <Award size={22} className="mx-auto text-emerald-500" />
-              <p className="mt-2 text-sm font-bold text-zinc-900 dark:text-zinc-100">100% Bepul</p>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Barcha talabalarga</p>
+            <div
+              onClick={handleOpenEditor}
+              title="To‘lov holatini tahrirlash uchun bosing"
+              className="group relative rounded-2xl border border-zinc-200/80 bg-white/80 p-4 text-center shadow-sm dark:border-zinc-800 dark:bg-zinc-900/60 cursor-pointer transition-all hover:border-emerald-500/70 hover:shadow-md hover:-translate-y-0.5"
+            >
+              <Award size={22} className="mx-auto text-emerald-500 transition-transform group-hover:scale-110" />
+              <p className="mt-2 text-sm font-bold text-zinc-900 dark:text-zinc-100">
+                {currentClub.price || '100% Bepul'}
+              </p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
+                {currentClub.priceSubtext || 'Barcha talabalarga'}
+              </p>
+              <span className="mt-1.5 inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 opacity-80 group-hover:opacity-100 transition-opacity">
+                <Edit3 size={10} /> Tahrirlash
+              </span>
             </div>
 
             <div className="rounded-2xl border border-zinc-200/80 bg-white/80 p-4 text-center shadow-sm dark:border-zinc-800 dark:bg-zinc-900/60">
@@ -400,6 +469,81 @@ export default function ClubDetailPage() {
           )}
         </article>
       </main>
+
+      {/* Toast Notification */}
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 z-50 rounded-2xl bg-zinc-900 text-white px-5 py-3 text-xs font-bold shadow-2xl dark:bg-white dark:text-zinc-900 flex items-center gap-2 border border-zinc-700 animate-in fade-in slide-in-from-bottom-5">
+          <Check size={16} className="text-emerald-400" />
+          <span>{toastMessage}</span>
+        </div>
+      )}
+
+      {/* Admin Quick Login Modal */}
+      {isAuthModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
+          <div className="w-full max-w-sm rounded-3xl border border-zinc-300 bg-white p-6 shadow-2xl dark:border-zinc-800 dark:bg-zinc-950">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
+                <Lock size={18} />
+                <h3 className="text-base font-bold text-zinc-900 dark:text-zinc-100">
+                  Admin Parolini Kiriting
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsAuthModalOpen(false)}
+                className="rounded-full p-1 text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
+              >
+                <X size={16} />
+              </button>
+            </div>
+            <p className="text-xs text-zinc-500 mt-2">
+              To‘garak narxi ("100% Bepul" bloki) va maʼlumotlarini tahrirlash uchun parolni kiriting.
+            </p>
+
+            <form onSubmit={handleAdminLoginSubmit} className="mt-4 space-y-3">
+              {passwordError && (
+                <p className="text-xs font-semibold text-rose-500">{passwordError}</p>
+              )}
+              <input
+                type="password"
+                required
+                autoFocus
+                placeholder="Admin paroli..."
+                value={passwordInput}
+                onChange={(e) => setPasswordInput(e.target.value)}
+                className="w-full rounded-2xl border border-zinc-200 bg-zinc-50 px-4 py-2.5 text-xs text-zinc-900 outline-none focus:border-emerald-500 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100"
+              />
+              <div className="flex items-center justify-between text-[11px] text-zinc-400">
+                <span>Standart parol: <strong className="text-emerald-600 dark:text-emerald-400">admin2026</strong></span>
+              </div>
+              <div className="flex items-center justify-end gap-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setIsAuthModalOpen(false)}
+                  className="rounded-xl border border-zinc-200 px-4 py-2 text-xs font-semibold text-zinc-600 hover:bg-zinc-100 dark:border-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-800 cursor-pointer"
+                >
+                  Bekor qilish
+                </button>
+                <button
+                  type="submit"
+                  className="rounded-xl bg-emerald-500 px-5 py-2 text-xs font-bold text-zinc-950 hover:bg-emerald-400 transition cursor-pointer shadow-md"
+                >
+                  Kirish & Tahrirlash
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Club Editor Modal */}
+      <ClubEditorModal
+        isOpen={isEditorOpen}
+        onClose={() => setIsEditorOpen(false)}
+        onSave={handleSaveClub}
+        editItem={currentClub}
+      />
 
       <FooterSection showContactForm={false} />
     </div>

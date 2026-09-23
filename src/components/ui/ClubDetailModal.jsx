@@ -118,7 +118,7 @@ export default function ClubDetailModal({ isOpen, onClose, club }) {
                 <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-white/90 text-xs">
                   <span className="font-semibold drop-shadow-md">UrDU Iqtidorli Talabalar Maydoni</span>
                   <span className="rounded-full bg-black/60 px-3 py-1 font-mono text-[11px] backdrop-blur-md">
-                    Faol To‘garak
+                    {club.membershipBadge || 'Faol To‘garak'}
                   </span>
                 </div>
               </div>
@@ -158,8 +158,8 @@ export default function ClubDetailModal({ isOpen, onClose, club }) {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <div className="rounded-2xl border border-zinc-200/80 bg-white/60 p-3.5 text-center dark:border-zinc-800 dark:bg-zinc-900/40">
                   <Award size={18} className="mx-auto text-emerald-500" />
-                  <p className="mt-1 text-xs font-bold text-zinc-900 dark:text-zinc-100">100% Bepul</p>
-                  <p className="text-[10px] text-zinc-500 dark:text-zinc-400">Aʼzolik to‘lovi yo‘q</p>
+                  <p className="mt-1 text-xs font-bold text-zinc-900 dark:text-zinc-100">{club.price || '100% Bepul'}</p>
+                  <p className="text-[10px] text-zinc-500 dark:text-zinc-400">{club.priceSubtext || 'Aʼzolik to‘lovi yo‘q'}</p>
                 </div>
 
                 <div className="rounded-2xl border border-zinc-200/80 bg-white/60 p-3.5 text-center dark:border-zinc-800 dark:bg-zinc-900/40">

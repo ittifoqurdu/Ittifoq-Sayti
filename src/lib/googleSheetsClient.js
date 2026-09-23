@@ -285,6 +285,9 @@ export async function fetchClubsFromSheet() {
                 : []
               const image = String(getVal(6) || '').trim()
               const color = String(getVal(7) || '#38bdf8').trim()
+              const price = String(getVal(8) || '').trim() || '100% Bepul'
+              const priceSubtext = String(getVal(9) || '').trim() || 'Barcha talabalarga'
+              const membershipBadge = String(getVal(10) || '').trim() || 'Aʼzolik Bepul'
 
               return {
                 id,
@@ -292,6 +295,9 @@ export async function fetchClubsFromSheet() {
                 subtitle,
                 description,
                 category,
+                price,
+                priceSubtext,
+                membershipBadge,
                 highlights,
                 image,
                 color,
@@ -328,6 +334,11 @@ export async function addClubToSheet(item) {
         tavsif: item.description || '',
         category: item.category || 'To‘garak',
         turi: item.category || 'To‘garak',
+        price: item.price || '100% Bepul',
+        priceSubtext: item.priceSubtext || 'Barcha talabalarga',
+        membershipBadge: item.membershipBadge || 'Aʼzolik Bepul',
+        narx: item.price || '100% Bepul',
+        narxi: item.price || '100% Bepul',
         highlights: Array.isArray(item.highlights) ? item.highlights.join(', ') : item.highlights || '',
         image: item.image || '',
         rasm: item.image || '',
@@ -356,6 +367,11 @@ export async function updateClubInSheet(item) {
         subtitle: item.subtitle || '',
         description: item.description || '',
         category: item.category || 'To‘garak',
+        price: item.price || '100% Bepul',
+        priceSubtext: item.priceSubtext || 'Barcha talabalarga',
+        membershipBadge: item.membershipBadge || 'Aʼzolik Bepul',
+        narx: item.price || '100% Bepul',
+        narxi: item.price || '100% Bepul',
         highlights: Array.isArray(item.highlights) ? item.highlights.join(', ') : item.highlights || '',
         image: item.image || '',
         color: item.color || '#38bdf8',

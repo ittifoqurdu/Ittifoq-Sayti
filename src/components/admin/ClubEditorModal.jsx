@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
-import { X, Sparkles, Plus, Trash2, Palette, Upload, Image as ImageIcon } from 'lucide-react'
+import { X, Sparkles, Plus, Trash2, Palette, Upload, Image as ImageIcon, Award } from 'lucide-react'
 import { compressImage } from '../../lib/imageCompressor'
 
 const COLOR_OPTIONS = [
@@ -12,12 +12,22 @@ const COLOR_OPTIONS = [
   { label: 'Indigo / Ko‘k', value: '#818cf8', gradient: 'from-indigo-500/20 via-sky-500/10 to-transparent' },
 ]
 
+const PRICE_PRESETS = [
+  { label: '100% Bepul', price: '100% Bepul', subtext: 'Barcha talabalarga', badge: 'Aʼzolik Bepul' },
+  { label: 'Erkin / Bepul', price: 'Bepul', subtext: 'Aʼzolik to‘lovi yo‘q', badge: 'Bepul Qatnashuv' },
+  { label: 'Pullik / Oylik to‘lov', price: 'Pullik kurs', subtext: 'Oylik to‘lov asosida', badge: 'Pullik To‘garak' },
+  { label: 'Grant / Imtiyozli', price: 'Grant asosida', subtext: 'Faollarga stipendiya', badge: 'Grant Asosida' },
+]
+
 export default function ClubEditorModal({ isOpen, onClose, onSave, editItem }) {
   const fileInputRef = useRef(null)
   const [title, setTitle] = useState('')
   const [subtitle, setSubtitle] = useState('')
   const [description, setDescription] = useState('')
   const [category, setCategory] = useState('To‘garak')
+  const [price, setPrice] = useState('100% Bepul')
+  const [priceSubtext, setPriceSubtext] = useState('Barcha talabalarga')
+  const [membershipBadge, setMembershipBadge] = useState('Aʼzolik Bepul')
   const [color, setColor] = useState('#38bdf8')
   const [gradient, setGradient] = useState('from-blue-500/20 via-cyan-500/10 to-transparent')
   const [highlights, setHighlights] = useState(['', '', ''])
@@ -34,6 +44,9 @@ export default function ClubEditorModal({ isOpen, onClose, onSave, editItem }) {
       setSubtitle(editItem.subtitle || '')
       setDescription(editItem.description || '')
       setCategory(editItem.category || 'To‘garak')
+      setPrice(editItem.price || '100% Bepul')
+      setPriceSubtext(editItem.priceSubtext || 'Barcha talabalarga')
+      setMembershipBadge(editItem.membershipBadge || 'Aʼzolik Bepul')
       setColor(editItem.color || '#38bdf8')
       setGradient(editItem.gradient || 'from-blue-500/20 via-cyan-500/10 to-transparent')
       setHighlights(
@@ -47,6 +60,9 @@ export default function ClubEditorModal({ isOpen, onClose, onSave, editItem }) {
       setSubtitle('')
       setDescription('')
       setCategory('To‘garak')
+      setPrice('100% Bepul')
+      setPriceSubtext('Barcha talabalarga')
+      setMembershipBadge('Aʼzolik Bepul')
       setColor('#38bdf8')
       setGradient('from-blue-500/20 via-cyan-500/10 to-transparent')
       setHighlights(['', '', ''])
@@ -118,6 +134,9 @@ export default function ClubEditorModal({ isOpen, onClose, onSave, editItem }) {
         subtitle: subtitle.trim(),
         description: description.trim(),
         category: category.trim(),
+        price: price.trim() || '100% Bepul',
+        priceSubtext: priceSubtext.trim() || 'Barcha talabalarga',
+        membershipBadge: membershipBadge.trim() || 'Aʼzolik Bepul',
         color,
         gradient,
         highlights: highlights.map((h) => h.trim()).filter(Boolean),
@@ -250,6 +269,93 @@ export default function ClubEditorModal({ isOpen, onClose, onSave, editItem }) {
               />
             </div>
 
+            {/* To'lov & Aʼzolik shartlari (Narxi va bepullik holati) */}
+            <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/5 p-4 sm:p-5 dark:border-emerald-500/20 dark:bg-emerald-950/20">
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                <label className="block text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300 flex items-center gap-1.5">
+                  <Award size={15} className="text-emerald-500" />
+                  To‘lov Holati & Aʼzolik Shartlari (Narxi) *
+                </label>
+                <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-500/15 px-2.5 py-0.5 rounded-full border border-emerald-500/20">
+                  Sahifadagi "100% Bepul" blokini o‘zgartiradi
+                </span>
+              </div>
+              <p className="text-[11px] text-zinc-600 dark:text-zinc-400 mb-3">
+                To‘garak sahifasidagi asosiy ko‘rsatkich kartochkasi va banner nishonida ko‘rinadigan qiymatni kiriting.
+              </p>
+
+              {/* Tezkor andozalar (Presets) */}
+              <div className="mb-3.5 flex flex-wrap items-center gap-2">
+                <span className="text-[11px] font-semibold text-zinc-500">Tezkor tanlov:</span>
+                {PRICE_PRESETS.map((p) => (
+                  <button
+                    key={p.label}
+                    type="button"
+                    onClick={() => {
+                      setPrice(p.price)
+                      setPriceSubtext(p.subtext)
+                      setMembershipBadge(p.badge)
+                    }}
+                    className={`rounded-xl border px-3 py-1 text-xs font-medium transition cursor-pointer ${
+                      price === p.price
+                        ? 'border-emerald-500 bg-emerald-500 text-zinc-950 font-bold shadow-sm'
+                        : 'border-zinc-300 bg-white text-zinc-700 hover:border-emerald-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300'
+                    }`}
+                  >
+                    {p.label}
+                  </button>
+                ))}
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {/* Asosiy Narx / Bepul matni */}
+                <div>
+                  <label className="block text-[11px] font-bold text-zinc-700 dark:text-zinc-300 mb-1">
+                    Asosiy Ko‘rsatkich (Sarlavha) *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                    placeholder="Masalan: 100% Bepul yoki 150 000 so‘m"
+                    className="w-full rounded-xl border border-zinc-200 bg-white px-3.5 py-2 text-xs font-bold text-zinc-900 outline-none focus:border-emerald-500 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100"
+                  />
+                  <p className="text-[10px] text-zinc-400 mt-1">Kartochkadagi katta matn</p>
+                </div>
+
+                {/* Quyi izoh */}
+                <div>
+                  <label className="block text-[11px] font-bold text-zinc-700 dark:text-zinc-300 mb-1">
+                    Quyi Izoh (Subtext)
+                  </label>
+                  <input
+                    type="text"
+                    value={priceSubtext}
+                    onChange={(e) => setPriceSubtext(e.target.value)}
+                    placeholder="Masalan: Barcha talabalarga"
+                    className="w-full rounded-xl border border-zinc-200 bg-white px-3.5 py-2 text-xs font-medium text-zinc-900 outline-none focus:border-emerald-500 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100"
+                  />
+                  <p className="text-[10px] text-zinc-400 mt-1">Kartochkadagi kichik izoh</p>
+                </div>
+
+                {/* Banner nishoni */}
+                <div>
+                  <label className="block text-[11px] font-bold text-zinc-700 dark:text-zinc-300 mb-1">
+                    Bannerdagi Nishon (Badge)
+                  </label>
+                  <input
+                    type="text"
+                    value={membershipBadge}
+                    onChange={(e) => setMembershipBadge(e.target.value)}
+                    placeholder="Masalan: Aʼzolik Bepul"
+                    className="w-full rounded-xl border border-zinc-200 bg-white px-3.5 py-2 text-xs font-medium text-zinc-900 outline-none focus:border-emerald-500 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100"
+                  />
+                  <p className="text-[10px] text-zinc-400 mt-1">Bannerdagi qora nishon</p>
+                </div>
+              </div>
+            </div>
+
             {/* Color Accent Picker */}
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-300 mb-2">
@@ -338,8 +444,13 @@ export default function ClubEditorModal({ isOpen, onClose, onSave, editItem }) {
                       }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 text-white">
-                      <span className="text-[10px] font-bold text-cyan-400">{category}</span>
-                      <p className="text-sm font-bold truncate">{title || 'To‘garak sarlavhasi'}</p>
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-[10px] font-bold text-cyan-400">{category}</span>
+                        <span className="rounded-full bg-black/60 px-2.5 py-0.5 font-mono text-[10px] backdrop-blur-md border border-white/20 text-white">
+                          {membershipBadge || 'Aʼzolik Bepul'}
+                        </span>
+                      </div>
+                      <p className="text-sm font-bold truncate mt-0.5">{title || 'To‘garak sarlavhasi'}</p>
                     </div>
                   </>
                 ) : (

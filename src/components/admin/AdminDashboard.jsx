@@ -641,9 +641,12 @@ export default function AdminDashboard() {
                           <span className="text-[10px] uppercase tracking-wider">Banner Rasm Yo‘q</span>
                         </div>
                       )}
-                      <div className="absolute left-3 top-3">
+                      <div className="absolute left-3 top-3 flex items-center gap-1.5 flex-wrap">
                         <span className="rounded-full bg-black/75 px-3 py-1 text-[10px] font-bold text-cyan-400 backdrop-blur-md shadow">
                           {club.category || 'To‘garak'}
+                        </span>
+                        <span className="rounded-full bg-emerald-500/90 text-zinc-950 px-2.5 py-1 text-[10px] font-black backdrop-blur-md shadow">
+                          {club.price || '100% Bepul'}
                         </span>
                       </div>
                     </div>
