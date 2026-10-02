@@ -155,9 +155,26 @@ function LeaderFeaturedCard({ member }) {
   )
 }
 
-function MemberCard({ member }) {
+function getLoneCardClass(index, total) {
+  if (index !== total - 1) return ''
+  const isAloneLg = total % 3 === 1
+  const isAloneMd = total % 2 === 1
+
+  if (isAloneLg && isAloneMd) {
+    return 'md:col-span-2 md:max-w-md md:w-full md:mx-auto lg:col-span-1 lg:col-start-2 lg:max-w-none lg:mx-0'
+  }
+  if (isAloneLg) {
+    return 'lg:col-start-2'
+  }
+  if (isAloneMd) {
+    return 'md:col-span-2 md:max-w-md md:w-full md:mx-auto lg:col-span-1 lg:max-w-none lg:mx-0'
+  }
+  return ''
+}
+
+function MemberCard({ member, className = '' }) {
   return (
-    <div className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-zinc-200/80 bg-[#F8F3EB]/90 shadow-lg dark:border-zinc-800/90 dark:bg-zinc-900/60 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/50 hover:shadow-2xl hover:shadow-emerald-500/10">
+    <div className={`group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-zinc-200/80 bg-[#F8F3EB]/90 shadow-lg dark:border-zinc-800/90 dark:bg-zinc-900/60 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/50 hover:shadow-2xl hover:shadow-emerald-500/10 ${className}`}>
       {/* Top Large Photo Section */}
       <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#EDE8DE] dark:bg-zinc-950 border-b border-zinc-200/80 dark:border-zinc-800/80">
         {member.avatar ? (
@@ -385,8 +402,12 @@ export default function TeamSection() {
             </div>
 
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {koordinatorMembers.map((member) => (
-                <MemberCard key={member.id} member={member} />
+              {koordinatorMembers.map((member, index) => (
+                <MemberCard
+                  key={member.id}
+                  member={member}
+                  className={getLoneCardClass(index, koordinatorMembers.length)}
+                />
               ))}
             </div>
           </div>
@@ -410,8 +431,12 @@ export default function TeamSection() {
             </div>
 
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {fakultetKoordinatorMembers.map((member) => (
-                <MemberCard key={member.id} member={member} />
+              {fakultetKoordinatorMembers.map((member, index) => (
+                <MemberCard
+                  key={member.id}
+                  member={member}
+                  className={getLoneCardClass(index, fakultetKoordinatorMembers.length)}
+                />
               ))}
             </div>
           </div>
