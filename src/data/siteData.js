@@ -37,7 +37,7 @@ export const profile = {
   telegramChannel: 'https://t.me/UrDU_Yoshlari_BT',
   telegramBot: 'https://t.me/urdu_ittifoq_bot',
   telegramBotHandle: '@urdu_ittifoq_bot',
-  website: 'https://urdu.uz',
+  website: 'https://ittifoq.ursu.uz',
 }
 
 export const navItems = [
@@ -706,7 +706,7 @@ export const socialLinks = {
   instagram: 'https://instagram.com/urdumatbuotxizmati',
   instagramHandle: '@urdumatbuotxizmati',
   youtube: 'https://www.youtube.com/channel/UCkQ8N0jtKR9VigB0FALuFvA/videos',
-  website: 'https://urdu.uz',
+  website: 'https://ittifoq.ursu.uz',
   email: 'https://mail.google.com/mail/?view=cm&fs=1&to=ittifoqurdu@gmail.com',
   phone: 'tel:+998622246700',
 }

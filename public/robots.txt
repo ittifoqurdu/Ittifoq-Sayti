@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://urdu.uz/sitemap.xml
+# Admin boshqaruv panelini indekslashdan chiqarish
+Disallow: /admin
+
+Sitemap: https://ittifoq.ursu.uz/sitemap.xml

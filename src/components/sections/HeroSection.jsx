@@ -23,7 +23,7 @@ function HeroSection() {
       <div className="absolute inset-0 z-0">
         <img
           src="/img/banner-ornament.png"
-          alt="UrDU Yoshlar Ittifoqi Banner"
+          alt="Urganch davlat universiteti Yoshlar ittifoqi bezak naqshi"
           className="h-full w-full object-cover object-center opacity-25 dark:opacity-35 filter blur-[1px] scale-105"
           loading="eager"
           fetchPriority="high"
@@ -48,21 +48,21 @@ function HeroSection() {
             <div className="mt-6 flex items-center gap-4">
               <img
                 src={isDark ? '/img/logo-oq.png' : '/img/logo-oq1.png'}
-                alt="UrDU Yoshlar Ittifoqi"
+                alt="Urganch davlat universiteti Yoshlar ittifoqi rasmiy logotipi"
                 className="h-16 w-auto sm:h-20 drop-shadow-[0_10px_25px_rgba(16,185,129,0.2)]"
               />
             </div>
 
             <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-zinc-900 sm:text-5xl lg:text-6xl leading-[1.08] dark:text-white">
-              UrDU Yoshlar <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent dark:from-emerald-400 dark:via-teal-300 dark:to-cyan-400">Ittifoqi</span>
+              Urganch davlat universiteti <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent dark:from-emerald-400 dark:via-teal-300 dark:to-cyan-400">Yoshlar ittifoqi</span>
             </h1>
 
-            <p className="mt-3 text-lg font-medium text-emerald-700 sm:text-xl dark:text-emerald-300/90">
-              {profile.title}
+            <p className="mt-3 text-lg font-semibold text-emerald-700 sm:text-xl dark:text-emerald-300/90">
+              Ursu Ittifoq — Boshlang‘ich Tashkiloti va Yetakchilar Kengashi
             </p>
 
             <p className="mt-4 max-w-[55ch] text-base leading-relaxed text-zinc-600 sm:text-lg dark:text-zinc-300">
-              Yangi O‘zbekiston yoshlari — ilm-fan, tashabbus va intellekt birlashgan maskan. Universitetimizning 20,000 ga yaqin iqtidorli talabalarini qo‘llab-quvvatlovchi rasmiy jamoa.
+              Yangi O‘zbekiston yoshlari — ilm-fan, tashabbus va intellekt maskani. Yoshlar ittifoqi Ursu universitetning 20,000 ga yaqin talabalarini qo‘llab-quvvatlovchi rasmiy portali.
             </p>
 
             {/* Quick Pillars */}

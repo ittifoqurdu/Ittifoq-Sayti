@@ -25,8 +25,8 @@ import ContactPage from './components/pages/ContactPage'
 import StatistikaPage from './components/pages/StatistikaPage'
 import { NewsProvider } from './context/NewsContext'
 
-const STATIC_SITE_URL = 'https://urdu.uz'
-const DEFAULT_IMAGE_PATH = '/img/banner-ornament.png'
+const STATIC_SITE_URL = 'https://ittifoq.ursu.uz'
+const DEFAULT_IMAGE_PATH = 'https://ittifoq.ursu.uz/img/banner-ornament.png'
 
 function getSiteOrigin() {
   if (typeof window !== 'undefined' && window.location?.origin) {
@@ -36,18 +36,18 @@ function getSiteOrigin() {
 }
 
 function buildSiteUrl(path = '/') {
-  if (!path) return getSiteOrigin()
+  if (!path) return STATIC_SITE_URL
   if (path.startsWith('http://') || path.startsWith('https://')) return path
 
   const normalizedPath = path.startsWith('/') ? path : `/${path}`
-  return `${getSiteOrigin()}${normalizedPath}`
+  return `${STATIC_SITE_URL}${normalizedPath}`
 }
 
 const DEFAULT_SEO = {
-  title: `${profile.name} | Rasmiy Portal | Urganch Davlat Universiteti`,
+  title: 'Ursu Ittifoq | Urganch davlat universiteti Yoshlar ittifoqi',
   description:
-    'Urganch davlat universiteti Yoshlar ittifoqi boshlang‘ich tashkiloti va Yetakchilar Kengashi rasmiy portali. Talabalar tashabbuslari, ilm-fan, startaplar va tadbirlar.',
-  image: buildSiteUrl(DEFAULT_IMAGE_PATH),
+    'Ursu Ittifoq — Urganch davlat universiteti Yoshlar ittifoqi rasmiy sayti. Tadbirlar, startaplar, talabalar tashabbuslari va yangiliklar.',
+  image: DEFAULT_IMAGE_PATH,
 }
 
 function upsertMeta(attribute, key, content) {
@@ -109,81 +109,99 @@ function App() {
   useEffect(() => {
     const path = location.pathname
     const normalizedPath = path.endsWith('/') && path !== '/' ? path.slice(0, -1) : path
-    const isHome = normalizedPath === '/'
+    const isHome = normalizedPath === '' || normalizedPath === '/'
+    let shouldIndex = true
 
     let seo = {
       title: DEFAULT_SEO.title,
       description: DEFAULT_SEO.description,
       image: DEFAULT_SEO.image,
-      url: buildSiteUrl(normalizedPath),
+      url: buildSiteUrl(normalizedPath === '' ? '/' : normalizedPath),
     }
 
     if (normalizedPath === '/tuzilma' || normalizedPath === '/team') {
       seo = {
         ...seo,
-        title: `Yoshlar Ittifoqi Tuzilmasi | ${profile.brand}`,
+        title: 'Tuzilma va Yetakchilar | Ursu Ittifoq',
         description:
-          'Urganch davlat universiteti Yoshlar ittifoqi boshlang‘ich tashkiloti yetakchilari, boshqaruv va fakultet koordinatorlari.',
+          'Urganch davlat universiteti Yoshlar ittifoqi yetakchilar kengashi, boshqaruv tarkibi va fakultet koordinatorlari.',
       }
     } else if (
       normalizedPath === '/klublar' ||
-      normalizedPath === '/yonalishlar' ||
+      normalizedPath === '/yonalishlar'
+    ) {
+      seo = {
+        ...seo,
+        title: 'Klublar va To‘garaklar | Ursu Ittifoq',
+        description:
+          'Urganch davlat universiteti talabalar klublari, ilmiy to‘garaklar, intellektual jamoalar va yoshlar loyihalari.',
+      }
+    } else if (
       normalizedPath.startsWith('/klublar/') ||
       normalizedPath.startsWith('/yonalishlar/')
     ) {
       seo = {
         ...seo,
-        title: `Klublar va To‘garaklar | ${profile.brand}`,
+        title: 'Klub Tafsilotlari | Ursu Ittifoq',
         description:
-          'Urganch davlat universiteti talabalar klublari, to‘garaklar, iqtidorli yoshlar faoliyati va tashabbuslari.',
+          'Urganch davlat universiteti Yoshlar ittifoqi yo‘nalishi va talabalar klubi faoliyati haqida batafsil maʼlumot.',
       }
     } else if (normalizedPath === '/boglanish') {
       seo = {
         ...seo,
-        title: `Bog‘lanish va Murojaat | ${profile.brand}`,
+        title: 'Bog‘lanish va Murojaat | Ursu Ittifoq',
         description:
-          'Urganch davlat universiteti Yoshlar ittifoqiga murojaat, taklif yo‘llash hamda rasmiy aloqa maʼlumotlari.',
+          'Urganch davlat universiteti Yoshlar ittifoqi rasmiy manzillari, aloqa telefonlari va onlayn murojaat yuborish.',
       }
     } else if (normalizedPath === '/hamkorlik') {
       seo = {
         ...seo,
-        title: `Xalqaro Hamkorlik va Grantlar | ${profile.brand}`,
+        title: 'Xalqaro Hamkorlik va Grantlar | Ursu Ittifoq',
         description:
-          'Urganch davlat universitetining xorijiy hamkor universitetlari, Erasmus+, DAAD va xalqaro talabalar almashinuvi dasturlari.',
+          'Urganch davlat universiteti talabalari uchun xalqaro grantlar, xorijiy almashinuv dasturlari va loyihalar.',
       }
-    } else if (normalizedPath === '/yangiliklar' || normalizedPath.startsWith('/yangiliklar/')) {
+    } else if (normalizedPath === '/yangiliklar') {
       seo = {
         ...seo,
-        title: `Yangiliklar va Tanlovlar | ${profile.brand}`,
+        title: 'Yangiliklar va Eʼlonlar | Ursu Ittifoq',
         description:
-          'Urganch davlat universiteti Yoshlar ittifoqi eng so‘nggi yangiliklari, xakatonlar, tanlovlar va eʼlonlar.',
+          'Urganch davlat universiteti Yoshlar ittifoqi so‘nggi yangiliklari, eʼlonlar, xakatonlar va yoshlar tadbirlari.',
+      }
+    } else if (normalizedPath.startsWith('/yangiliklar/')) {
+      seo = {
+        ...seo,
+        title: 'Yangilik Tafsilotlari | Ursu Ittifoq',
+        description:
+          'Urganch davlat universiteti Yoshlar ittifoqi yangiligi va talabalar tadbirlari haqida to‘liq maʼlumot.',
       }
     } else if (normalizedPath === '/statistika') {
       seo = {
         ...seo,
-        title: `Talabalar Kontingenti va Statistikasi | ${profile.brand}`,
+        title: 'Statistika va Ko‘rsatkichlar | Ursu Ittifoq',
         description:
-          'Urganch davlat universiteti talabalar kontingenti to‘liq tahlili, fakultetlar, taʼlim shakllari, jins va yosh ko‘rsatkichlari.',
+          'Urganch davlat universiteti talaba-yoshlar kontingenti, fakultetlar va jamoatchilik faolligi ko‘rsatkichlari.',
       }
     } else if (normalizedPath === '/admin') {
+      shouldIndex = false
       seo = {
         ...seo,
-        title: `Admin Boshqaruv Paneli | ${profile.brand}`,
+        title: 'Admin Boshqaruv Paneli | Ursu Ittifoq',
         description: 'Urganch davlat universiteti Yoshlar ittifoqi admin boshqaruv tizimi.',
       }
     } else if (!isHome) {
+      shouldIndex = false
       seo = {
         ...seo,
-        title: `404 | Sahifa topilmadi | ${profile.brand}`,
+        title: '404 — Sahifa topilmadi | Ursu Ittifoq',
         description: 'Siz qidirgan sahifa mavjud emas.',
       }
     }
 
     document.title = seo.title
     upsertMeta('name', 'description', seo.description)
-    upsertMeta('name', 'robots', isHome ? 'index, follow, max-image-preview:large' : 'noindex, nofollow')
+    upsertMeta('name', 'robots', shouldIndex ? 'index, follow, max-image-preview:large' : 'noindex, nofollow')
     upsertMeta('property', 'og:type', 'website')
-    upsertMeta('property', 'og:site_name', profile.brand)
+    upsertMeta('property', 'og:site_name', 'Ursu Ittifoq')
     upsertMeta('property', 'og:title', seo.title)
     upsertMeta('property', 'og:description', seo.description)
     upsertMeta('property', 'og:url', seo.url)
