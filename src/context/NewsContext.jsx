@@ -25,7 +25,7 @@ const NewsContext = createContext(null)
 const STORAGE_KEY = 'urdu_news_events_v4'
 const CLUBS_STORAGE_KEY = 'urdu_clubs_v8'
 const DELETED_CLUBS_KEY = 'urdu_deleted_clubs_v3'
-const SLIDES_STORAGE_KEY = 'urdu_slides_v3'
+const SLIDES_STORAGE_KEY = 'urdu_slides_v4'
 const AUTH_KEY = 'urdu_admin_authenticated'
 const PASSWORD_KEY = 'urdu_admin_password'
 const DEFAULT_PASSWORD = 'admin2026'
@@ -41,6 +41,7 @@ try {
     'urdu_clubs_v5',
     'urdu_clubs_v6',
     'urdu_clubs_v7',
+    'urdu_slides_v3',
   ].forEach((k) => localStorage.removeItem(k))
 } catch {}
 
@@ -155,6 +156,30 @@ export const defaultClubsList = [
 
 // Real UrDU Yoshlar Ittifoqi slides from the slide folder
 export const defaultSlidesList = [
+  {
+    id: 'slide-bt-1',
+    title: "Madaniyat va san'at to'garaklari",
+    tag: 'Madaniyat',
+    image: '/slide/1.jpg',
+  },
+  {
+    id: 'slide-bt-2',
+    title: "Sog'lom turmush tarzi va sport musobaqalari",
+    tag: 'Sport',
+    image: '/slide/2.jpg',
+  },
+  {
+    id: 'slide-bt-3',
+    title: 'Axborot texnologiyalari va raqamli startaplar',
+    tag: 'IT & Innovatsiya',
+    image: '/slide/3.jpg',
+  },
+  {
+    id: 'slide-bt-4',
+    title: "Kitobxonlik va ma'naviyat maskani",
+    tag: 'Kitobxonlik',
+    image: '/slide/4.jpg',
+  },
   {
     id: 'slide-1',
     title: 'UrDU Yoshlar Forumi & Taqdirlash',

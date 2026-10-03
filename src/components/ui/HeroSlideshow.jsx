@@ -1,16 +1,35 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'motion/react'
-import { Sparkles } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useNews, defaultSlidesList } from '../../context/NewsContext'
 
-const INTERVAL_MS = 3000 // Har 3 sekundda almashadi
+const DELAY_MS = 5600 // beshtashabbus sayti kabi 5.6 soniya
+
+const BESHTASHABBUS_SLIDES = [
+  { id: 'bt-1', image: '/slide/1.jpg', title: "Madaniyat va san'at to'garaklari" },
+  { id: 'bt-2', image: '/slide/2.jpg', title: "Sog'lom turmush tarzi va sport musobaqalari" },
+  { id: 'bt-3', image: '/slide/3.jpg', title: "Axborot texnologiyalari va raqamli startaplar" },
+  { id: 'bt-4', image: '/slide/4.jpg', title: "Kitobxonlik va ma'naviyat maskani" },
+]
 
 export default function HeroSlideshow() {
   const { slidesList } = useNews()
-  const items = slidesList && slidesList.length > 0 ? slidesList : defaultSlidesList
+  // Beshtashabbus suratlari har doim 1-o'rinda kafolatlanadi
+  const items = [
+    ...BESHTASHABBUS_SLIDES,
+    ...(slidesList || defaultSlidesList).filter(
+      (s) =>
+        s &&
+        s.image &&
+        !s.image.includes('/slide/1.jpg') &&
+        !s.image.includes('/slide/2.jpg') &&
+        !s.image.includes('/slide/3.jpg') &&
+        !s.image.includes('/slide/4.jpg')
+    ),
+  ]
   const count = items.length
 
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [isHovered, setIsHovered] = useState(false)
 
   // Indeks chegaradan chiqib ketmasligi uchun
   useEffect(() => {
@@ -19,165 +38,97 @@ export default function HeroSlideshow() {
     }
   }, [count, currentIndex])
 
-  // Avtomatik uzluksiz oqim (3 sekund)
+  // Avtomatik uzluksiz oqim (sichqoncha rasm ustida bo'lsa to'xtab turadi)
   useEffect(() => {
-    if (count <= 1) return undefined
+    if (count <= 1 || isHovered) return undefined
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % count)
-    }, INTERVAL_MS)
+    }, DELAY_MS)
     return () => clearInterval(timer)
-  }, [count])
+  }, [count, isHovered])
 
-  // Vertikal o'lchamlar va offsetlar (kartalar yuqoridan kelib pastga oqadi)
-  const getCardStyle = (i) => {
-    let offset = (currentIndex - i) % count
-    if (offset > count / 2) offset -= count
-    if (offset < -count / 2) offset += count
-
-    // O'rtadagi asosiy katta karta
-    if (offset === 0) {
-      return {
-        y: 0,
-        scale: 1,
-        opacity: 1,
-        zIndex: 20,
-        filter: 'blur(0px)',
-        isCenter: true,
-      }
-    }
-    // Yuqoridagi kelayotgan karta (dumaloq qirralari to'liq ko'rinadi)
-    if (offset === -1) {
-      return {
-        y: -105,
-        scale: 0.9,
-        opacity: 0.55,
-        zIndex: 10,
-        filter: 'blur(0.4px)',
-        isCenter: false,
-      }
-    }
-    // Pastdagi ketayotgan karta (dumaloq qirralari to'liq ko'rinadi)
-    if (offset === 1) {
-      return {
-        y: 105,
-        scale: 0.9,
-        opacity: 0.55,
-        zIndex: 10,
-        filter: 'blur(0.4px)',
-        isCenter: false,
-      }
-    }
-    // Yuqoridan kirishga tayyor turgan
-    if (offset === -2) {
-      return {
-        y: -210,
-        scale: 0.78,
-        opacity: 0,
-        zIndex: 0,
-        filter: 'blur(2px)',
-        isCenter: false,
-      }
-    }
-    // Pastga chiqib ketgan
-    return {
-      y: 210,
-      scale: 0.78,
-      opacity: 0,
-      zIndex: 0,
-      filter: 'blur(2px)',
-      isCenter: false,
-    }
-  }
+  const goNext = () => setCurrentIndex((prev) => (prev + 1) % count)
+  const goPrev = () => setCurrentIndex((prev) => (prev - 1 + count) % count)
 
   return (
-    <div className="relative w-full max-w-[540px] xl:max-w-[580px] mx-auto select-none py-4">
-      {/* Orqa fon yumshoq emerald nur */}
-      <div className="absolute inset-x-6 top-1/2 -translate-y-1/2 h-[340px] rounded-[3rem] bg-gradient-to-r from-emerald-500/20 via-teal-500/15 to-emerald-500/20 blur-3xl opacity-70 pointer-events-none" />
-
-      {/* Vertikal Oqim Karuseli - Yuqori va pastki kartalar burchaklari kesilmay, to'liq dumaloq ko'rinadi */}
-      <div className="relative h-[490px] sm:h-[530px] lg:h-[550px] w-full flex items-center justify-center overflow-visible">
-        {items.map((item, i) => {
-          const style = getCardStyle(i)
-
+    <div
+      className="group relative w-full aspect-[16/10] overflow-hidden rounded-2xl md:rounded-3xl border border-zinc-200/80 bg-zinc-950 shadow-2xl shadow-emerald-950/15 select-none dark:border-white/10 dark:shadow-black/60"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Slaydlar maydoni */}
+      <div className="absolute inset-0 overflow-hidden">
+        {items.map((item, idx) => {
+          const isActive = idx === currentIndex
           return (
-            <motion.div
-              key={item.id}
-              animate={{
-                y: style.y,
-                scale: style.scale,
-                opacity: style.opacity,
-                zIndex: style.zIndex,
-                filter: style.filter,
-              }}
-              transition={{
-                duration: 0.75,
-                ease: [0.22, 1, 0.36, 1], // Butunlay silliq, tabiiy oqim
-              }}
-              className={`absolute w-[94%] sm:w-[96%] h-[270px] sm:h-[305px] lg:h-[320px] rounded-[2rem] sm:rounded-[2.25rem] overflow-hidden shadow-2xl transition-shadow ${
-                style.isCenter
-                  ? 'border-2 border-emerald-500/60 dark:border-emerald-400/50 ring-2 ring-emerald-500/20 shadow-[0_20px_50px_rgba(0,0,0,0.55)]'
-                  : 'border border-white/30 dark:border-white/20 shadow-[0_12px_30px_rgba(0,0,0,0.35)]'
+            <div
+              key={item.id || idx}
+              className={`absolute inset-0 overflow-hidden transition-all duration-[1100ms] ease-in-out ${
+                isActive
+                  ? 'opacity-100 z-10 visible'
+                  : 'opacity-0 z-0 invisible pointer-events-none'
               }`}
             >
-              {/* Rasm */}
               <img
                 src={item.image}
-                alt={item.title}
-                className="h-full w-full object-cover object-center"
+                alt={item.title || `UrDU Tadbirlari ${idx + 1}`}
+                className={`h-full w-full object-cover object-center transition-transform duration-[7500ms] linear ${
+                  isActive ? 'scale-110' : 'scale-100'
+                }`}
                 loading="eager"
                 onError={(e) => {
                   e.currentTarget.src = '/slide/photo_2026-08-19_17-46-57.jpg'
                 }}
               />
-
-              {/* Gradient qatlamlar */}
-              <div
-                className={`absolute inset-0 transition-opacity duration-500 ${
-                  style.isCenter
-                    ? 'bg-gradient-to-t from-black/95 via-black/35 to-black/15'
-                    : 'bg-black/60'
-                }`}
-              />
-
-              {/* Tag (faqat o'rtadagi asosiy kartada tiniq ko'rinadi) */}
-              <div
-                className={`absolute top-4 left-4 sm:top-5 sm:left-5 z-10 transition-opacity duration-300 ${
-                  style.isCenter ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                }`}
-              >
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/40 bg-black/65 px-3.5 py-1 text-xs font-bold text-emerald-300 shadow-md backdrop-blur-md">
-                  <Sparkles size={12} className="text-emerald-400" />
-                  {item.tag}
-                </span>
-              </div>
-
-              {/* Faqat qisqa Title (faqat o'rtadagi kartada) */}
-              <div
-                className={`absolute bottom-0 inset-x-0 p-5 sm:p-7 z-10 transition-opacity duration-300 ${
-                  style.isCenter ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                }`}
-              >
-                <h3 className="text-2xl sm:text-3xl lg:text-[30px] font-black tracking-tight text-white leading-snug drop-shadow-[0_4px_14px_rgba(0,0,0,0.9)]">
-                  {item.title}
-                </h3>
-              </div>
-
-              {/* 3 sekundlik nozik chiziq (faqat o'rtadagi kartada) */}
-              {style.isCenter && (
-                <div className="absolute bottom-0 inset-x-0 h-1 bg-white/15 z-20 overflow-hidden">
-                  <motion.div
-                    key={`progress-${item.id}`}
-                    initial={{ width: '0%' }}
-                    animate={{ width: '100%' }}
-                    transition={{ duration: 3, ease: 'linear' }}
-                    className="h-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]"
-                  />
-                </div>
-              )}
-            </motion.div>
+            </div>
           )
         })}
       </div>
+
+      {/* Navigatsiya strelkalari (sichqoncha rasm ustiga borganda silliq paydo bo'ladi) */}
+      {count > 1 && (
+        <>
+          <button
+            type="button"
+            onClick={goPrev}
+            aria-label="Oldingi rasm"
+            className="absolute left-3.5 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-xl bg-white/90 text-zinc-900 shadow-lg backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 hover:bg-white active:scale-95 cursor-pointer dark:bg-black/75 dark:text-white dark:hover:bg-black"
+          >
+            <ChevronLeft size={20} strokeWidth={2.5} />
+          </button>
+
+          <button
+            type="button"
+            onClick={goNext}
+            aria-label="Keyingi rasm"
+            className="absolute right-3.5 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-xl bg-white/90 text-zinc-900 shadow-lg backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 hover:bg-white active:scale-95 cursor-pointer dark:bg-black/75 dark:text-white dark:hover:bg-black"
+          >
+            <ChevronRight size={20} strokeWidth={2.5} />
+          </button>
+        </>
+      )}
+
+      {/* Pastki markazdagi ko'rsatkich nuqtalar (Dots) */}
+      {count > 1 && (
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+          {items.map((_, dotIdx) => {
+            const isActive = dotIdx === currentIndex
+            return (
+              <button
+                key={dotIdx}
+                type="button"
+                onClick={() => setCurrentIndex(dotIdx)}
+                aria-label={`Rasm ${dotIdx + 1}`}
+                className={`h-2 rounded-full transition-all duration-350 cursor-pointer ${
+                  isActive
+                    ? 'w-7 bg-white shadow-md shadow-black/50'
+                    : 'w-2 bg-white/55 hover:bg-white/80'
+                }`}
+              />
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }
