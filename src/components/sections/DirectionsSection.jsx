@@ -50,7 +50,7 @@ export default function DirectionsSection() {
           </p>
           <div className="mt-6">
             <a
-              href={socialLinks.telegram || 'https://t.me/UrDU_Yoshlari_BT'}
+              href={socialLinks.telegram || 'https://t.me/UrDU_YI'}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-6 py-2.5 text-xs font-bold text-zinc-950 hover:bg-emerald-400 transition"

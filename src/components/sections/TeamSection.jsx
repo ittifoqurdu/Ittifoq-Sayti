@@ -107,7 +107,7 @@ function LeaderFeaturedCard({ member }) {
                 <div className="min-w-0">
                   <span className="text-[10px] text-zinc-400 font-semibold block">Telegram</span>
                   <span className="font-semibold truncate block">
-                    {member.telegramHandle || '@UrDU_Yoshlari_BT'}
+                    {member.telegramHandle || '@UrDU_YI'}
                   </span>
                 </div>
               </a>
@@ -155,21 +155,42 @@ function LeaderFeaturedCard({ member }) {
   )
 }
 
-function getLoneCardClass(index, total) {
-  if (index !== total - 1) return ''
-  const isAloneLg = total % 3 === 1
-  const isAloneMd = total % 2 === 1
+function getCardPlacementClass(index, total) {
+  const isLast = index === total - 1
+  const isSecondToLast = index === total - 2
+  const remainder3 = total % 3
+  const remainder2 = total % 2
 
-  if (isAloneLg && isAloneMd) {
-    return 'md:col-span-2 md:max-w-md md:w-full md:mx-auto lg:col-span-1 lg:col-start-2 lg:max-w-none lg:mx-0'
+  // Default for 3-column desktop layout (6-column grid where each item spans 2)
+  let classes = 'col-span-1 md:col-span-1 lg:col-span-2'
+
+  // When only 1 card is in the last row on lg screens
+  if (remainder3 === 1 && isLast) {
+    if (remainder2 === 1) {
+      return 'col-span-1 md:col-span-2 md:max-w-md md:w-full md:mx-auto lg:col-start-3 lg:col-span-2 lg:max-w-none lg:mx-0'
+    }
+    return 'col-span-1 md:col-span-1 lg:col-start-3 lg:col-span-2'
   }
-  if (isAloneLg) {
-    return 'lg:col-start-2'
+
+  // When 2 cards are in the last row on lg screens (center both cards side-by-side!)
+  if (remainder3 === 2) {
+    if (isSecondToLast) {
+      return 'col-span-1 md:col-span-1 lg:col-start-2 lg:col-span-2'
+    }
+    if (isLast) {
+      if (remainder2 === 1) {
+        return 'col-span-1 md:col-span-2 md:max-w-md md:w-full md:mx-auto lg:col-start-4 lg:col-span-2 lg:max-w-none lg:mx-0'
+      }
+      return 'col-span-1 md:col-span-1 lg:col-start-4 lg:col-span-2'
+    }
   }
-  if (isAloneMd) {
-    return 'md:col-span-2 md:max-w-md md:w-full md:mx-auto lg:col-span-1 lg:max-w-none lg:mx-0'
+
+  // If last row has full 3 cards on lg, but is alone on md
+  if (remainder2 === 1 && isLast) {
+    return 'col-span-1 md:col-span-2 md:max-w-md md:w-full md:mx-auto lg:col-span-2 lg:max-w-none lg:mx-0'
   }
-  return ''
+
+  return classes
 }
 
 function MemberCard({ member, className = '' }) {
@@ -251,7 +272,7 @@ function MemberCard({ member, className = '' }) {
                 <span className="font-semibold">Telegram:</span>
               </span>
               <span className="text-zinc-500 group-hover:text-zinc-800 dark:text-zinc-400 dark:group-hover:text-zinc-200">
-                {member.telegramHandle || '@UrDU_Yoshlari_BT'}
+                {member.telegramHandle || '@UrDU_YI'}
               </span>
             </a>
           ) : null}
@@ -401,12 +422,12 @@ export default function TeamSection() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-6">
               {koordinatorMembers.map((member, index) => (
                 <MemberCard
                   key={member.id}
                   member={member}
-                  className={getLoneCardClass(index, koordinatorMembers.length)}
+                  className={getCardPlacementClass(index, koordinatorMembers.length)}
                 />
               ))}
             </div>
@@ -430,12 +451,12 @@ export default function TeamSection() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-6">
               {fakultetKoordinatorMembers.map((member, index) => (
                 <MemberCard
                   key={member.id}
                   member={member}
-                  className={getLoneCardClass(index, fakultetKoordinatorMembers.length)}
+                  className={getCardPlacementClass(index, fakultetKoordinatorMembers.length)}
                 />
               ))}
             </div>
