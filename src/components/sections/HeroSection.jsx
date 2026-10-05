@@ -58,7 +58,7 @@ function HeroSection() {
             </h1>
 
             <p className="mt-3 text-lg font-semibold text-emerald-700 sm:text-xl dark:text-emerald-300/90">
-              UrDU Yoshlar ittifoqi — Boshlang‘ich tashkiloti va Yetakchilar kengashi
+              UrDU Yoshlar ittifoqi — Boshlang‘ich tashkiloti va yetakchilar kengashi
             </p>
 
             <p className="mt-4 max-w-[55ch] text-base leading-relaxed text-zinc-600 sm:text-lg dark:text-zinc-300">
@@ -121,14 +121,14 @@ function HeroSection() {
           <div className="flex items-start gap-3">
             <Award size={18} className="text-cyan-600 shrink-0 mt-0.5 dark:text-cyan-400" />
             <div>
-              <p className="font-bold text-zinc-900 dark:text-zinc-200">13 ta Fakultet Kengashi</p>
-              <p className="mt-0.5 text-zinc-500 font-normal">20,000+ Talaba qamrovi</p>
+              <p className="font-bold text-zinc-900 dark:text-zinc-200">13 ta fakultet kengashi</p>
+              <p className="mt-0.5 text-zinc-500 font-normal">20 000+ talaba qamrovi</p>
             </div>
           </div>
           <div className="flex items-start gap-3 sm:justify-end">
             <Send size={18} className="text-amber-500 shrink-0 mt-0.5 dark:text-amber-400" />
             <div className="sm:text-right">
-              <p className="font-bold text-zinc-900 dark:text-zinc-200">Rasmiy Kanal</p>
+              <p className="font-bold text-zinc-900 dark:text-zinc-200">Rasmiy kanal</p>
               <p className="mt-0.5 text-zinc-500 font-normal">{profile.telegramHandle}</p>
             </div>
           </div>

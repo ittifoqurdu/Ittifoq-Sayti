@@ -107,7 +107,7 @@ function BehindCurtains() {
         <div>
           <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400">Biz bilan bog‘laning</p>
           <p className="mt-1 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-            UrDU Yoshlar Ittifoqi barcha talabalarga ochiq — o‘z tashabbus va g‘oyangiz bilan safimizga qo‘shiling!
+            UrDU Yoshlar ittifoqi barcha talabalarga ochiq — o‘z tashabbus va g‘oyangiz bilan safimizga qo‘shiling!
           </p>
         </div>
 

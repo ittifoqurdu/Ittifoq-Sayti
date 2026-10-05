@@ -16,7 +16,7 @@ import {
 export const profile = {
   name: 'UrDU Yoshlar Ittifoqi BT',
   brand: 'UrDU Yoshlar Ittifoqi',
-  title: "Boshlang‘ich tashkiloti va Yetakchilar kengashi",
+  title: "Boshlang‘ich tashkiloti va yetakchilar kengashi",
   subtitle: "Urganch davlat universiteti Yoshlar ittifoqi boshlang‘ich tashkiloti",
   tagline: "Ilm, tashabbus va intellekt birlashgan maskan",
   university: 'Urganch Davlat Universiteti',
@@ -49,7 +49,7 @@ export const navItems = [
 
 export const universityStats = [
   {
-    value: '20,000+',
+    value: '20 000+',
     label: 'Talaba-yoshlar',
     description: 'Universitet bo‘ylab barcha fakultet talabalari',
     icon: Users,
@@ -508,7 +508,7 @@ export const partnerUniversities = [
     facultyFocus: 'Axborot texnologiyalari, Matematika, Iqtisodiyot',
     grantDetails: 'Bir semestr uchun to‘liq moliyalashtiriladigan grant (oylik 850€ + yo‘l xarajatlari).',
     description: 'UrDU bilan eng faol hamkorlardan biri. Har yili 5 dan ortiq talabamiz Klagenfurtda 1 semestr bepul tahsil oladi.',
-    badge: 'Erasmus+ Hamkor',
+    badge: 'Erasmus+ hamkor',
     website: 'https://www.aau.at',
   },
   {
@@ -524,7 +524,7 @@ export const partnerUniversities = [
     facultyFocus: 'Meʼmorchilik, Ekologiya, Muhandislik texnologiyalari',
     grantDetails: 'DAAD stipendiyalari va yozgi amaliyot kurslari orqali to‘liq qoplanadi.',
     description: 'Yevropaning nufuzli dizayn va meʼmorchilik dargohi. Atrof-muhit va barqaror qurilish yo‘nalishlarida yosh olimlar almashinuvi.',
-    badge: 'DAAD Dasturi',
+    badge: 'DAAD dasturi',
     website: 'https://www.uni-weimar.de',
   },
   {
@@ -540,7 +540,7 @@ export const partnerUniversities = [
     facultyFocus: 'Amaliy matematika, Kompyuter fanlari, Fizika',
     grantDetails: 'Oylik 850€ stipendiya va Yevropa Ittifoqining rasmiy diplomi berilishi.',
     description: "Amaliy matematika va axborot tizimlari bo‘yicha magistr talabalarimiz uchun 1+1 qo‘shma dasturi yo‘lga qo‘yilgan.",
-    badge: 'Erasmus+ Hamkor',
+    badge: 'Erasmus+ hamkor',
     website: 'https://www.univaq.it',
   },
   {
@@ -556,7 +556,7 @@ export const partnerUniversities = [
     facultyFocus: 'Tabiiy fanlar, Biologiya, Biotexnologiya',
     grantDetails: 'Erasmus+ doirasida bepul o‘qish, turar joy va oylik stipendiya.',
     description: 'Qishloq xo‘jaligi, oziq-ovqat xavfsizligi va bio-ekologiya bo‘yicha talabalarimiz ilmiy laboratoriyalarda amaliyot o‘taydilar.',
-    badge: 'Erasmus+ Hamkor',
+    badge: 'Erasmus+ hamkor',
     website: 'https://www.uco.es',
   },
   {
@@ -572,7 +572,7 @@ export const partnerUniversities = [
     facultyFocus: 'Agrobiznes, Iqtisodiyot, Oziq-ovqat texnologiyasi',
     grantDetails: 'Bir semestrlik o‘quv kursi va Yevropa standartidagi kreditlar (ECTS) transferi.',
     description: 'Polshaning eng yirik tabiiy fanlar universiteti. Talabalarimiz 1 semestr davomida ingliz tilidagi fanlarni o‘zlashtiradilar.',
-    badge: 'Akademik Hamkor',
+    badge: 'Akademik hamkor',
     website: 'https://www.sggw.edu.pl',
   },
   {
@@ -588,7 +588,7 @@ export const partnerUniversities = [
     facultyFocus: 'Tarix, Sharqshunoslik, Filologiya, Jurnalistika',
     grantDetails: 'Mevlana dasturi bo‘yicha bepul yotoqxona va 4 oylik stipendiya.',
     description: 'Turk dunyosi yoshlari o‘rtasida tarixiy-madaniy integratsiya va yosh tadqiqotchilarning arxiv ishlari.',
-    badge: 'Mevlana Dasturi',
+    badge: 'Mevlana dasturi',
     website: 'https://www.istanbul.edu.tr',
   },
   {
@@ -604,7 +604,7 @@ export const partnerUniversities = [
     facultyFocus: 'Turizm, Kimyo, O‘zbek-Turk tili',
     grantDetails: 'Bakalavr talabalari uchun 4-bosqichda Izmir shahrida o‘qish va ikki tomonlama diplom.',
     description: 'UrDU bilan ikki tomonlama diplom (Double Degree) beruvchi eng yirik strategik taʼlim hamkori.',
-    badge: 'Qo‘shma Diplom',
+    badge: 'Qo‘shma diplom',
     website: 'https://ege.edu.tr',
   },
   {
@@ -620,7 +620,7 @@ export const partnerUniversities = [
     facultyFocus: 'Matematika va mexanika, Kimyo, Fizika',
     grantDetails: 'Magistr va iqtidorli talabalar uchun ilmiy laboratoriyalarda qisqa muddatli amaliyot.',
     description: 'MDH hududidagi yetakchi oliygoh bilan fundamental fanlar bo‘yicha seminar va mahorat darslari.',
-    badge: 'Ilmiy Hamkor',
+    badge: 'Ilmiy hamkor',
     website: 'https://www.msu.ru',
   },
   {
@@ -636,7 +636,7 @@ export const partnerUniversities = [
     facultyFocus: 'Filologiya, Huquq, Axborot texnologiyalari',
     grantDetails: 'O‘zaro kelishuv asosida bepul o‘qish va stipendiyali almashinuv.',
     description: 'KFU ning IT-litseyi va yoshlar markazlari bilan muntazam xakatonlar va tajriba almashinuvi.',
-    badge: 'Akademik Hamkor',
+    badge: 'Akademik hamkor',
     website: 'https://kpfu.ru',
   },
   {
@@ -652,7 +652,7 @@ export const partnerUniversities = [
     facultyFocus: 'Raqamli iqtisodiyot, Sunʼiy intellekt, Xitoy tili',
     grantDetails: 'To‘liq qoplanadigan hukumat granti (o‘qish, yotoqxona, tibbiy sug‘urta va oylik 3000 yuan).',
     description: 'Xitoy tilini o‘rganayotgan va IT yo‘nalishidagi iqtidorli talabalar uchun beqiyos global tramplin.',
-    badge: 'CSC Hukumat Granti',
+    badge: 'CSC hukumat granti',
     website: 'https://www.shu.edu.cn',
   },
   {
@@ -668,7 +668,7 @@ export const partnerUniversities = [
     facultyFocus: 'Xalqaro munosabatlar, Turizm menejmenti, Ingliz tili',
     grantDetails: 'Qisqa muddatli yetakchilik kurslari va almashinuv dasturlari.',
     description: 'Janubi-sharqiy Osiyoning yetakchi nufuzli universiteti bilan yoshlar yetakchilari almashinuvi.',
-    badge: 'Xalqaro Forum',
+    badge: 'Xalqaro forum',
     website: 'https://www.ukm.my',
   },
   {
@@ -684,7 +684,7 @@ export const partnerUniversities = [
     facultyFocus: 'Tarix, Biologiya, Geografiya va ekologiya',
     grantDetails: 'Mintaqaviy integratsiya doirasida bepul taʼlim va yotoqxona.',
     description: 'Qardosh Qozog‘iston bilan talabalar ilmiy anjumanlari va sport musobaqalaridagi yaqin hamkorlik.',
-    badge: 'Mintaqaviy Hamkor',
+    badge: 'Mintaqaviy hamkor',
     website: 'https://www.kaznu.kz',
   },
 ]

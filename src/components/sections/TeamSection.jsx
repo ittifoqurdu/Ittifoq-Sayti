@@ -55,7 +55,7 @@ function LeaderFeaturedCard({ member }) {
           <div className="space-y-4">
             <div>
               <span className="inline-block text-[11px] font-extrabold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 mb-3">
-                Boshqaruv yetakchisi
+                Boshlang‘ich tashkilot yetakchisi
               </span>
               <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-zinc-900 group-hover:text-emerald-600 transition-colors dark:text-zinc-100 dark:group-hover:text-emerald-300">
                 {member.name}

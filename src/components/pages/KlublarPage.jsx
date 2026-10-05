@@ -21,7 +21,7 @@ export default function KlublarPage() {
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=2000&q=85"
-            alt="UrDU Talabalar Klublari"
+            alt="UrDU talabalar klublari"
             className="h-full w-full object-cover object-center filter brightness-[0.45] contrast-[1.05] dark:brightness-[0.3]"
           />
           {/* Crisp, deep cinematic overlay without foggy washouts */}
@@ -58,7 +58,7 @@ export default function KlublarPage() {
                 <p className="text-[11px] font-semibold text-zinc-300 mt-0.5">Asosiy yo‘nalishlar</p>
               </div>
               <div className="rounded-2xl border border-white/15 bg-black/40 p-3.5 backdrop-blur-md text-center">
-                <p className="text-2xl font-black text-teal-300">2,500+</p>
+                <p className="text-2xl font-black text-teal-300">2 500+</p>
                 <p className="text-[11px] font-semibold text-zinc-300 mt-0.5">Faol talabalar</p>
               </div>
               <div className="rounded-2xl border border-white/15 bg-black/40 p-3.5 backdrop-blur-md text-center">

@@ -31,7 +31,7 @@ function FooterSection({ showContactForm = true, isStandalone = false } = {}) {
   )
 
   const quickLinks = [
-    { href: socialLinks.telegram, label: 'Telegram Kanal', icon: Send },
+    { href: socialLinks.telegram, label: 'Telegram kanal', icon: Send },
     { href: socialLinks.instagram, label: 'Instagram', icon: Instagram },
     { href: `https://mail.google.com/mail/?view=cm&fs=1&to=${contactEmail}`, label: contactEmail, icon: Mail },
     { href: socialLinks.phone, label: profile.phoneLabel, icon: Phone },

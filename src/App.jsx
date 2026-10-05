@@ -122,7 +122,7 @@ function App() {
     if (normalizedPath === '/tuzilma' || normalizedPath === '/team') {
       seo = {
         ...seo,
-        title: 'Tuzilma va Yetakchilar | Ursu Ittifoq',
+        title: 'Tuzilma va yetakchilar | Ursu Ittifoq',
         description:
           'Urganch davlat universiteti Yoshlar ittifoqi yetakchilar kengashi, boshqaruv tarkibi va fakultet koordinatorlari.',
       }
@@ -132,7 +132,7 @@ function App() {
     ) {
       seo = {
         ...seo,
-        title: 'Klublar va To‘garaklar | Ursu Ittifoq',
+        title: 'Klublar va to‘garaklar | Ursu Ittifoq',
         description:
           'Urganch davlat universiteti talabalar klublari, ilmiy to‘garaklar, intellektual jamoalar va yoshlar loyihalari.',
       }
@@ -142,42 +142,42 @@ function App() {
     ) {
       seo = {
         ...seo,
-        title: 'Klub Tafsilotlari | Ursu Ittifoq',
+        title: 'Klub tafsilotlari | Ursu Ittifoq',
         description:
           'Urganch davlat universiteti Yoshlar ittifoqi yo‘nalishi va talabalar klubi faoliyati haqida batafsil maʼlumot.',
       }
     } else if (normalizedPath === '/boglanish') {
       seo = {
         ...seo,
-        title: 'Bog‘lanish va Murojaat | Ursu Ittifoq',
+        title: 'Bog‘lanish va murojaat | Ursu Ittifoq',
         description:
           'Urganch davlat universiteti Yoshlar ittifoqi rasmiy manzillari, aloqa telefonlari va onlayn murojaat yuborish.',
       }
     } else if (normalizedPath === '/hamkorlik') {
       seo = {
         ...seo,
-        title: 'Xalqaro Hamkorlik va Grantlar | Ursu Ittifoq',
+        title: 'Xalqaro hamkorlik va grantlar | Ursu Ittifoq',
         description:
           'Urganch davlat universiteti talabalari uchun xalqaro grantlar, xorijiy almashinuv dasturlari va loyihalar.',
       }
     } else if (normalizedPath === '/yangiliklar') {
       seo = {
         ...seo,
-        title: 'Yangiliklar va Eʼlonlar | Ursu Ittifoq',
+        title: 'Yangiliklar va eʼlonlar | Ursu Ittifoq',
         description:
           'Urganch davlat universiteti Yoshlar ittifoqi so‘nggi yangiliklari, eʼlonlar, xakatonlar va yoshlar tadbirlari.',
       }
     } else if (normalizedPath.startsWith('/yangiliklar/')) {
       seo = {
         ...seo,
-        title: 'Yangilik Tafsilotlari | Ursu Ittifoq',
+        title: 'Yangilik tafsilotlari | Ursu Ittifoq',
         description:
           'Urganch davlat universiteti Yoshlar ittifoqi yangiligi va talabalar tadbirlari haqida to‘liq maʼlumot.',
       }
     } else if (normalizedPath === '/statistika') {
       seo = {
         ...seo,
-        title: 'Statistika va Ko‘rsatkichlar | Ursu Ittifoq',
+        title: 'Statistika va ko‘rsatkichlar | Ursu Ittifoq',
         description:
           'Urganch davlat universiteti talaba-yoshlar kontingenti, fakultetlar va jamoatchilik faolligi ko‘rsatkichlari.',
       }
@@ -185,7 +185,7 @@ function App() {
       shouldIndex = false
       seo = {
         ...seo,
-        title: 'Admin Boshqaruv Paneli | Ursu Ittifoq',
+        title: 'Admin boshqaruv paneli | Ursu Ittifoq',
         description: 'Urganch davlat universiteti Yoshlar ittifoqi admin boshqaruv tizimi.',
       }
     } else if (!isHome) {

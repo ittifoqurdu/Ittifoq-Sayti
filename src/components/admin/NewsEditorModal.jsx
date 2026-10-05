@@ -43,7 +43,7 @@ const SAMPLE_PRESET_IMAGES = [
   { label: 'IT & Texnologiya', url: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1200&auto=format&fit=crop&q=80' },
   { label: 'Universitet & Talabalar', url: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&auto=format&fit=crop&q=80' },
   { label: 'Madaniyat & Sanʼat', url: 'https://images.unsplash.com/photo-1460723237483-7a6dc9d0b212?w=1200&auto=format&fit=crop&q=80' },
-  { label: 'Xalqaro Grantlar', url: 'https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=1200&auto=format&fit=crop&q=80' },
+  { label: 'Xalqaro grantlar', url: 'https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=1200&auto=format&fit=crop&q=80' },
 ]
 
 export default function NewsEditorModal({ isOpen, onClose, onSave, editItem = null }) {

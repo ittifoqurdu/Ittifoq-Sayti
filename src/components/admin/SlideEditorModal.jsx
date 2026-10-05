@@ -113,14 +113,14 @@ export default function SlideEditorModal({ isOpen, onClose, onSave, editItem }) 
                 {/* Title */}
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-300 mb-1">
-                Qisqa va Aniq Sarlavha *
+                Qisqa va aniq sarlavha *
               </label>
               <input
                 type="text"
                 required
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="Masalan: 5,000+ Ko‘chat Ekish Aksiyasi"
+                placeholder="Masalan: 5 000+ ko‘chat ekish aksiyasi"
                 className="w-full rounded-2xl border border-zinc-200 bg-zinc-50 px-4 py-2.5 text-xs text-zinc-900 outline-none focus:border-emerald-500 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100"
               />
             </div>

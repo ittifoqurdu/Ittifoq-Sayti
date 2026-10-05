@@ -92,7 +92,7 @@ function HeaderNav() {
           />
           <div className="flex flex-col">
             <span className="text-xs sm:text-sm font-bold tracking-tight text-zinc-900 dark:text-zinc-100 uppercase leading-none">
-              UrDU Yoshlar Ittifoqi
+              UrDU Yoshlar ittifoqi
             </span>
             <span className="hidden sm:block text-[10px] text-zinc-500 dark:text-zinc-400 font-medium tracking-wide mt-0.5">
               Boshlang‘ich tashkiloti

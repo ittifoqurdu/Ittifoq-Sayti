@@ -317,7 +317,7 @@ export default function AdminDashboard() {
               }`}
             >
               <Newspaper size={14} />
-              <span>1. Yangilik va Eʼlonlar ({newsList.length})</span>
+              <span>1. Yangilik va eʼlonlar ({newsList.length})</span>
             </button>
 
             <button
@@ -333,7 +333,7 @@ export default function AdminDashboard() {
               }`}
             >
               <Compass size={14} />
-              <span>2. Klub va To‘garaklar ({clubsList.length})</span>
+              <span>2. Klub va to‘garaklar ({clubsList.length})</span>
             </button>
 
             <button

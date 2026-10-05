@@ -26,7 +26,7 @@ function BlogsSection() {
           Yangiliklar & Eʼlonlar
         </div>
         <h2 className="mt-4 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl lg:text-5xl dark:text-zinc-100">
-          Universitet <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent dark:from-emerald-400 dark:via-teal-300 dark:to-cyan-400">Yoshlar Hayoti</span>
+          Universitet <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent dark:from-emerald-400 dark:via-teal-300 dark:to-cyan-400">yoshlar hayoti</span>
         </h2>
         <p className="mx-auto mt-4 max-w-2xl text-base text-zinc-600 dark:text-zinc-400">
           Xakatonlar, intellektual turnirlar, festivallar, eʼlonlar va talabalarimizning respublika miqyosidagi yutuqlari.
@@ -102,7 +102,7 @@ function BlogsSection() {
 
             {/* Bottom link */}
             <div className="mt-6 border-t border-zinc-200/80 pt-4 flex items-center justify-between dark:border-zinc-800/80">
-              <span className="text-xs text-zinc-500">UrDU Yoshlar Matbuot Xizmati</span>
+              <span className="text-xs text-zinc-500">UrDU Yoshlar matbuot xizmati</span>
               <Link
                 to={`/yangiliklar/${item.id}`}
                 className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 transition hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300"

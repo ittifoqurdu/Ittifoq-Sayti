@@ -216,7 +216,7 @@ export default function ClubEditorModal({ isOpen, onClose, onSave, editItem }) {
                       }`}
                     >
                       <span className="text-base">🏛</span>
-                      <span>Universitet Klubi</span>
+                      <span>Universitet klubi</span>
                     </button>
                   </div>
                   <p className="text-[11px] text-zinc-500 mt-1.5">
@@ -236,7 +236,7 @@ export default function ClubEditorModal({ isOpen, onClose, onSave, editItem }) {
                 required
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="Masalan: 'IT & Sunʼiy Intellekt' yoki 'Yoshlar Notiqlik Klubi'"
+                placeholder="Masalan: 'IT va sunʼiy intellekt' yoki 'Yoshlar notiqlik klubi'"
                 className="w-full rounded-2xl border border-zinc-200 bg-zinc-50 px-4 py-2.5 text-xs text-zinc-900 outline-none focus:border-cyan-500 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100"
               />
             </div>
