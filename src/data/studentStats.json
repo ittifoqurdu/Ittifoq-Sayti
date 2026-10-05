@@ -28,30 +28,30 @@
     "Fizika-matematika fakulteti": 1734,
     "Xorijiy filologiya fakulteti": 1575,
     "Tarix va huquq fakulteti": 1547,
-    "Tabiiy va qishloq xo'jaligi fanlari fakulteti": 1528,
+    "Tabiiy va qishloq xo‘jaligi fanlari fakulteti": 1528,
     "Filologiya fakulteti": 1327,
     "Sport faoliyati fakulteti": 1196,
-    "Psixologiya va san'at fakulteti": 967,
+    "Psixologiya va sanʼat fakulteti": 967,
     "Kimyoviy texnologiya fakulteti": 862,
-    "Magistratura bo'limi": 430,
+    "Magistratura bo‘limi": 430,
     "Kompyuter injiniringi fakulteti": 187
   },
   "residenceTypes": {
     "Talabalar turar joyida": 3362,
-    "O'z uyida": 15665,
+    "O‘z uyida": 15665,
     "Ijaradagi uyda": 22,
     "Qarindoshining uyida": 64,
     "Tanishining uyida": 8
   },
   "regions": {
     "Xorazm viloyati": 14992,
-    "Qoraqalpog'iston Respublikasi": 3450,
+    "Qoraqalpog‘iston Respublikasi": 3450,
     "Samarqand viloyati": 127,
     "Qashqadaryo viloyati": 106,
     "Toshkent shahri": 86,
     "Surxondaryo viloyati": 60,
     "Buxoro viloyati": 51,
-    "Farg'ona viloyati": 43,
+    "Farg‘ona viloyati": 43,
     "Navoiy viloyati": 40,
     "Jizzax viloyati": 39,
     "Toshkent viloyati": 34,
@@ -60,5 +60,5 @@
     "Sirdaryo viloyati": 19,
     "Boshqa": 24
   },
-  "updatedAt": "15-sentyabr 2026-yil holatiga"
+  "updatedAt": "15-sentabr 2026-yil holatiga"
 }

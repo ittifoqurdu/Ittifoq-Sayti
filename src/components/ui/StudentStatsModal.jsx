@@ -81,10 +81,10 @@ export default function StudentStatsModal({ isOpen, onClose }) {
                   <div>
                     <div className="flex items-center gap-2">
                       <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 sm:text-2xl">
-                        Talabalar Kontingenti Statistikasi
+                        Talabalar kontingenti statistikasi
                       </h3>
                       <span className="hidden sm:inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-                        <CheckCircle2 size={12} /> Rasmiy ma'lumot
+                        <CheckCircle2 size={12} /> Rasmiy maʼlumot
                       </span>
                     </div>
                     <p className="mt-0.5 text-xs text-zinc-500 dark:text-zinc-400 flex items-center gap-1.5">
@@ -108,9 +108,9 @@ export default function StudentStatsModal({ isOpen, onClose }) {
                 {[
                   { id: 'umumiy', label: 'Umumiy tahlil' },
                   { id: 'fakultet', label: 'Fakultetlar kesimida' },
-                  { id: 'talim', label: 'Ta\'lim shakllari & Kurslar' },
-                  { id: 'hudud', label: 'Hududlar & Turar joy' },
-                  { id: 'iqtidorli', label: 'Iqtidorli & Sertifikatlar' }
+                  { id: 'talim', label: 'Taʼlim shakllari va kurslar' },
+                  { id: 'hudud', label: 'Hududlar va turar joy' },
+                  { id: 'iqtidorli', label: 'Iqtidorli talabalar va sertifikatlar' }
                 ].map((tab) => (
                   <button
                     key={tab.id}
@@ -147,7 +147,7 @@ export default function StudentStatsModal({ isOpen, onClose }) {
 
                     <div className="relative overflow-hidden rounded-2xl border border-pink-500/30 bg-pink-500/5 p-4">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-semibold text-pink-600 dark:text-pink-400">Qizlar soni</span>
+                        <span className="text-xs font-semibold text-pink-600 dark:text-pink-400">Talaba-qizlar</span>
                         <span className="text-xs font-bold text-pink-500">{girlsPercent}%</span>
                       </div>
                       <p className="mt-2 text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-zinc-100">
@@ -158,7 +158,7 @@ export default function StudentStatsModal({ isOpen, onClose }) {
 
                     <div className="relative overflow-hidden rounded-2xl border border-blue-500/30 bg-blue-500/5 p-4">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-semibold text-blue-600 dark:text-blue-400">O'g'il bolalar</span>
+                        <span className="text-xs font-semibold text-blue-600 dark:text-blue-400">Talaba-yigitlar</span>
                         <span className="text-xs font-bold text-blue-500">{boysPercent}%</span>
                       </div>
                       <p className="mt-2 text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-zinc-100">
@@ -183,13 +183,13 @@ export default function StudentStatsModal({ isOpen, onClose }) {
                   <div className="rounded-2xl border border-zinc-200/80 bg-white dark:border-zinc-800 dark:bg-zinc-900/60 p-5 space-y-4">
                     <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
                       <TrendingUp size={16} className="text-emerald-500" />
-                      Jinsiy va yosh bo'yicha mutanosiblik
+                      Jins va yosh bo‘yicha mutanosiblik
                     </h4>
 
                     <div>
                       <div className="flex justify-between text-xs font-medium text-zinc-600 dark:text-zinc-400 mb-1.5">
                         <span className="text-pink-600 dark:text-pink-400 font-semibold">Qizlar: {studentStats.girls.toLocaleString()} ({girlsPercent}%)</span>
-                        <span className="text-blue-600 dark:text-blue-400 font-semibold">O'g'il bolalar: {studentStats.boys.toLocaleString()} ({boysPercent}%)</span>
+                        <span className="text-blue-600 dark:text-blue-400 font-semibold">Talaba-yigitlar: {studentStats.boys.toLocaleString()} ({boysPercent}%)</span>
                       </div>
                       <div className="h-3 w-full overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800 flex">
                         <div style={{ width: `${girlsPercent}%` }} className="bg-gradient-to-r from-pink-500 to-rose-400 h-full" />
@@ -199,8 +199,8 @@ export default function StudentStatsModal({ isOpen, onClose }) {
 
                     <div>
                       <div className="flex justify-between text-xs font-medium text-zinc-600 dark:text-zinc-400 mb-1.5">
-                        <span className="text-emerald-600 dark:text-emerald-400 font-semibold">30 yoshgacha bo'lganlar: {studentStats.under30.toLocaleString()} ({under30Percent}%)</span>
-                        <span className="text-zinc-500 font-semibold">30 yoshdan kattalar: {studentStats.over30.toLocaleString()} ({(100 - under30Percent).toFixed(1)}%)</span>
+                        <span className="text-emerald-600 dark:text-emerald-400 font-semibold">30 yoshgacha bo‘lganlar: {studentStats.under30.toLocaleString()} ({under30Percent}%)</span>
+                        <span className="text-zinc-500 font-semibold">30 yoshdan yuqori: {studentStats.over30.toLocaleString()} ({(100 - under30Percent).toFixed(1)}%)</span>
                       </div>
                       <div className="h-3 w-full overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800 flex">
                         <div style={{ width: `${under30Percent}%` }} className="bg-gradient-to-r from-emerald-500 to-teal-400 h-full" />
@@ -214,7 +214,7 @@ export default function StudentStatsModal({ isOpen, onClose }) {
                     <div className="rounded-2xl border border-zinc-200/80 bg-white dark:border-zinc-800 dark:bg-zinc-900/60 p-4">
                       <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-500 mb-3 flex items-center gap-1.5">
                         <GraduationCap size={15} className="text-emerald-500" />
-                        Ta'lim bosqichi
+                        Taʼlim bosqichi
                       </h4>
                       <div className="space-y-2.5">
                         <div className="flex items-center justify-between rounded-xl bg-zinc-50 dark:bg-zinc-800/50 p-3">
@@ -235,7 +235,7 @@ export default function StudentStatsModal({ isOpen, onClose }) {
                     <div className="rounded-2xl border border-zinc-200/80 bg-white dark:border-zinc-800 dark:bg-zinc-900/60 p-4">
                       <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-500 mb-3 flex items-center gap-1.5">
                         <BookOpen size={15} className="text-emerald-500" />
-                        Ta'lim shakli bo'yicha
+                        Taʼlim shakli bo‘yicha
                       </h4>
                       <div className="grid grid-cols-2 gap-2 text-center">
                         <div className="rounded-xl bg-zinc-50 dark:bg-zinc-800/50 p-2.5">
@@ -277,7 +277,7 @@ export default function StudentStatsModal({ isOpen, onClose }) {
                       type="text"
                       value={facultySearch}
                       onChange={(e) => setFacultySearch(e.target.value)}
-                      placeholder="Fakultet nomi bo'yicha qidirish..."
+                      placeholder="Fakultet nomi bo‘yicha qidirish..."
                       className="w-full rounded-xl border border-zinc-200 bg-white py-2.5 pl-10 pr-4 text-xs text-zinc-900 outline-none focus:border-emerald-500 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 transition-colors"
                     />
                   </div>
@@ -317,7 +317,7 @@ export default function StudentStatsModal({ isOpen, onClose }) {
                   <div className="rounded-2xl border border-zinc-200/80 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60">
                     <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 mb-4 flex items-center gap-2">
                       <BookOpen size={16} className="text-emerald-500" />
-                      Ta'lim Shakllari Taqsimoti
+                      Taʼlim shakllari taqsimoti
                     </h4>
                     <div className="space-y-3">
                       {Object.entries(studentStats.educationForms || {}).map(([form, count]) => {
@@ -325,7 +325,7 @@ export default function StudentStatsModal({ isOpen, onClose }) {
                         return (
                           <div key={form}>
                             <div className="flex justify-between text-xs mb-1">
-                              <span className="font-medium text-zinc-700 dark:text-zinc-300">{form} ta'lim</span>
+                              <span className="font-medium text-zinc-700 dark:text-zinc-300">{form} taʼlim shakli</span>
                               <span className="font-bold text-zinc-900 dark:text-zinc-100">{count.toLocaleString()} nafar ({pct}%)</span>
                             </div>
                             <div className="h-2 w-full overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-800">
@@ -341,7 +341,7 @@ export default function StudentStatsModal({ isOpen, onClose }) {
                   <div className="rounded-2xl border border-zinc-200/80 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60">
                     <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 mb-4 flex items-center gap-2">
                       <GraduationCap size={16} className="text-emerald-500" />
-                      Kurslar Kesimida Talabalar
+                      Kurslar kesimida talabalar
                     </h4>
                     <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
                       {Object.entries(studentStats.courses || {}).map(([course, count]) => (
@@ -362,7 +362,7 @@ export default function StudentStatsModal({ isOpen, onClose }) {
                   <div className="rounded-2xl border border-zinc-200/80 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60">
                     <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 mb-4 flex items-center gap-2">
                       <Home size={16} className="text-emerald-500" />
-                      Turar Joy Turi Bo'yicha Taqsimot
+                      Turar joy turi bo‘yicha taqsimot
                     </h4>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                       {Object.entries(studentStats.residenceTypes || {}).map(([type, count]) => (
@@ -379,7 +379,7 @@ export default function StudentStatsModal({ isOpen, onClose }) {
                   <div className="rounded-2xl border border-zinc-200/80 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60">
                     <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 mb-4 flex items-center gap-2">
                       <MapPin size={16} className="text-emerald-500" />
-                      Hududlar (Viloyatlar) Kesimida
+                      Hududlar (viloyatlar) kesimida
                     </h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                       {Object.entries(studentStats.regions || {})
@@ -402,10 +402,10 @@ export default function StudentStatsModal({ isOpen, onClose }) {
                       <Award size={28} />
                     </div>
                     <h4 className="text-base font-bold text-zinc-900 dark:text-zinc-100">
-                      Iqtidorli Talabalar va Sertifikat Egalari Bazasi
+                      Iqtidorli talabalar va sertifikat egalari bazasi
                     </h4>
                     <p className="mt-1.5 max-w-md mx-auto text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                      Xalqaro til sertifikatlari (IELTS, CEFR, TOEFL), fan olimpiadalari g'oliblari, Davlat stipendiatlari hamda startap g'oliblari to'g'risidagi ma'lumotlar yaqin orada tizimga to'liq integratsiya qilinadi.
+                      Xalqaro til sertifikatlari (IELTS, CEFR, TOEFL), fan olimpiadalari g‘oliblari, davlat stipendiatlari hamda startap g‘oliblari to‘g‘risidagi maʼlumotlar yaqin orada tizimga to‘liq integratsiya qilinadi.
                     </p>
                     <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-300">
                       <Sparkles size={14} /> Keyingi bosqichda kiritiladi
@@ -437,7 +437,7 @@ export default function StudentStatsModal({ isOpen, onClose }) {
             <div className="border-t border-zinc-200/80 bg-zinc-50/70 px-6 py-4 dark:border-zinc-800/80 dark:bg-zinc-900/50 flex flex-wrap items-center justify-between gap-3">
               <span className="text-[11px] text-zinc-500 flex items-center gap-1.5">
                 <CheckCircle2 size={13} className="text-emerald-500" />
-                Urganch Davlat Universiteti Yoshlar Ittifoqi boshlang'ich tashkiloti
+                Urganch davlat universiteti Yoshlar ittifoqi boshlang‘ich tashkiloti
               </span>
               <button
                 type="button"

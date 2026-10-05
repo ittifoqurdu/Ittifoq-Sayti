@@ -110,7 +110,7 @@ export default function ClubDetailPage() {
                   {currentClub.category || 'To‘garak & Tashabbus'}
                 </span>
                 <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
-                  UrDU Yoshlar Ittifoqi BT
+                  UrDU Yoshlar ittifoqi boshlang‘ich tashkiloti
                 </span>
               </div>
 
@@ -165,10 +165,10 @@ export default function ClubDetailPage() {
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             <div className="absolute bottom-4 left-6 right-6 flex items-center justify-between text-white text-xs sm:text-sm">
               <span className="font-semibold drop-shadow-md">
-                Urganch Davlat Universiteti Yoshlar Ittifoqi
+                Urganch davlat universiteti Yoshlar ittifoqi
               </span>
               <span className="rounded-full bg-black/60 px-3.5 py-1 font-mono text-xs backdrop-blur-md border border-white/20">
-                {currentClub.membershipBadge || (currentClub.price ? `Aʼzolik: ${currentClub.price}` : 'Aʼzolik Bepul')}
+                {currentClub.membershipBadge || (currentClub.price ? `Aʼzolik: ${currentClub.price}` : 'Aʼzolik bepul')}
               </span>
             </div>
           </div>
@@ -178,36 +178,36 @@ export default function ClubDetailPage() {
             <div className="rounded-2xl border border-zinc-200/80 bg-white/80 p-4 text-center shadow-sm dark:border-zinc-800 dark:bg-zinc-900/60">
               <Award size={22} className="mx-auto text-emerald-500" />
               <p className="mt-2 text-sm font-bold text-zinc-900 dark:text-zinc-100">
-                {currentClub.price || '100% Bepul'}
+                {currentClub.price || '100% bepul'}
               </p>
               <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
-                {currentClub.priceSubtext || 'Barcha talabalarga'}
+                {currentClub.priceSubtext || 'Barcha talabalar uchun'}
               </p>
             </div>
 
             <div className="rounded-2xl border border-zinc-200/80 bg-white/80 p-4 text-center shadow-sm dark:border-zinc-800 dark:bg-zinc-900/60">
               <Users size={22} className="mx-auto text-cyan-500" />
-              <p className="mt-2 text-sm font-bold text-zinc-900 dark:text-zinc-100">1–4 Kurslar</p>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Bakalavr & Magistr</p>
+              <p className="mt-2 text-sm font-bold text-zinc-900 dark:text-zinc-100">1–4-kurslar</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Bakalavriat va magistratura</p>
             </div>
 
             <div className="rounded-2xl border border-zinc-200/80 bg-white/80 p-4 text-center shadow-sm dark:border-zinc-800 dark:bg-zinc-900/60">
               <Calendar size={22} className="mx-auto text-amber-500" />
-              <p className="mt-2 text-sm font-bold text-zinc-900 dark:text-zinc-100">Haftalik Mashg‘ulot</p>
+              <p className="mt-2 text-sm font-bold text-zinc-900 dark:text-zinc-100">Haftalik mashg‘ulotlar</p>
               <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Darsdan bo‘sh vaqtda</p>
             </div>
 
             <div className="rounded-2xl border border-zinc-200/80 bg-white/80 p-4 text-center shadow-sm dark:border-zinc-800 dark:bg-zinc-900/60">
               <Sparkles size={22} className="mx-auto text-purple-500" />
-              <p className="mt-2 text-sm font-bold text-zinc-900 dark:text-zinc-100">Sertifikat & Grant</p>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Faollar rag‘bati</p>
+              <p className="mt-2 text-sm font-bold text-zinc-900 dark:text-zinc-100">Sertifikat va grantlar</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Faol talabalar rag‘bati</p>
             </div>
           </div>
 
           {/* Description & Mission */}
           <div className="rounded-3xl border border-zinc-200/80 bg-white/90 p-6 sm:p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/70 space-y-4">
             <h2 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-2xl">
-              To‘garak Haqida Batafsil Maʼlumot
+              To‘garak haqida batafsil maʼlumot
             </h2>
             <p className="text-base leading-relaxed text-zinc-700 dark:text-zinc-300">
               {currentClub.description}
@@ -222,7 +222,7 @@ export default function ClubDetailPage() {
             <div className="rounded-3xl border border-zinc-200/80 bg-white/90 p-6 sm:p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/70">
               <h2 className="flex items-center gap-2 text-xl font-bold tracking-tight text-emerald-600 dark:text-emerald-400 sm:text-2xl">
                 <Layers size={22} />
-                Asosiy Yo‘nalishlar va Imkoniyatlar
+                Asosiy yo‘nalishlar va imkoniyatlar
               </h2>
               <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
                 To‘garak aʼzolari quyidagi ustuvor yo‘nalishlar va amaliy loyihalarda ishtirok etish imkoniyatiga ega bo‘ladilar:
@@ -250,7 +250,7 @@ export default function ClubDetailPage() {
           {/* How to Join Steps */}
           <div className="rounded-3xl border border-zinc-200/80 bg-white/90 p-6 sm:p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/70">
             <h2 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-2xl">
-              To‘garakka Qanday Aʼzo Bo‘lish Mumkin?
+              To‘garakka qanday aʼzo bo‘lish mumkin?
             </h2>
             <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="rounded-2xl border border-cyan-500/20 bg-cyan-500/5 p-5">
@@ -261,7 +261,7 @@ export default function ClubDetailPage() {
                   Telegram orqali murojaat
                 </h3>
                 <p className="mt-1.5 text-xs leading-relaxed text-zinc-600 dark:text-zinc-400">
-                  Yoshlar Ittifoqi rasmiy botida aʼzolik so‘rovnomasini to‘ldiring va yo‘nalishingizni tanlang.
+                  Yoshlar ittifoqi rasmiy boti orqali aʼzolik so‘rovnomasini to‘ldiring va kerakli yo‘nalishni tanlang.
                 </p>
               </div>
 
@@ -270,10 +270,10 @@ export default function ClubDetailPage() {
                   2
                 </div>
                 <h3 className="mt-3 text-sm font-bold text-zinc-900 dark:text-zinc-100">
-                  Tanishuv Yig‘ilishi
+                  Tanishuv uchrashuvi
                 </h3>
                 <p className="mt-1.5 text-xs leading-relaxed text-zinc-600 dark:text-zinc-400">
-                  Har haftalik ochiq yig‘ilishda qatnashib, to‘garak rahbari va aʼzolari bilan tanishing.
+                  Har haftalik ochiq yig‘ilishda qatnashib, to‘garak rahbari va faol aʼzolari bilan tanishing.
                 </p>
               </div>
 
@@ -282,10 +282,10 @@ export default function ClubDetailPage() {
                   3
                 </div>
                 <h3 className="mt-3 text-sm font-bold text-zinc-900 dark:text-zinc-100">
-                  Faol Ishtirok & Loyihalar
+                  Faol ishtirok va loyihalar
                 </h3>
                 <p className="mt-1.5 text-xs leading-relaxed text-zinc-600 dark:text-zinc-400">
-                  To‘garak mashg‘ulotlarida faol bo‘ling, musobaqa va loyihalarda o‘z iqtidoringizni namoyon eting.
+                  To‘garak mashg‘ulotlarida muntazam qatnashing, tanlov hamda amaliy loyihalarda o‘z iqtidoringizni namoyon eting.
                 </p>
               </div>
             </div>
@@ -296,7 +296,7 @@ export default function ClubDetailPage() {
             <div className="relative z-10 max-w-2xl">
               <span className="inline-flex items-center gap-1 rounded-full bg-black/30 border border-white/20 px-3.5 py-1 text-xs font-bold uppercase tracking-wider backdrop-blur-md">
                 <Sparkles size={12} />
-                Iqtidorli Yoshlar Safi
+                Iqtidorli yoshlar safi
               </span>
               <h2 className="mt-4 text-2xl sm:text-3xl font-extrabold tracking-tight">
                 Siz ham {currentClub.title} to‘garagiga qo‘shiling!
@@ -313,7 +313,7 @@ export default function ClubDetailPage() {
                   className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-xs font-bold uppercase tracking-wider text-zinc-950 shadow-lg transition-all hover:bg-zinc-100 hover:scale-[1.02] active:scale-95"
                 >
                   <Send size={14} className="text-emerald-600" />
-                  <span>Bot orqali ro'yxatdan o'tish</span>
+                  <span>Bot orqali ro‘yxatdan o‘tish</span>
                 </a>
 
                 <a
@@ -323,14 +323,14 @@ export default function ClubDetailPage() {
                   className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/20 px-6 py-3 text-xs font-semibold text-white backdrop-blur-md transition hover:bg-black/35"
                 >
                   <Users size={14} />
-                  <span>Telegram kanalga qo'shilish</span>
+                  <span>Telegram kanalga aʼzo bo‘lish</span>
                 </a>
 
                 <Link
                   to="/klublar"
                   className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/20 px-6 py-3 text-xs font-semibold text-white backdrop-blur-md transition hover:bg-black/35"
                 >
-                  <span>Barcha to'garaklar</span>
+                  <span>Barcha to‘garaklar</span>
                   <ArrowRight size={14} />
                 </Link>
               </div>
@@ -343,7 +343,7 @@ export default function ClubDetailPage() {
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-                    Boshqa To‘garaklar va Klublar
+                    Boshqa to‘garaklar va klublar
                   </h2>
                   <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
                     O‘zingiz qiziqqan boshqa yo‘nalishlarni ham kashf eting

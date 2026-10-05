@@ -8,7 +8,7 @@ const MotionDiv = motion.div
 
 const opportunityCards = [
   {
-    eyebrow: 'Davlat Stipendiyalari',
+    eyebrow: 'Davlat stipendiyalari',
     title: 'Iqtidorli talabalarni qo‘llab-quvvatlash',
     description:
       'Prezident, Beruniy, Navoiy va universitet rektori stipendiyalari sohiblarini tayyorlash hamda ilmiy maqolalar nashrini moliyalashtirish.',
@@ -19,25 +19,25 @@ const opportunityCards = [
     ],
   },
   {
-    eyebrow: 'Startap va IT-Lab',
+    eyebrow: 'Startap va IT-laboratoriya',
     title: 'Yoshlar innovatsiyalari va startaplar',
     description:
       'Talabalarning dasturiy va texnik ishlanmalarini hayotga tatbiq etish uchun kovorking, texnik baza va boshlang‘ich moliyaviy grantlar.',
     points: [
       'G‘oyadan tayyor mahsulotgacha inkubatsiya',
       'Tajribali IT va biznes ekspertlar konsultatsiyasi',
-      'Xalqaro va Respublika startap tanlovlarida ishtirok',
+      'Xalqaro va respublika startap tanlovlarida ishtirok',
     ],
   },
   {
-    eyebrow: 'Xalqaro Hamkorlik',
+    eyebrow: 'Xalqaro hamkorlik',
     title: 'Global talabalar forumi va almashinuv',
     description:
       'Yetakchi xorijiy oliygohlar yoshlar tashkilotlari bilan qo‘shma loyihalar, yozgi oromgohlar va xalqaro konferensiyalar.',
     points: [
       'Chet el universitetlari talabalar kengashlari bilan aloqa',
       'Yevropa va Osiyo yoshlar forumlariga delegatsiyalar',
-      'Xorijiy tillarni chuqur o‘rganish va speaking klublar',
+      'Xorijiy tillarni chuqur o‘rganish va so‘zlashuv klublari',
     ],
   },
 ]
@@ -64,9 +64,9 @@ function BehindCurtains() {
           Imkoniyatlar
         </div>
         <h2 className="mt-4 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl lg:text-5xl dark:text-zinc-100">
-          UrDU Talabalari Uchun{' '}
+          UrDU talabalari uchun{' '}
           <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent dark:from-emerald-400 dark:via-teal-300 dark:to-cyan-400">
-            Yaratilgan Imkoniyatlar
+            yaratilgan imkoniyatlar
           </span>
         </h2>
       </MotionDiv>

@@ -144,7 +144,7 @@ function FooterSection({ showContactForm = true, isStandalone = false } = {}) {
 
     setIsSubmitting(false)
     setStatusTone('success')
-    setStatusText('✅ Murojaatingiz Google Sheetga saqlandi va Emailga ham yo‘naltirildi!')
+    setStatusText('✅ Murojaatingiz muvaffaqiyatli qabul qilindi hamda masʼul mutasaddilarga yo‘naltirildi.')
     setFormValues(INITIAL_FORM)
   }
 
@@ -171,7 +171,7 @@ function FooterSection({ showContactForm = true, isStandalone = false } = {}) {
         >
           <div className="mb-6 flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-xs font-semibold tracking-widest text-emerald-700 dark:text-emerald-300">
             <Sparkles size={14} className="text-emerald-600 dark:text-emerald-400" />
-            YOSHLAR BOSH QABULI
+            YOSHLAR QABULI
           </div>
           <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-black leading-[1] tracking-tighter text-zinc-900 dark:text-zinc-100">
             Safimizga qo‘shiling yoki
@@ -202,18 +202,18 @@ function FooterSection({ showContactForm = true, isStandalone = false } = {}) {
         <div className="rounded-2xl border border-zinc-200/80 bg-[#EDE8DE]/80 p-6 md:p-8 dark:border-zinc-800/80 dark:bg-zinc-950/45">
           <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400">Taklif va Murojaat</p>
+              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400">Taklif va murojaat</p>
               <h3 className="mt-1 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">Bizga xabar yo‘llang</h3>
             </div>
             <span className="rounded-full border border-zinc-200 bg-white px-3.5 py-1 text-xs font-semibold text-zinc-600 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/90 dark:text-zinc-400">
-              UrDU Yoshlar Kengashi
+              UrDU Yoshlar kengashi
             </span>
           </div>
 
           <form className="grid gap-4 md:grid-cols-2" onSubmit={handleFormSubmit}>
             <div>
               <label className="mb-1 block text-xs font-semibold uppercase tracking-[0.16em] text-zinc-700 dark:text-zinc-400" htmlFor="contact-name">
-                Ism va Familiya *
+                Ism va familiya *
               </label>
               <input
                 id="contact-name"
@@ -229,7 +229,7 @@ function FooterSection({ showContactForm = true, isStandalone = false } = {}) {
 
             <div>
               <label className="mb-1 block text-xs font-semibold uppercase tracking-[0.16em] text-zinc-700 dark:text-zinc-400" htmlFor="contact-faculty">
-                Fakultet yoki Yo‘nalish
+                Fakultet yoki yo‘nalish
               </label>
               <input
                 id="contact-faculty"
@@ -243,7 +243,7 @@ function FooterSection({ showContactForm = true, isStandalone = false } = {}) {
 
             <div className="md:col-span-2">
               <label className="mb-1 block text-xs font-semibold uppercase tracking-[0.16em] text-zinc-700 dark:text-zinc-400" htmlFor="contact-phone">
-                Telefon raqam yoki Telegram username
+                Telefon raqami yoki Telegram foydalanuvchi nomi
               </label>
               <input
                 id="contact-phone"
@@ -257,7 +257,7 @@ function FooterSection({ showContactForm = true, isStandalone = false } = {}) {
 
             <div className="md:col-span-2">
               <label className="mb-1 block text-xs font-semibold uppercase tracking-[0.16em] text-zinc-700 dark:text-zinc-400" htmlFor="contact-message">
-                Murojaat yoki Taklif mazmuni *
+                Murojaat yoki taklif mazmuni *
               </label>
               <textarea
                 id="contact-message"
@@ -312,7 +312,7 @@ function FooterSection({ showContactForm = true, isStandalone = false } = {}) {
               />
             </div>
             <p className="mt-4 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-              Urganch davlat universiteti Yoshlar ittifoqi boshlang‘ich tashkiloti — talaba-yoshlarning qonuniy huquq va manfaatlarini himoya qiluvchi, ularning intellektual, ma‘naviy va kasbiy yuksalishiga xizmat qiluvchi nufuzli tuzilma.
+              Urganch davlat universiteti Yoshlar ittifoqi boshlang‘ich tashkiloti — talaba-yoshlarning qonuniy huquq va manfaatlarini himoya qiluvchi, ularning intellektual, maʼnaviy va kasbiy yuksalishiga xizmat qiluvchi nufuzli tuzilma.
             </p>
             <div className="mt-5 flex items-center gap-2 text-xs text-zinc-600 dark:text-zinc-400">
               <MapPin size={15} className="text-emerald-600 dark:text-emerald-400 shrink-0" />
@@ -339,7 +339,7 @@ function FooterSection({ showContactForm = true, isStandalone = false } = {}) {
             </div>
           ))}
 
-          {/* Row 2: Aloqa & Manzil */}
+          {/* Row 2: Aloqa va Manzil */}
           {footerColumns[3] ? (
             <div className="pr-6">
               <p className="mb-4 text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">{footerColumns[3].title}</p>
@@ -372,7 +372,7 @@ function FooterSection({ showContactForm = true, isStandalone = false } = {}) {
             >
               <div className="relative h-44 sm:h-52 w-full overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-900">
                 <iframe
-                  title="Urganch Davlat Universiteti Xaritasi"
+                  title="Urganch davlat universiteti xaritasi"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2988.3742468728515!2d60.62768407659556!3d41.54924768590684!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x41dfc92fa3b8c3ab%3A0x6a2c2ef7e0cb3a0!2sUrganch%20davlat%20universiteti!5e0!3m2!1suz!2suz!4v1710000000000!5m2!1suz!2suz"
                   className="h-full w-full border-0 pointer-events-none filter contrast-105 opacity-90 transition-transform duration-700 group-hover:scale-105"
                   loading="lazy"
@@ -383,11 +383,11 @@ function FooterSection({ showContactForm = true, isStandalone = false } = {}) {
                   <div className="flex items-center justify-between">
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 dark:bg-zinc-900/90 px-3 py-1 text-[11px] font-bold text-zinc-900 dark:text-zinc-100 shadow-md backdrop-blur-md">
                       <MapPin size={13} className="text-emerald-500" />
-                      UrDU Bosh binosi
+                      UrDU bosh binosi
                     </span>
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500 px-3 py-1 text-xs font-bold text-zinc-950 shadow-md transition-all group-hover:bg-emerald-400 group-hover:scale-105">
                       <Navigation size={12} />
-                      Google Maps'da yo‘nalish olish
+                      Google xaritalar orqali yo‘nalish olish
                       <ExternalLink size={11} />
                     </span>
                   </div>

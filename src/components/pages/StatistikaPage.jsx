@@ -70,13 +70,13 @@ export default function StatistikaPage() {
             <div className="max-w-3xl">
               <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-300 mb-4">
                 <PieChart size={14} />
-                <span>Urganch Davlat Universiteti • Rasmiy Statistika</span>
+                <span>Urganch davlat universiteti • Rasmiy statistika</span>
               </div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 leading-tight">
-                Talabalar Kontingenti va <span className="text-emerald-600 dark:text-emerald-400">To'liq Statistikasi</span>
+                Talabalar kontingenti va <span className="text-emerald-600 dark:text-emerald-400">to‘liq statistikasi</span>
               </h1>
               <p className="mt-3 text-sm sm:text-base leading-relaxed text-zinc-600 dark:text-zinc-300">
-                Universitetimizda tahsil olayotgan barcha talaba-yoshlar kontingenti, jinsiy va yosh ko'rsatkichlari, ta'lim shakllari, fakultetlar hamda hududlar bo'yicha to'liq tahliliy ma'lumotlar bazasi.
+                Universitetda tahsil olayotgan barcha talaba-yoshlar kontingenti, jins va yosh ko‘rsatkichlari, taʼlim shakllari, fakultetlar hamda hududlar bo‘yicha to‘liq tahliliy maʼlumotlar bazasi.
               </p>
             </div>
 
@@ -109,7 +109,7 @@ export default function StatistikaPage() {
             </p>
             <div className="mt-2 flex items-center gap-1.5 text-xs text-zinc-500">
               <CheckCircle2 size={13} className="text-emerald-500" />
-              <span>Universitet to'liq kontingenti</span>
+              <span>Universitet umumiy kontingenti</span>
             </div>
           </div>
 
@@ -117,7 +117,7 @@ export default function StatistikaPage() {
           <div className="glass-card relative overflow-hidden p-6 border-l-4 border-l-pink-500">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold uppercase tracking-wider text-pink-600 dark:text-pink-400">
-                Talaba qizlar
+                Talaba-qizlar
               </span>
               <div className="rounded-xl bg-pink-500/10 p-2 text-pink-600 dark:text-pink-400 font-bold text-xs">
                 {girlsPercent}%
@@ -127,7 +127,7 @@ export default function StatistikaPage() {
               {studentStats.girls.toLocaleString()}
             </p>
             <div className="mt-2 flex items-center gap-1.5 text-xs text-zinc-500">
-              <span>Xotin-qiz talabalar ulushi</span>
+              <span>Xotin-qizlar ulushi</span>
             </div>
           </div>
 
@@ -135,7 +135,7 @@ export default function StatistikaPage() {
           <div className="glass-card relative overflow-hidden p-6 border-l-4 border-l-blue-500">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">
-                Talaba yigitlar
+                Talaba-yigitlar
               </span>
               <div className="rounded-xl bg-blue-500/10 p-2 text-blue-600 dark:text-blue-400 font-bold text-xs">
                 {boysPercent}%
@@ -145,7 +145,7 @@ export default function StatistikaPage() {
               {studentStats.boys.toLocaleString()}
             </p>
             <div className="mt-2 flex items-center gap-1.5 text-xs text-zinc-500">
-              <span>O'g'il bola talabalar ulushi</span>
+              <span>Talaba-yigitlar ulushi</span>
             </div>
           </div>
 
@@ -153,7 +153,7 @@ export default function StatistikaPage() {
           <div className="glass-card relative overflow-hidden p-6 border-l-4 border-l-amber-500">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
-                30 yoshgacha bo'lganlar
+                30 yoshgacha bo‘lganlar
               </span>
               <div className="rounded-xl bg-amber-500/10 p-2 text-amber-600 dark:text-amber-400 font-bold text-xs">
                 {under30Percent}%
@@ -173,7 +173,7 @@ export default function StatistikaPage() {
           <div className="flex items-center gap-2 mb-6">
             <TrendingUp className="text-emerald-500" size={20} />
             <h2 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-zinc-100">
-              Jinsiy va Yosh Ko'rsatkichlari Mutanosibligi
+              Jins va yosh ko‘rsatkichlari mutanosibligi
             </h2>
           </div>
 
@@ -182,10 +182,10 @@ export default function StatistikaPage() {
             <div>
               <div className="flex justify-between items-baseline mb-2">
                 <span className="text-xs font-bold text-pink-600 dark:text-pink-400">
-                  Qizlar: {studentStats.girls.toLocaleString()} nafar ({girlsPercent}%)
+                  Talaba-qizlar: {studentStats.girls.toLocaleString()} nafar ({girlsPercent}%)
                 </span>
                 <span className="text-xs font-bold text-blue-600 dark:text-blue-400">
-                  O'g'il bolalar: {studentStats.boys.toLocaleString()} nafar ({boysPercent}%)
+                  Talaba-yigitlar: {studentStats.boys.toLocaleString()} nafar ({boysPercent}%)
                 </span>
               </div>
               <div className="h-4 w-full overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800 flex shadow-inner">
@@ -193,7 +193,7 @@ export default function StatistikaPage() {
                 <div style={{ width: `${boysPercent}%` }} className="bg-gradient-to-r from-blue-500 to-cyan-400 h-full transition-all duration-1000" />
               </div>
               <p className="mt-2 text-[11px] text-zinc-500 leading-relaxed">
-                UrDU talabalarining 57.3 foizini qizlar tashkil etadi, bu esa respublika bo'yicha yuqori ko'rsatkichlardan biridir.
+                UrDU talabalarining 57,3 foizini xotin-qizlar tashkil etadi, bu esa respublika oliy taʼlim muassasalari orasidagi yuqori ko‘rsatkichlardan biridir.
               </p>
             </div>
 
@@ -212,7 +212,7 @@ export default function StatistikaPage() {
                 <div style={{ width: `${over30Percent}%` }} className="bg-zinc-400 dark:bg-zinc-600 h-full transition-all duration-1000" />
               </div>
               <p className="mt-2 text-[11px] text-zinc-500 leading-relaxed">
-                Talabalarning 91.1 foizi 30 yoshgacha bo'lgan yoshlar toifasiga to'g'ri keladi.
+                Talabalarning 91,1 foizi 30 yoshgacha bo‘lgan yoshlar toifasiga to‘g‘ri keladi.
               </p>
             </div>
           </div>
@@ -226,7 +226,7 @@ export default function StatistikaPage() {
               <div className="flex items-center gap-2">
                 <BookOpen className="text-emerald-500" size={18} />
                 <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
-                  Ta'lim Shakllari Taqsimoti
+                  Taʼlim shakllari taqsimoti
                 </h2>
               </div>
               <span className="text-xs text-zinc-400">Barcha shakllar</span>
@@ -239,7 +239,7 @@ export default function StatistikaPage() {
                   <div key={form} className="rounded-xl border border-zinc-200/70 dark:border-zinc-800/80 bg-white/50 dark:bg-zinc-900/40 p-3.5">
                     <div className="flex justify-between items-center text-xs mb-1.5">
                       <span className="font-semibold text-zinc-800 dark:text-zinc-200 text-sm">
-                        {form} ta'lim shakli
+                        {form} taʼlim shakli
                       </span>
                       <span className="font-bold text-emerald-600 dark:text-emerald-400">
                         {count.toLocaleString()} nafar ({pct}%)
@@ -260,7 +260,7 @@ export default function StatistikaPage() {
               <div className="flex items-center gap-2 mb-5">
                 <GraduationCap className="text-emerald-500" size={18} />
                 <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
-                  Ta'lim Bosqichlari
+                  Taʼlim bosqichlari
                 </h2>
               </div>
 
@@ -275,7 +275,7 @@ export default function StatistikaPage() {
                   <p className="text-2xl font-black text-zinc-900 dark:text-zinc-100 mt-2">
                     {studentStats.degrees.Bakalavr?.toLocaleString()} nafar
                   </p>
-                  <p className="text-[11px] text-zinc-400 mt-1">Barcha yo'nalishlar bo'yicha</p>
+                  <p className="text-[11px] text-zinc-400 mt-1">Barcha taʼlim yo‘nalishlari bo‘yicha</p>
                 </div>
 
                 <div className="rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white/60 dark:bg-zinc-900/50 p-4">
@@ -288,14 +288,14 @@ export default function StatistikaPage() {
                   <p className="text-2xl font-black text-zinc-900 dark:text-zinc-100 mt-2">
                     {studentStats.degrees.Magistratura?.toLocaleString()} nafar
                   </p>
-                  <p className="text-[11px] text-zinc-400 mt-1">Ilmiy-pedagogik magistrantlar</p>
+                  <p className="text-[11px] text-zinc-400 mt-1">Magistratura mutaxassisliklari</p>
                 </div>
               </div>
             </div>
 
             {/* Courses summary */}
             <div className="mt-5 pt-4 border-t border-zinc-200/80 dark:border-zinc-800/80">
-              <span className="text-xs font-semibold text-zinc-500 block mb-2">Kurslar bo'yicha:</span>
+              <span className="text-xs font-semibold text-zinc-500 block mb-2">Kurslar bo‘yicha:</span>
               <div className="grid grid-cols-5 gap-1.5 text-center">
                 {Object.entries(studentStats.courses || {}).map(([course, count]) => (
                   <div key={course} className="rounded-lg bg-zinc-100 dark:bg-zinc-800/60 py-1.5 px-1">
@@ -315,11 +315,11 @@ export default function StatistikaPage() {
               <div className="flex items-center gap-2">
                 <Building2 className="text-emerald-500" size={20} />
                 <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
-                  Fakultetlar Kesimida Talabalar Kontingenti
+                  Fakultetlar kesimida talabalar kontingenti
                 </h2>
               </div>
               <p className="text-xs text-zinc-500 mt-1">
-                Universitetning barcha fakultetlari bo'yicha talabalar soni va umumiy ulushi
+                Universitetning barcha fakultetlari bo‘yicha talabalar soni va umumiy ulushi
               </p>
             </div>
 
@@ -330,7 +330,7 @@ export default function StatistikaPage() {
                 type="text"
                 value={facultySearch}
                 onChange={(e) => setFacultySearch(e.target.value)}
-                placeholder="Fakultet qidirish..."
+                placeholder="Fakultet nomini qidirish..."
                 className="w-full rounded-full border border-zinc-200 bg-white py-2 pl-10 pr-4 text-xs text-zinc-900 outline-none focus:border-emerald-500 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 transition-colors shadow-sm"
               />
             </div>
@@ -380,7 +380,7 @@ export default function StatistikaPage() {
             <div className="flex items-center gap-2 mb-5">
               <Home className="text-emerald-500" size={18} />
               <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
-                Talabalar Turar Joyi Taqsimoti
+                Talabalar turar joyi taqsimoti
               </h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -403,7 +403,7 @@ export default function StatistikaPage() {
             <div className="flex items-center gap-2 mb-5">
               <MapPin className="text-emerald-500" size={18} />
               <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
-                Hududlar Kesimida (Viloyatlar)
+                Hududlar kesimida (viloyatlar bo‘yicha)
               </h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-[300px] overflow-y-auto pr-1">
@@ -433,14 +433,14 @@ export default function StatistikaPage() {
               <div>
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-zinc-100">
-                    Iqtidorli Talabalar va Sertifikat Egalari Bazasi
+                    Iqtidorli talabalar va sertifikat egalari bazasi
                   </h3>
                   <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/20 px-2.5 py-0.5 text-[10px] font-bold text-amber-700 dark:text-amber-300">
                     <Sparkles size={11} /> Tez kunda
                   </span>
                 </div>
                 <p className="mt-1 text-xs text-zinc-600 dark:text-zinc-400 max-w-2xl leading-relaxed">
-                  Xalqaro til sertifikatlari (IELTS, CEFR, TOEFL, JLPT), fan olimpiadalari g'oliblari, Davlat va nomdor stipendiatlar, startap va grant sohiblari to'g'risidagi mukammal ma'lumotlar keyingi bosqichda kiritiladi.
+                  Xalqaro til sertifikatlari (IELTS, CEFR, TOEFL, JLPT), fan olimpiadalari g‘oliblari, davlat va nomdor stipendiatlar, startap va grant sohiblari to‘g‘risidagi to‘liq maʼlumotlar keyingi bosqichda kiritiladi.
                 </p>
               </div>
             </div>
@@ -456,17 +456,17 @@ export default function StatistikaPage() {
             <div className="rounded-xl border border-zinc-200/80 bg-white/80 p-4 text-center dark:border-zinc-800 dark:bg-zinc-900/60">
               <p className="text-xs font-semibold text-zinc-500">Xalqaro til sertifikatlari</p>
               <p className="text-lg font-bold text-zinc-800 dark:text-zinc-200 mt-1">IELTS / CEFR / TOEFL</p>
-              <span className="text-[10px] text-emerald-600 dark:text-emerald-400">Tez kunda qo'shiladi</span>
+              <span className="text-[10px] text-emerald-600 dark:text-emerald-400">Tez kunda qo‘shiladi</span>
             </div>
             <div className="rounded-xl border border-zinc-200/80 bg-white/80 p-4 text-center dark:border-zinc-800 dark:bg-zinc-900/60">
               <p className="text-xs font-semibold text-zinc-500">Nomdor stipendiyalar</p>
               <p className="text-lg font-bold text-zinc-800 dark:text-zinc-200 mt-1">Prezident, Beruniy, Navoiy</p>
-              <span className="text-[10px] text-emerald-600 dark:text-emerald-400">Tez kunda qo'shiladi</span>
+              <span className="text-[10px] text-emerald-600 dark:text-emerald-400">Tez kunda qo‘shiladi</span>
             </div>
             <div className="rounded-xl border border-zinc-200/80 bg-white/80 p-4 text-center dark:border-zinc-800 dark:bg-zinc-900/60">
               <p className="text-xs font-semibold text-zinc-500">Respublika va xalqaro tanlovlar</p>
               <p className="text-lg font-bold text-zinc-800 dark:text-zinc-200 mt-1">Xakatonlar & Olimpiadalar</p>
-              <span className="text-[10px] text-emerald-600 dark:text-emerald-400">Tez kunda qo'shiladi</span>
+              <span className="text-[10px] text-emerald-600 dark:text-emerald-400">Tez kunda qo‘shiladi</span>
             </div>
           </div>
         </section>

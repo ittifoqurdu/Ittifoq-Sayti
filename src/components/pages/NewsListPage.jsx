@@ -22,7 +22,7 @@ export default function NewsListPage() {
     window.scrollTo({ top: 0, behavior: 'auto' })
   }, [])
 
-  const defaultCategories = ['Barchasi', 'Intellektual O‘yin', 'IT & Innovatsiya', 'Madaniyat & Sanʼat', 'Ijtimoiy Loyiha', 'Xalqaro Taʼlim']
+  const defaultCategories = ['Barchasi', 'Intellektual o‘yinlar', 'IT va innovatsiyalar', 'Madaniyat va sanʼat', 'Ijtimoiy loyihalar', 'Xalqaro taʼlim']
   const extraCategories = (newsList || []).map((n) => n.category).filter(Boolean)
   const categories = Array.from(new Set([...defaultCategories, ...extraCategories]))
 
@@ -44,13 +44,13 @@ export default function NewsListPage() {
         <div className="mx-auto max-w-[1320px] text-center relative z-10">
           <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-300">
             <Newspaper size={14} />
-            UrDU Yoshlar Matbuot Xizmati
+            UrDU Yoshlar matbuot xizmati
           </div>
 
           <h1 className="mt-5 text-3xl font-extrabold tracking-tight text-zinc-900 sm:text-5xl lg:text-6xl dark:text-zinc-100">
-            Universitet Yoshlar Hayoti{' '}
+            Universitet yoshlar hayoti{' '}
             <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent dark:from-emerald-400 dark:via-teal-300 dark:to-cyan-400">
-              Yangiliklari
+              yangiliklari
             </span>
           </h1>
 
@@ -166,7 +166,7 @@ export default function NewsListPage() {
                 </div>
 
                 <div className="mt-6 border-t border-zinc-200/80 pt-4 flex items-center justify-between dark:border-zinc-800">
-                  <span className="text-xs text-zinc-500">UrDU Yoshlar Matbuot Xizmati</span>
+                  <span className="text-xs text-zinc-500">UrDU Yoshlar matbuot xizmati</span>
                   <Link
                     to={`/yangiliklar/${item.id}`}
                     className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 transition-colors"

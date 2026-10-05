@@ -35,14 +35,14 @@ export default function KlublarPage() {
             {/* Top Badge */}
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/15 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-emerald-300 backdrop-blur-md shadow-lg">
               <Compass size={14} />
-              Faoliyatimiz & Talabalar Klublari
+              Faoliyatimiz va talabalar klublari
             </div>
 
             {/* Hero Heading */}
             <h1 className="mt-5 text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.15]">
-              Talabalar Klublari va{' '}
+              Talabalar klublari va{' '}
               <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-300 bg-clip-text text-transparent">
-                Ijodiy To‘garaklar
+                ijodiy to‘garaklar
               </span>
             </h1>
 
@@ -55,19 +55,19 @@ export default function KlublarPage() {
             <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
               <div className="rounded-2xl border border-white/15 bg-black/40 p-3.5 backdrop-blur-md text-center">
                 <p className="text-2xl font-black text-emerald-400">6+</p>
-                <p className="text-[11px] font-semibold text-zinc-300 mt-0.5">Asosiy Yo‘nalish</p>
+                <p className="text-[11px] font-semibold text-zinc-300 mt-0.5">Asosiy yo‘nalishlar</p>
               </div>
               <div className="rounded-2xl border border-white/15 bg-black/40 p-3.5 backdrop-blur-md text-center">
                 <p className="text-2xl font-black text-teal-300">2,500+</p>
-                <p className="text-[11px] font-semibold text-zinc-300 mt-0.5">Faol Talabalar</p>
+                <p className="text-[11px] font-semibold text-zinc-300 mt-0.5">Faol talabalar</p>
               </div>
               <div className="rounded-2xl border border-white/15 bg-black/40 p-3.5 backdrop-blur-md text-center">
                 <p className="text-2xl font-black text-amber-300">100%</p>
-                <p className="text-[11px] font-semibold text-zinc-300 mt-0.5">Bepul Aʼzolik</p>
+                <p className="text-[11px] font-semibold text-zinc-300 mt-0.5">Bepul aʼzolik</p>
               </div>
               <div className="rounded-2xl border border-white/15 bg-black/40 p-3.5 backdrop-blur-md text-center">
                 <p className="text-2xl font-black text-emerald-300">50+</p>
-                <p className="text-[11px] font-semibold text-zinc-300 mt-0.5">Yillik Loyihalar</p>
+                <p className="text-[11px] font-semibold text-zinc-300 mt-0.5">Yillik loyihalar</p>
               </div>
             </div>
 
@@ -77,7 +77,7 @@ export default function KlublarPage() {
                 href="#directions"
                 className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-emerald-500 px-7 py-3.5 text-xs font-bold uppercase tracking-[0.16em] text-zinc-950 shadow-[0_12px_30px_rgba(16,185,129,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-emerald-400 hover:shadow-[0_16px_36px_rgba(16,185,129,0.45)] active:scale-95 cursor-pointer"
               >
-                <span>To‘garaklar Ro‘yxati</span>
+                <span>To‘garaklar ro‘yxati</span>
                 <ArrowRight size={15} className="transition-transform duration-200 group-hover:translate-x-1" />
               </a>
 

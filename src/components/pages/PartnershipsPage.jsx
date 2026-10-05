@@ -53,13 +53,13 @@ export default function PartnershipsPage() {
         <div className="mx-auto max-w-[1320px] text-center relative z-10">
           <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-300">
             <Globe2 size={15} />
-            UrDU Global Aloqalar Tizimi
+            UrDU xalqaro aloqalar tizimi
           </div>
 
           <h1 className="mt-5 text-3xl font-extrabold tracking-tight text-zinc-900 sm:text-5xl lg:text-6xl dark:text-zinc-100">
-            Xorijiy Hamkor Universitetlar va{' '}
+            Xorijiy hamkor universitetlar va{' '}
             <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent dark:from-emerald-400 dark:via-teal-300 dark:to-cyan-400">
-              Talabalar Grantlari
+              talabalar grantlari
             </span>
           </h1>
 
@@ -75,15 +75,15 @@ export default function PartnershipsPage() {
             </div>
             <div className="rounded-2xl border border-zinc-200/80 bg-white/80 p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/60 backdrop-blur-sm">
               <p className="text-3xl font-extrabold text-emerald-600 dark:text-emerald-400">15+</p>
-              <p className="mt-1 text-xs font-semibold text-zinc-600 dark:text-zinc-400">Erasmus+ & DAAD Grantlari</p>
+              <p className="mt-1 text-xs font-semibold text-zinc-600 dark:text-zinc-400">Erasmus+ va DAAD grantlari</p>
             </div>
             <div className="rounded-2xl border border-zinc-200/80 bg-white/80 p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/60 backdrop-blur-sm">
               <p className="text-3xl font-extrabold text-emerald-600 dark:text-emerald-400">850€</p>
-              <p className="mt-1 text-xs font-semibold text-zinc-600 dark:text-zinc-400">O‘rtacha Oylik Stipendiya</p>
+              <p className="mt-1 text-xs font-semibold text-zinc-600 dark:text-zinc-400">O‘rtacha oylik stipendiya</p>
             </div>
             <div className="rounded-2xl border border-zinc-200/80 bg-white/80 p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/60 backdrop-blur-sm">
               <p className="text-3xl font-extrabold text-emerald-600 dark:text-emerald-400">12 ta</p>
-              <p className="mt-1 text-xs font-semibold text-zinc-600 dark:text-zinc-400">Hamkor Davlatlar</p>
+              <p className="mt-1 text-xs font-semibold text-zinc-600 dark:text-zinc-400">Hamkor davlatlar</p>
             </div>
           </div>
         </div>
@@ -219,7 +219,7 @@ export default function PartnershipsPage() {
           <div className="max-w-3xl">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">
               <Info size={13} />
-              Qabul Tartibi
+              Qabul tartibi
             </span>
             <h2 className="mt-3 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-100">
               Xalqaro almashinuv dasturlarida qanday ishtirok etish mumkin?
@@ -235,7 +235,7 @@ export default function PartnershipsPage() {
                 01
               </div>
               <h3 className="mt-4 text-sm font-bold text-zinc-900 dark:text-zinc-100">
-                Til Bilish Talabi
+                Til bilish talabi
               </h3>
               <p className="mt-1 text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
                 Ingliz tilidan kamida IELTS 6.0 yoki CEFR B2 daraja sertifikatiga ega bo‘lish.
@@ -247,7 +247,7 @@ export default function PartnershipsPage() {
                 02
               </div>
               <h3 className="mt-4 text-sm font-bold text-zinc-900 dark:text-zinc-100">
-                Akademik O‘zlashtirish
+                Akademik o‘zlashtirish
               </h3>
               <p className="mt-1 text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
                 Oxirgi 2 semestr bo‘yicha GPA ko‘rsatkichi kamida 4.0 (yoki 80%+ aʼlo baholar) bo‘lishi lozim.
@@ -259,10 +259,10 @@ export default function PartnershipsPage() {
                 03
               </div>
               <h3 className="mt-4 text-sm font-bold text-zinc-900 dark:text-zinc-100">
-                Ijtimoiy Faollik
+                Ijtimoiy faollik
               </h3>
               <p className="mt-1 text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                Yoshlar Ittifoqi tadbirlari, ilmiy to‘garaklar yoki volontyorlikdagi faollik tavsiyanomasi.
+                Yoshlar ittifoqi tadbirlari, ilmiy to‘garaklar yoki volontyorlikdagi faollik tavsiyanomasi.
               </p>
             </div>
 
@@ -271,7 +271,7 @@ export default function PartnershipsPage() {
                 04
               </div>
               <h3 className="mt-4 text-sm font-bold text-zinc-900 dark:text-zinc-100">
-                Suhbat va Qabul
+                Suhbat va qabul
               </h3>
               <p className="mt-1 text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
                 Xorijiy universitet vakillari bilan onlayn suhbatdan muvaffaqiyatli o‘tib, grant vaucherini olish.
@@ -283,7 +283,7 @@ export default function PartnershipsPage() {
             <div className="flex items-center gap-2 text-xs text-zinc-600 dark:text-zinc-400">
               <Building2 size={16} className="text-emerald-500 shrink-0" />
               <span>
-                Qo‘shimcha savollar: <strong>UrDU Xalqaro Aloqalar Bo‘limi (Bosh bino, 214-xona)</strong>
+                Qo‘shimcha savollar: <strong>UrDU Xalqaro aloqalar bo‘limi (Bosh bino, 214-xona)</strong>
               </span>
             </div>
 

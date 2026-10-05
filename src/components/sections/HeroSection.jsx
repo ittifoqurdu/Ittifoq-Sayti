@@ -58,21 +58,21 @@ function HeroSection() {
             </h1>
 
             <p className="mt-3 text-lg font-semibold text-emerald-700 sm:text-xl dark:text-emerald-300/90">
-              Ursu Ittifoq — Boshlang‘ich Tashkiloti va Yetakchilar Kengashi
+              UrDU Yoshlar ittifoqi — Boshlang‘ich tashkiloti va Yetakchilar kengashi
             </p>
 
             <p className="mt-4 max-w-[55ch] text-base leading-relaxed text-zinc-600 sm:text-lg dark:text-zinc-300">
-              Yangi O‘zbekiston yoshlari — ilm-fan, tashabbus va intellekt maskani. Yoshlar ittifoqi Ursu universitetning 20,000 ga yaqin talabalarini qo‘llab-quvvatlovchi rasmiy portali.
+              Yangi O‘zbekiston yoshlari — ilm-fan, tashabbus va intellekt maskani. Urganch davlat universiteti Yoshlar ittifoqining 20 000 nafardan ziyod talabalarini qo‘llab-quvvatlovchi rasmiy portali.
             </p>
 
             {/* Quick Pillars */}
             <div className="mt-5 flex flex-wrap gap-2">
               {[
-                'Ilm-fan & Grantlar',
-                'IT & Startaplar',
-                'Zakovat & Munozara',
-                'Oltin Qanot Volontyorlari',
-                'Madaniyat & Sport',
+                'Ilm-fan va grantlar',
+                'IT va startaplar',
+                'Zakovat va munozara',
+                'Oltin qanot volontyorlari',
+                'Madaniyat va sport',
               ].map((item) => (
                 <span
                   key={item}
@@ -91,13 +91,13 @@ function HeroSection() {
                 className="group inline-flex items-center justify-center rounded-full bg-emerald-500 px-7 py-3.5 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-950 shadow-[0_14px_35px_rgba(16,185,129,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 font-bold"
               >
                 <Users size={15} className="mr-2" />
-                Yetakchilar Kengashi
+                Yetakchilar kengashi
               </Link>
               <Link
                 to="/boglanish"
                 className="inline-flex items-center justify-center rounded-full border border-zinc-300/80 bg-white/80 px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-800 shadow-[0_8px_20px_rgba(120,105,85,0.06)] backdrop-blur-xl transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-500/60 hover:text-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-white/15 dark:bg-black/40 dark:text-zinc-100 dark:shadow-[0_12px_30px_rgba(0,0,0,0.3)] dark:hover:border-emerald-400/60 dark:hover:text-emerald-300"
               >
-                Safimizga Qo‘shiling
+                Safimizga qo‘shiling
                 <Send size={13} className="ml-2" />
               </Link>
             </div>

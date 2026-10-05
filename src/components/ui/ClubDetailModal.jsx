@@ -69,7 +69,7 @@ export default function ClubDetailModal({ isOpen, onClose, club }) {
                     {club.category || 'To‘garak & Klub'}
                   </span>
                   <span className="hidden sm:inline-block text-xs font-medium text-zinc-500 dark:text-zinc-400">
-                    UrDU Yoshlar Ittifoqi
+                    UrDU Yoshlar ittifoqi
                   </span>
                 </div>
 
@@ -116,9 +116,9 @@ export default function ClubDetailModal({ isOpen, onClose, club }) {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
                 <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-white/90 text-xs">
-                  <span className="font-semibold drop-shadow-md">UrDU Iqtidorli Talabalar Maydoni</span>
+                  <span className="font-semibold drop-shadow-md">UrDU iqtidorli talabalar maydoni</span>
                   <span className="rounded-full bg-black/60 px-3 py-1 font-mono text-[11px] backdrop-blur-md">
-                    {club.membershipBadge || 'Faol To‘garak'}
+                    {club.membershipBadge || 'Faol to‘garak'}
                   </span>
                 </div>
               </div>
@@ -138,7 +138,7 @@ export default function ClubDetailModal({ isOpen, onClose, club }) {
                 <div className="rounded-2xl border border-zinc-200/80 bg-white/70 p-5 dark:border-zinc-800 dark:bg-zinc-900/50">
                   <h4 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
                     <Layers size={14} />
-                    Imkoniyatlar va Asosiy yo‘nalishlar:
+                    Asosiy imkoniyatlar va yo‘nalishlar:
                   </h4>
                   <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     {highlights.map((h, i) => (
@@ -158,14 +158,14 @@ export default function ClubDetailModal({ isOpen, onClose, club }) {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <div className="rounded-2xl border border-zinc-200/80 bg-white/60 p-3.5 text-center dark:border-zinc-800 dark:bg-zinc-900/40">
                   <Award size={18} className="mx-auto text-emerald-500" />
-                  <p className="mt-1 text-xs font-bold text-zinc-900 dark:text-zinc-100">{club.price || '100% Bepul'}</p>
+                  <p className="mt-1 text-xs font-bold text-zinc-900 dark:text-zinc-100">{club.price || '100% bepul'}</p>
                   <p className="text-[10px] text-zinc-500 dark:text-zinc-400">{club.priceSubtext || 'Aʼzolik to‘lovi yo‘q'}</p>
                 </div>
 
                 <div className="rounded-2xl border border-zinc-200/80 bg-white/60 p-3.5 text-center dark:border-zinc-800 dark:bg-zinc-900/40">
                   <Users size={18} className="mx-auto text-cyan-500" />
                   <p className="mt-1 text-xs font-bold text-zinc-900 dark:text-zinc-100">Barcha kurslar</p>
-                  <p className="text-[10px] text-zinc-500 dark:text-zinc-400">1–4 kurs talabalari</p>
+                  <p className="text-[10px] text-zinc-500 dark:text-zinc-400">1–4-kurs talabalari</p>
                 </div>
 
                 <div className="rounded-2xl border border-zinc-200/80 bg-white/60 p-3.5 text-center dark:border-zinc-800 dark:bg-zinc-900/40">
@@ -191,7 +191,7 @@ export default function ClubDetailModal({ isOpen, onClose, club }) {
                 className="inline-flex items-center gap-2 rounded-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-5 py-2.5 text-xs font-bold uppercase tracking-wider shadow-lg shadow-emerald-500/25 transition-all active:scale-95"
               >
                 <Send size={13} />
-                <span>Safga qo‘shilish (Telegram)</span>
+                <span>Safga qo‘shilish (Telegram bot)</span>
               </a>
 
               <button

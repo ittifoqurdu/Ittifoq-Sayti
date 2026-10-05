@@ -127,7 +127,7 @@ export default function NewsDetailPage() {
               </div>
               <div>
                 <p className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
-                  UrDU Yoshlar Ittifoqi Matbuot Xizmati
+                  UrDU Yoshlar ittifoqi matbuot xizmati
                 </p>
                 <p className="text-[11px] text-zinc-500 dark:text-zinc-400">
                   Rasmiy axborot portali • Urganch
@@ -192,7 +192,7 @@ export default function NewsDetailPage() {
           {currentNews.highlights && currentNews.highlights.length > 0 && (
             <div className="mt-10 rounded-3xl border border-emerald-500/20 bg-emerald-500/5 p-6 sm:p-8 dark:bg-emerald-950/20">
               <h3 className="text-sm font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">
-                Asosiy Ko‘rsatkichlar va Faktlar:
+                Asosiy ko‘rsatkichlar va faktlar:
               </h3>
               <ul className="mt-4 space-y-3">
                 {currentNews.highlights.map((item, idx) => (
@@ -247,7 +247,7 @@ export default function NewsDetailPage() {
         <section className="mt-16 border-t border-zinc-200/80 pt-12 dark:border-zinc-800">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-              Boshqa Yangiliklar
+              Boshqa yangiliklar
             </h2>
             <Link
               to="/yangiliklar"

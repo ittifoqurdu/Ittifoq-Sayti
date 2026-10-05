@@ -5,10 +5,10 @@ import { useNews, defaultSlidesList } from '../../context/NewsContext'
 const DELAY_MS = 5600 // beshtashabbus sayti kabi 5.6 soniya
 
 const BESHTASHABBUS_SLIDES = [
-  { id: 'bt-1', image: '/slide/1.jpg', title: "Madaniyat va san'at to'garaklari" },
-  { id: 'bt-2', image: '/slide/2.jpg', title: "Sog'lom turmush tarzi va sport musobaqalari" },
+  { id: 'bt-1', image: '/slide/1.jpg', title: "Madaniyat va sanʼat to‘garaklari" },
+  { id: 'bt-2', image: '/slide/2.jpg', title: "Sog‘lom turmush tarzi va sport musobaqalari" },
   { id: 'bt-3', image: '/slide/3.jpg', title: "Axborot texnologiyalari va raqamli startaplar" },
-  { id: 'bt-4', image: '/slide/4.jpg', title: "Kitobxonlik va ma'naviyat maskani" },
+  { id: 'bt-4', image: '/slide/4.jpg', title: "Kitobxonlik va maʼnaviyat maskani" },
 ]
 
 export default function HeroSlideshow() {

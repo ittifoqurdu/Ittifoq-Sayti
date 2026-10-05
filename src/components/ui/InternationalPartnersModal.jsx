@@ -80,14 +80,14 @@ export default function InternationalPartnersModal({ isOpen, onClose }) {
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400">
-                        UrDU Xalqaro Hamkorlik
+                        UrDU xalqaro hamkorlik
                       </span>
                       <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 dark:text-emerald-300">
-                        {partnerUniversities.length}+ Universitet
+                        {partnerUniversities.length}+ universitet
                       </span>
                     </div>
                     <h2 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-2xl">
-                      Xorijiy Hamkor Universitetlar va Grantlar
+                      Xorijiy hamkor universitetlar va grantlar
                     </h2>
                   </div>
                 </div>
@@ -258,7 +258,7 @@ export default function InternationalPartnersModal({ isOpen, onClose }) {
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle2 size={14} className="text-emerald-500 shrink-0" />
-                    <span>Yoshlar Ittifoqi faoli tavsiyanomasi</span>
+                    <span>Yoshlar ittifoqi faoli tavsiyanomasi</span>
                   </div>
                 </div>
               </div>

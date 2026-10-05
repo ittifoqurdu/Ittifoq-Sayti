@@ -55,7 +55,7 @@ function LeaderFeaturedCard({ member }) {
           <div className="space-y-4">
             <div>
               <span className="inline-block text-[11px] font-extrabold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 mb-3">
-                Boshqaruv Yetakchisi
+                Boshqaruv yetakchisi
               </span>
               <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-zinc-900 group-hover:text-emerald-600 transition-colors dark:text-zinc-100 dark:group-hover:text-emerald-300">
                 {member.name}
@@ -341,13 +341,13 @@ export default function TeamSection() {
       <div className="mb-12 text-center lg:mb-16">
         <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-300">
           <Users size={14} />
-          Yoshlar Ittifoqi Tuzilmasi
+          Yoshlar ittifoqi tuzilmasi
         </div>
         <h2 className="mt-4 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl lg:text-5xl dark:text-zinc-100">
-          UrDU Yoshlar Ittifoqi <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent dark:from-emerald-400 dark:via-teal-300 dark:to-cyan-400">Tuzilmasi</span>
+          UrDU Yoshlar ittifoqi <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent dark:from-emerald-400 dark:via-teal-300 dark:to-cyan-400">tuzilmasi</span>
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-base text-zinc-600 sm:text-lg dark:text-zinc-400">
-          Universitetimiz talabalarining tashabbuslarini muvofiqlashtiruvchi Boshqaruv, Universitet va Fakultet Koordinatorlari.
+          Universitetimiz talabalarining tashabbuslarini muvofiqlashtiruvchi boshqaruv, universitet va fakultet koordinatorlari.
         </p>
 
         {/* Tabs switcher */}
@@ -385,7 +385,7 @@ export default function TeamSection() {
               </div>
               <div>
                 <h3 className="text-xl font-bold text-zinc-900 sm:text-2xl dark:text-zinc-100">
-                  Boshqaruv Kengashi
+                  Boshqaruv kengashi
                 </h3>
                 <p className="text-xs text-zinc-500 dark:text-zinc-400">
                   Yoshlar ittifoqi yetakchisi
@@ -414,7 +414,7 @@ export default function TeamSection() {
               </div>
               <div>
                 <h3 className="text-xl font-bold text-zinc-900 sm:text-2xl dark:text-zinc-100">
-                  Universitet Koordinatorlari
+                  Universitet koordinatorlari
                 </h3>
                 <p className="text-xs text-zinc-500 dark:text-zinc-400">
                   Universitet miqyosidagi asosiy soha va faoliyat yo‘nalishlari koordinatorlari
@@ -443,7 +443,7 @@ export default function TeamSection() {
               </div>
               <div>
                 <h3 className="text-xl font-bold text-zinc-900 sm:text-2xl dark:text-zinc-100">
-                  Fakultet Koordinatorlari
+                  Fakultet koordinatorlari
                 </h3>
                 <p className="text-xs text-zinc-500 dark:text-zinc-400">
                   Fakultetlar bo‘yicha yoshlar yetakchilari va yo‘nalish koordinatorlari

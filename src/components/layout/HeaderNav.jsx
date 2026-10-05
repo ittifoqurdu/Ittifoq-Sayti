@@ -130,7 +130,7 @@ function HeaderNav() {
           <button
             type="button"
             onClick={toggleTheme}
-            aria-label={isDark ? "Kunduzgi rejimga o'tish" : "Kechki rejimga o'tish"}
+            aria-label={isDark ? "Kunduzgi rejimga o‘tish" : "Kechki rejimga o‘tish"}
             title={isDark ? 'Kunduzgi rejim' : 'Kechki rejim'}
             className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-200/90 bg-zinc-50 text-zinc-700 transition hover:border-emerald-500/50 hover:bg-white hover:text-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 dark:border-zinc-800 dark:bg-zinc-900/90 dark:text-zinc-300 dark:hover:border-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-emerald-300"
           >
