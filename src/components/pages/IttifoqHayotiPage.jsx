@@ -14,6 +14,7 @@ import {
   Check,
 } from 'lucide-react'
 import { useNews, defaultSlidesList } from '../../context/NewsContext'
+import telegramPhotos from '../../data/telegramPhotos.json'
 import urduNewsPhotos from '../../data/urduNewsPhotos.json'
 import FooterSection from '../sections/FooterSection'
 
@@ -43,9 +44,9 @@ export default function IttifoqHayotiPage() {
     window.scrollTo({ top: 0, behavior: 'auto' })
   }, [])
 
-  // Barcha ko'p sonli fotolavhalarni birlashtiramiz (urdu.uz dan 60 ta + 13 ta slayd)
+  // Barcha ko'p sonli fotolavhalarni birlashtiramiz (Telegram kanaldan + slaydlar + urdu.uz dan)
   const allPhotos = useMemo(() => {
-    const list = [...urduNewsPhotos, ...SLIDE_PHOTOS]
+    const list = [...telegramPhotos, ...SLIDE_PHOTOS, ...urduNewsPhotos]
     const currentSlides = slidesList && slidesList.length > 0 ? slidesList : defaultSlidesList
 
     currentSlides.forEach((slide) => {
@@ -182,7 +183,7 @@ export default function IttifoqHayotiPage() {
 
       {/* Faqat toza rasmlar galereyasi: Hech qanday sonlar, izohlar yoki yo'nalishlarsiz */}
       <section className="mx-auto w-full max-w-[1440px] px-3 py-8 sm:px-6 lg:px-8 lg:py-12">
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 sm:gap-4">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-5 sm:gap-4">
           {allPhotos.map((photo, idx) => (
             <motion.div
               key={photo.id || idx}
