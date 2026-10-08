@@ -3,21 +3,26 @@ import { useNavigate } from 'react-router-dom'
 import { ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react'
 import { useNews, defaultSlidesList } from '../../context/NewsContext'
 
-const DELAY_MS = 5600 // beshtashabbus sayti kabi 5.6 soniya
+const DELAY_MS = 5600
 
-const BESHTASHABBUS_SLIDES = [
-  { id: 'bt-1', image: '/slide/1.jpg', title: "Madaniyat va sanʼat to‘garaklari" },
-  { id: 'bt-2', image: '/slide/2.jpg', title: "Sog‘lom turmush tarzi va sport musobaqalari" },
-  { id: 'bt-3', image: '/slide/3.jpg', title: "Axborot texnologiyalari va raqamli startaplar" },
-  { id: 'bt-4', image: '/slide/4.jpg', title: "Kitobxonlik va maʼnaviyat maskani" },
+const REAL_EVENT_SLIDES = [
+  { id: 'real-1', image: '/slide/photo_2026-08-19_17-46-57.jpg', title: 'UrDU yoshlar forumi va tantanali taqdirlash' },
+  { id: 'real-2', image: '/slide/photo_2026-08-19_17-46-56.jpg', title: 'Tashakkurnoma va nufuzli mukofotlar topshirilishi' },
+  { id: 'real-3', image: '/slide/photo_2026-09-03_14-24-19.jpg', title: 'Yoshlar harakati va yangi tashabbuslar anjumani' },
+  { id: 'real-4', image: '/slide/photo_2026-09-13_00-08-45.jpg', title: 'Yillik hisobot va istiqbolli rejalar taqdimoti' },
+  { id: 'real-5', image: '/slide/photo_2026-09-03_14-24-20.jpg', title: 'Yetakchilar ochiq muloqoti va davra suhbati' },
+  { id: 'real-6', image: '/slide/photo_2026-08-19_17-45-29.jpg', title: 'Yetakchilar kengashining navbatdagi majlisi' },
+  { id: 'real-7', image: '/slide/photo_2026-08-19_17-46-23.jpg', title: 'Iqtidorli talabalar loyihalari va tashabbuslari' },
+  { id: 'real-8', image: '/slide/photo_2026-09-03_14-24-20-2.jpg', title: 'UrDU talaba-yoshlar assambleyasi' },
+  { id: 'real-9', image: '/slide/photo_2026-09-03_14-24-20-3.jpg', title: 'Tashabbuskor qizlar va yoshlar yetakchilari faoliyati' },
 ]
 
 export default function HeroSlideshow() {
   const navigate = useNavigate()
   const { slidesList } = useNews()
-  // Beshtashabbus suratlari har doim 1-o'rinda kafolatlanadi
+  // Faqat real hayot fotosuratlari (banner va logolar filtrlanadi)
   const items = [
-    ...BESHTASHABBUS_SLIDES,
+    ...REAL_EVENT_SLIDES,
     ...(slidesList || defaultSlidesList).filter(
       (s) =>
         s &&
@@ -25,7 +30,9 @@ export default function HeroSlideshow() {
         !s.image.includes('/slide/1.jpg') &&
         !s.image.includes('/slide/2.jpg') &&
         !s.image.includes('/slide/3.jpg') &&
-        !s.image.includes('/slide/4.jpg')
+        !s.image.includes('/slide/4.jpg') &&
+        !s.image.toLowerCase().includes('logo') &&
+        !s.image.toLowerCase().includes('banner')
     ),
   ]
   const count = items.length

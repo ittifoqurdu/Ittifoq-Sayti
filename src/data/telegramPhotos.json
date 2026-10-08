@@ -1,13 +1,5 @@
 [
   {
-    "id": "tg-1",
-    "image": "/img/tg_photo_1.jpg"
-  },
-  {
-    "id": "tg-2",
-    "image": "/img/tg_photo_2.jpg"
-  },
-  {
     "id": "tg-3",
     "image": "/img/tg_photo_3.jpg"
   },
@@ -38,10 +30,6 @@
   {
     "id": "tg-10",
     "image": "/img/tg_photo_10.jpg"
-  },
-  {
-    "id": "tg-11",
-    "image": "/img/tg_photo_11.jpg"
   },
   {
     "id": "tg-12",
@@ -86,10 +74,6 @@
   {
     "id": "tg-22",
     "image": "/img/tg_photo_22.jpg"
-  },
-  {
-    "id": "tg-23",
-    "image": "/img/tg_photo_23.jpg"
   },
   {
     "id": "tg-24",

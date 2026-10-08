@@ -18,7 +18,7 @@ import telegramPhotos from '../../data/telegramPhotos.json'
 import urduNewsPhotos from '../../data/urduNewsPhotos.json'
 import FooterSection from '../sections/FooterSection'
 
-// Real Yoshlar ittifoqi tadbirlari va slayd suratlari
+// Real Yoshlar ittifoqi tadbirlari va anjumanlari suratlari
 const SLIDE_PHOTOS = [
   { id: 's-1', image: '/slide/photo_2026-08-19_17-46-57.jpg' },
   { id: 's-2', image: '/slide/photo_2026-08-19_17-46-56.jpg' },
@@ -29,11 +29,30 @@ const SLIDE_PHOTOS = [
   { id: 's-7', image: '/slide/photo_2026-08-19_17-46-23.jpg' },
   { id: 's-8', image: '/slide/photo_2026-09-03_14-24-20-2.jpg' },
   { id: 's-9', image: '/slide/photo_2026-09-03_14-24-20-3.jpg' },
-  { id: 's-10', image: '/slide/1.jpg' },
-  { id: 's-11', image: '/slide/2.jpg' },
-  { id: 's-12', image: '/slide/3.jpg' },
-  { id: 's-13', image: '/slide/4.jpg' },
 ]
+
+// Logo, banner va grafik plakatlarni chetlatib, faqat real hayot fotosuratlarini qoldirish
+const isRealLifePhoto = (img) => {
+  if (!img) return false
+  const lower = img.toLowerCase()
+  if (
+    lower.includes('/slide/1.jpg') ||
+    lower.includes('/slide/2.jpg') ||
+    lower.includes('/slide/3.jpg') ||
+    lower.includes('/slide/4.jpg') ||
+    lower.includes('logo') ||
+    lower.includes('banner') ||
+    lower.includes('gerb') ||
+    lower.includes('gimn') ||
+    lower.includes('tg_photo_1.jpg') ||
+    lower.includes('tg_photo_2.jpg') ||
+    lower.includes('tg_photo_11.jpg') ||
+    lower.includes('tg_photo_23.jpg')
+  ) {
+    return false
+  }
+  return true
+}
 
 export default function IttifoqHayotiPage() {
   const { slidesList } = useNews()
@@ -44,13 +63,16 @@ export default function IttifoqHayotiPage() {
     window.scrollTo({ top: 0, behavior: 'auto' })
   }, [])
 
-  // Barcha ko'p sonli fotolavhalarni birlashtiramiz (Telegram kanaldan + slaydlar + urdu.uz dan)
+  // Barcha faqat real hayot fotosuratlarini birlashtiramiz
   const allPhotos = useMemo(() => {
-    const list = [...telegramPhotos, ...SLIDE_PHOTOS, ...urduNewsPhotos]
+    const list = [...telegramPhotos, ...SLIDE_PHOTOS, ...urduNewsPhotos].filter((p) =>
+      isRealLifePhoto(p.image)
+    )
     const currentSlides = slidesList && slidesList.length > 0 ? slidesList : defaultSlidesList
 
     currentSlides.forEach((slide) => {
       if (!slide || !slide.image) return
+      if (!isRealLifePhoto(slide.image)) return
       const alreadyExists = list.some((p) => p.image === slide.image)
       if (!alreadyExists) {
         list.push({
