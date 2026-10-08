@@ -9,7 +9,6 @@ const MotionNav = motion.nav
 
 const navItems = [
   { label: 'Bosh sahifa', path: '/', id: 'hero' },
-  { label: 'Ittifoq hayoti', path: '/ittifoq-hayoti', id: 'gallery' },
   { label: 'Statistika', path: '/statistika', id: 'stats' },
   { label: 'Tuzilma', path: '/tuzilma', id: 'team' },
   { label: 'To‘garaklar va klublar', path: '/klublar', id: 'directions' },
