@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react'
 import { useNews, defaultSlidesList } from '../../context/NewsContext'
 
 const DELAY_MS = 5600 // beshtashabbus sayti kabi 5.6 soniya
@@ -12,6 +13,7 @@ const BESHTASHABBUS_SLIDES = [
 ]
 
 export default function HeroSlideshow() {
+  const navigate = useNavigate()
   const { slidesList } = useNews()
   // Beshtashabbus suratlari har doim 1-o'rinda kafolatlanadi
   const items = [
@@ -50,9 +52,15 @@ export default function HeroSlideshow() {
   const goNext = () => setCurrentIndex((prev) => (prev + 1) % count)
   const goPrev = () => setCurrentIndex((prev) => (prev - 1 + count) % count)
 
+  const handleContainerClick = () => {
+    navigate('/ittifoq-hayoti')
+  }
+
   return (
     <div
-      className="group relative w-full aspect-[16/10] overflow-hidden rounded-2xl md:rounded-3xl border border-zinc-200/80 bg-zinc-950 shadow-2xl shadow-emerald-950/15 select-none dark:border-white/10 dark:shadow-black/60"
+      onClick={handleContainerClick}
+      title="UrDU Yoshlar ittifoqi fotolavhalarini ko‘rish"
+      className="group relative w-full aspect-[16/10] overflow-hidden rounded-2xl md:rounded-3xl border border-zinc-200/80 bg-zinc-950 shadow-2xl shadow-emerald-950/15 select-none cursor-pointer dark:border-white/10 dark:shadow-black/60"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -85,12 +93,21 @@ export default function HeroSlideshow() {
         })}
       </div>
 
+      {/* Hover paytida burchakdagi nozik belgi */}
+      <div className="absolute top-3.5 right-3.5 z-20 pointer-events-none flex items-center gap-1.5 rounded-full bg-black/65 px-3 py-1.5 text-[11px] font-semibold text-white/95 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-300 border border-white/15 shadow-lg">
+        <span>Ittifoq hayoti</span>
+        <ArrowUpRight size={13} className="text-emerald-400" />
+      </div>
+
       {/* Navigatsiya strelkalari (sichqoncha rasm ustiga borganda silliq paydo bo'ladi) */}
       {count > 1 && (
         <>
           <button
             type="button"
-            onClick={goPrev}
+            onClick={(e) => {
+              e.stopPropagation()
+              goPrev()
+            }}
             aria-label="Oldingi rasm"
             className="absolute left-3.5 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-xl bg-white/90 text-zinc-900 shadow-lg backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 hover:bg-white active:scale-95 cursor-pointer dark:bg-black/75 dark:text-white dark:hover:bg-black"
           >
@@ -99,7 +116,10 @@ export default function HeroSlideshow() {
 
           <button
             type="button"
-            onClick={goNext}
+            onClick={(e) => {
+              e.stopPropagation()
+              goNext()
+            }}
             aria-label="Keyingi rasm"
             className="absolute right-3.5 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-xl bg-white/90 text-zinc-900 shadow-lg backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 hover:bg-white active:scale-95 cursor-pointer dark:bg-black/75 dark:text-white dark:hover:bg-black"
           >
@@ -117,7 +137,10 @@ export default function HeroSlideshow() {
               <button
                 key={dotIdx}
                 type="button"
-                onClick={() => setCurrentIndex(dotIdx)}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setCurrentIndex(dotIdx)
+                }}
                 aria-label={`Rasm ${dotIdx + 1}`}
                 className={`h-2 rounded-full transition-all duration-350 cursor-pointer ${
                   isActive

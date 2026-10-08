@@ -23,6 +23,7 @@ import KlublarPage from './components/pages/KlublarPage'
 import ClubDetailPage from './components/pages/ClubDetailPage'
 import ContactPage from './components/pages/ContactPage'
 import StatistikaPage from './components/pages/StatistikaPage'
+import IttifoqHayotiPage from './components/pages/IttifoqHayotiPage'
 import { NewsProvider } from './context/NewsContext'
 
 const STATIC_SITE_URL = 'https://ittifoq.ursu.uz'
@@ -181,6 +182,13 @@ function App() {
         description:
           'Urganch davlat universiteti talaba-yoshlar kontingenti, fakultetlar va jamoatchilik faolligi ko‘rsatkichlari.',
       }
+    } else if (normalizedPath === '/ittifoq-hayoti' || normalizedPath === '/galereya') {
+      seo = {
+        ...seo,
+        title: 'Ittifoq hayoti va fotolavhalar | Ursu Ittifoq',
+        description:
+          'Urganch davlat universiteti Yoshlar ittifoqi tadbirlari, forumlari va talabalar hayotidan barcha fotolavhalar to‘plami.',
+      }
     } else if (normalizedPath === '/admin') {
       shouldIndex = false
       seo = {
@@ -236,6 +244,10 @@ function App() {
           <main className="relative z-10 pb-0 pt-0" id="main-content">
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/ittifoq-hayoti" element={<IttifoqHayotiPage />} />
+              <Route path="/ittifoq hayoti" element={<IttifoqHayotiPage />} />
+              <Route path="/ittifoq%20hayoti" element={<IttifoqHayotiPage />} />
+              <Route path="/galereya" element={<IttifoqHayotiPage />} />
               <Route path="/statistika" element={<StatistikaPage />} />
               <Route path="/tuzilma" element={<TuzilmaPage />} />
               <Route path="/team" element={<TuzilmaPage />} />
