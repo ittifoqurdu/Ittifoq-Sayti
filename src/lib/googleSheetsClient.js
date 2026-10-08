@@ -554,3 +554,104 @@ export async function fetchBotUserIds() {
 
   return Array.from(userIdsSet)
 }
+
+// ---------------------------------------------------------------------------
+// FOTOLAVHALAR (Ittifoq hayoti & Galereya)
+// ---------------------------------------------------------------------------
+
+export const GVIZ_GALLERY_URL =
+  `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent('Fotolavhalar')}&headers=1`
+
+export async function fetchGalleryFromSheet() {
+  try {
+    const res = await fetch(`${GVIZ_GALLERY_URL}&_t=${Date.now()}`, {
+      method: 'GET',
+      headers: { Accept: 'text/plain,application/json' },
+    })
+    if (res.ok) {
+      const text = await res.text()
+      const match = text.match(/google\.visualization\.Query\.setResponse\((.*)\);/s)
+      if (match && match[1]) {
+        const parsed = JSON.parse(match[1])
+        const rows = parsed?.table?.rows || []
+        if (rows.length > 0) {
+          const items = rows
+            .map((row) => {
+              const c = row.c || []
+              const getVal = (i) =>
+                i < c.length && c[i] && c[i].v !== null && c[i].v !== undefined ? c[i].v : ''
+
+              const id = String(getVal(0) || '').trim()
+              if (!id || id.toLowerCase() === 'id') return null
+
+              const title = String(getVal(1) || '').trim() || 'UrDU Yoshlar Ittifoqi'
+              const image = String(getVal(2) || '').trim()
+              if (!image) return null
+
+              const date = String(getVal(3) || '').trim() || new Date().toISOString().split('T')[0]
+              const category = String(getVal(4) || 'Talabalar hayoti').trim()
+
+              return {
+                id,
+                title,
+                image,
+                date,
+                category,
+              }
+            })
+            .filter(Boolean)
+
+          if (items.length > 0) return items.reverse()
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('Could not fetch gallery from Google Sheets:', err)
+  }
+  return null
+}
+
+export async function addPhotoToSheet(item) {
+  try {
+    await fetch(GOOGLE_SHEETS_API_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        type: 'foto_qoshish',
+        action: 'add_photo',
+        id: item.id,
+        title: item.title || '',
+        caption: item.title || '',
+        image: item.image,
+        rasm: item.image,
+        date: item.date || new Date().toISOString().split('T')[0],
+        category: item.category || 'Talabalar hayoti',
+      }),
+    })
+    return { success: true }
+  } catch (err) {
+    console.error('Error adding photo to Google Sheets:', err)
+    return { success: false, error: err.message }
+  }
+}
+
+export async function deletePhotoFromSheet(id) {
+  try {
+    await fetch(GOOGLE_SHEETS_API_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        type: 'foto_ochirish',
+        action: 'delete_photo',
+        id,
+      }),
+    })
+    return { success: true }
+  } catch (err) {
+    console.error('Error deleting photo from Google Sheets:', err)
+    return { success: false, error: err.message }
+  }
+}
+

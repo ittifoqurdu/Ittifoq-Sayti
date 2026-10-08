@@ -23,12 +23,14 @@ import {
   Compass,
   Film,
   Layers,
+  Camera,
 } from 'lucide-react'
 import { useNews } from '../../context/NewsContext'
 import { useTheme } from '../../context/ThemeContext'
 import NewsEditorModal from './NewsEditorModal'
 import ClubEditorModal from './ClubEditorModal'
 import SlideEditorModal from './SlideEditorModal'
+import PhotoEditorModal from './PhotoEditorModal'
 import { GOOGLE_SPREADSHEET_URL } from '../../lib/googleSheetsClient'
 
 export default function AdminDashboard() {
@@ -56,6 +58,12 @@ export default function AdminDashboard() {
     deleteSlide,
     resetSlides,
 
+    // Gallery (Fotolavhalar)
+    galleryList,
+    addGalleryPhoto,
+    deleteGalleryPhoto,
+    resetGallery,
+
     // Auth & Sync
     isSyncing,
     syncFromSheet,
@@ -63,7 +71,7 @@ export default function AdminDashboard() {
     changeAdminPassword,
   } = useNews()
 
-  // Active Tab: 'news' | 'clubs' | 'slideshow'
+  // Active Tab: 'news' | 'clubs' | 'slideshow' | 'gallery'
   const [activeTab, setActiveTab] = useState('news')
 
   // Search & Filter state
@@ -79,6 +87,9 @@ export default function AdminDashboard() {
 
   const [isSlideModalOpen, setIsSlideModalOpen] = useState(false)
   const [editingSlide, setEditingSlide] = useState(null)
+
+  const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false)
+  const [editingPhoto, setEditingPhoto] = useState(null)
 
   // Password modal
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false)
@@ -135,6 +146,20 @@ export default function AdminDashboard() {
       )
     })
   }, [slidesList, searchQuery])
+
+  // 4. FILTERED PHOTOS (Fotolavhalar)
+  const filteredPhotos = useMemo(() => {
+    return galleryList.filter((photo) => {
+      const q = searchQuery.toLowerCase().trim()
+      if (!q) return true
+      return (
+        (photo.title && photo.title.toLowerCase().includes(q)) ||
+        (photo.category && photo.category.toLowerCase().includes(q)) ||
+        (photo.date && photo.date.toLowerCase().includes(q)) ||
+        (photo.id && photo.id.toLowerCase().includes(q))
+      )
+    })
+  }, [galleryList, searchQuery])
 
   // NEWS HANDLERS
   const handleSaveNews = async (payload) => {
@@ -205,6 +230,27 @@ export default function AdminDashboard() {
       showToast('Slayd o‘chirildi!')
     }
   }
+
+  // GALLERY HANDLERS (Fotolavhalar)
+  const handleSavePhoto = async (payload) => {
+    try {
+      await addGalleryPhoto(payload)
+      showToast('Yangi fotolavha muvaffaqiyatli saqlandi!')
+      setIsPhotoModalOpen(false)
+      setEditingPhoto(null)
+    } catch (err) {
+      console.error('Save photo error:', err)
+      showToast('Fotolavhani saqlashda xatolik yuz berdi!')
+    }
+  }
+
+  const handleDeletePhoto = async (id, title) => {
+    if (window.confirm(`Rostdan ham ushbu fotolavhani o‘chirmoqchimisiz?`)) {
+      await deleteGalleryPhoto(id)
+      showToast('Fotolavha o‘chirildi!')
+    }
+  }
+
 
   // Password submit
   const handleChangePasswordSubmit = (e) => {
@@ -350,6 +396,22 @@ export default function AdminDashboard() {
             >
               <Film size={14} />
               <span>3. Bosh Sahifa Slide Show ({slidesList.length})</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                setActiveTab('gallery')
+                setSearchQuery('')
+              }}
+              className={`inline-flex items-center gap-2 rounded-2xl px-4 py-2 text-xs font-bold transition-all cursor-pointer shrink-0 ${
+                activeTab === 'gallery'
+                  ? 'bg-amber-500 text-zinc-950 shadow-md shadow-amber-500/20'
+                  : 'bg-white/80 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 border border-zinc-200/80 dark:border-zinc-800'
+              }`}
+            >
+              <Camera size={14} />
+              <span>4. Fotolavhalar ({galleryList.length})</span>
             </button>
           </div>
         </div>
@@ -866,6 +928,193 @@ export default function AdminDashboard() {
             </div>
           </div>
         )}
+
+        {/* =========================================================================
+            TAB 4: FOTOLAVHALAR (Ittifoq hayoti & Galereya)
+           ========================================================================= */}
+        {activeTab === 'gallery' && (
+          <div>
+            {/* Top Toolbar */}
+            <div className="mb-8 flex flex-col gap-4 rounded-3xl border border-zinc-200/80 bg-white/80 p-5 shadow-sm backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-900/80 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-xl font-black text-zinc-900 dark:text-zinc-100">
+                    Ittifoq Hayoti Fotolavhalari
+                  </h2>
+                  <span className="rounded-full bg-amber-500/20 px-2.5 py-0.5 text-xs font-bold text-amber-600 dark:text-amber-400">
+                    {filteredPhotos.length} ta surat
+                  </span>
+                </div>
+                <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
+                  Ushbu fotosuratlar saytdagi "/ittifoq-hayoti" galereya sahifasida jonli ko‘rsatiladi va Google Sheets bazasida saqlanadi.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (window.confirm("Barcha o'chirilgan fotolavhalarni boshlang'ich holatga qaytarmoqchimisiz?")) {
+                      resetGallery()
+                      showToast("Fotolavhalar boshlang'ich holatga qaytarildi!")
+                    }
+                  }}
+                  className="inline-flex items-center gap-1.5 rounded-2xl border border-zinc-200 bg-white px-3.5 py-2 text-xs font-semibold text-zinc-600 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 transition cursor-pointer"
+                  title="Boshlang'ich holatga qaytarish"
+                >
+                  <RefreshCw size={13} />
+                  <span>Qayta tiklash</span>
+                </button>
+
+                <Link
+                  to="/ittifoq-hayoti"
+                  target="_blank"
+                  className="inline-flex items-center gap-1.5 rounded-2xl border border-amber-500/30 bg-amber-500/10 px-3.5 py-2 text-xs font-bold text-amber-700 dark:text-amber-300 hover:bg-amber-500/20 transition cursor-pointer"
+                >
+                  <ExternalLink size={13} />
+                  <span>Galereyani ochish</span>
+                </Link>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEditingPhoto(null)
+                    setIsPhotoModalOpen(true)
+                  }}
+                  className="inline-flex items-center gap-2 rounded-2xl bg-amber-500 px-4 py-2 text-xs font-extrabold text-zinc-950 shadow-md shadow-amber-500/20 hover:bg-amber-400 transition cursor-pointer"
+                >
+                  <Plus size={16} />
+                  <span>Yangi fotolavha qo‘shish</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Search Input */}
+            <div className="mb-6 max-w-md">
+              <div className="relative">
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400" size={16} />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Fotolavhalar bo‘yicha qidiruv (sarlavha, kategoriya, sana)..."
+                  className="w-full rounded-2xl border border-zinc-200 bg-white/80 pl-10 pr-4 py-2.5 text-xs text-zinc-900 outline-none focus:border-amber-500 dark:border-zinc-800 dark:bg-zinc-900/80 dark:text-zinc-100"
+                />
+              </div>
+            </div>
+
+            {/* Photos Grid */}
+            {filteredPhotos.length === 0 ? (
+              <div className="rounded-3xl border border-dashed border-zinc-300 dark:border-zinc-800 p-12 text-center bg-white/40 dark:bg-zinc-900/40">
+                <Camera size={36} className="mx-auto text-zinc-400 mb-3" />
+                <h3 className="text-sm font-bold text-zinc-700 dark:text-zinc-300">Fotolavhalar topilmadi</h3>
+                <p className="text-xs text-zinc-500 mt-1">Qidiruv so‘zini o‘zgartiring yoki yangi rasm qo‘shing.</p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEditingPhoto(null)
+                    setIsPhotoModalOpen(true)
+                  }}
+                  className="mt-4 inline-flex items-center gap-2 rounded-2xl bg-amber-500 px-4 py-2 text-xs font-bold text-zinc-950 hover:bg-amber-400 transition cursor-pointer"
+                >
+                  <Plus size={14} />
+                  <span>Rasm qo‘shish</span>
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
+                {filteredPhotos.map((photo, idx) => (
+                  <div
+                    key={photo.id || `photo-${idx}`}
+                    className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-zinc-200/90 bg-white/95 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-amber-500/50 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900/80"
+                  >
+                    <div>
+                      {/* Photo Thumbnail */}
+                      <div className="relative aspect-[4/3] w-full overflow-hidden bg-zinc-950 border-b border-zinc-100 dark:border-zinc-800">
+                        <img
+                          src={photo.image}
+                          alt={photo.title || 'UrDU Fotolavha'}
+                          className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+                          loading="lazy"
+                          onError={(e) => {
+                            e.target.onerror = null
+                            e.target.src = '/img/logo-oq1.png'
+                          }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+
+                        {photo.category && (
+                          <div className="absolute top-2 left-2">
+                            <span className="rounded-md bg-black/60 backdrop-blur-md px-2 py-0.5 text-[9px] font-bold text-white border border-white/10">
+                              {photo.category}
+                            </span>
+                          </div>
+                        )}
+
+                        <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <button
+                            type="button"
+                            onClick={() => handleDeletePhoto(photo.id, photo.title)}
+                            className="flex h-7 w-7 items-center justify-center rounded-lg bg-rose-600 text-white hover:bg-rose-700 transition cursor-pointer shadow-md"
+                            title="O‘chirish"
+                          >
+                            <Trash2 size={13} />
+                          </button>
+                        </div>
+
+                        <div className="absolute bottom-2 left-2 right-2 text-white">
+                          <span className="text-[10px] text-white/80 font-mono">
+                            #{filteredPhotos.length - idx}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Photo Meta */}
+                      <div className="p-3">
+                        <h4 className="text-xs font-bold text-zinc-900 dark:text-zinc-100 line-clamp-2 leading-snug">
+                          {photo.title || 'UrDU Yoshlar Ittifoqi'}
+                        </h4>
+                        <div className="mt-1 flex items-center justify-between text-[10px] text-zinc-400">
+                          <span>{photo.date || '2026-10-08'}</span>
+                          <span className="truncate max-w-[80px]" title={photo.id}>
+                            {photo.id}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Bottom Actions */}
+                    <div className="px-3 pb-3 pt-1 flex items-center justify-between border-t border-zinc-100 dark:border-zinc-800/60 text-[11px]">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const url = photo.image.startsWith('http') ? photo.image : window.location.origin + photo.image
+                          navigator.clipboard.writeText(url)
+                          showToast('Havola nusxalandi!')
+                        }}
+                        className="text-zinc-500 hover:text-amber-600 dark:text-zinc-400 dark:hover:text-amber-400 flex items-center gap-1 font-semibold transition cursor-pointer"
+                        title="Rasm URL nusxalash"
+                      >
+                        <Copy size={11} />
+                        <span>Havola</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => handleDeletePhoto(photo.id, photo.title)}
+                        className="text-rose-500 hover:text-rose-600 flex items-center gap-1 font-bold transition cursor-pointer"
+                        title="O‘chirish"
+                      >
+                        <Trash2 size={11} />
+                        <span>O‘chirish</span>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </main>
 
       {/* 1. News Editor Modal */}
@@ -890,6 +1139,14 @@ export default function AdminDashboard() {
         onClose={() => setIsSlideModalOpen(false)}
         onSave={handleSaveSlide}
         editItem={editingSlide}
+      />
+
+      {/* 4. Photo Editor Modal */}
+      <PhotoEditorModal
+        isOpen={isPhotoModalOpen}
+        onClose={() => setIsPhotoModalOpen(false)}
+        onSave={handleSavePhoto}
+        editItem={editingPhoto}
       />
 
       {/* Password Change Modal */}

@@ -13,19 +13,24 @@ import {
   addSlideToSheet,
   updateSlideInSheet,
   deleteSlideFromSheet,
+  fetchGalleryFromSheet,
+  addPhotoToSheet,
+  deletePhotoFromSheet,
 } from '../lib/googleSheetsClient'
 import {
   broadcastClubToAllBotUsers,
   broadcastNewsToAllBotUsers,
 } from '../lib/telegramNotifier'
+import { defaultGalleryList } from '../data/defaultGalleryPhotos'
 
 const NewsContext = createContext(null)
-
 
 const STORAGE_KEY = 'urdu_news_events_v4'
 const CLUBS_STORAGE_KEY = 'urdu_clubs_v8'
 const DELETED_CLUBS_KEY = 'urdu_deleted_clubs_v3'
-const SLIDES_STORAGE_KEY = 'urdu_slides_v4'
+const SLIDES_STORAGE_KEY = 'urdu_slides_v5'
+const GALLERY_STORAGE_KEY = 'urdu_gallery_v3'
+const DELETED_GALLERY_KEY = 'urdu_deleted_gallery_v3'
 const AUTH_KEY = 'urdu_admin_authenticated'
 const PASSWORD_KEY = 'urdu_admin_password'
 const DEFAULT_PASSWORD = 'admin2026'
@@ -71,6 +76,23 @@ function saveDeletedClubId(id) {
     localStorage.setItem(DELETED_CLUBS_KEY, JSON.stringify(Array.from(set)))
   } catch {}
 }
+
+function getDeletedGalleryIds() {
+  try {
+    const raw = localStorage.getItem(DELETED_GALLERY_KEY)
+    if (raw) return new Set(JSON.parse(raw))
+  } catch {}
+  return new Set()
+}
+
+function saveDeletedGalleryId(id) {
+  try {
+    const set = getDeletedGalleryIds()
+    set.add(id)
+    localStorage.setItem(DELETED_GALLERY_KEY, JSON.stringify(Array.from(set)))
+  } catch {}
+}
+
 
 // Boshlang‘ich klublar ro‘yxati (Google Sheets bilan to‘liq sinxron)
 export const defaultClubsList = [
@@ -156,30 +178,6 @@ export const defaultClubsList = [
 
 // Real UrDU Yoshlar Ittifoqi slides from the slide folder
 export const defaultSlidesList = [
-  {
-    id: 'slide-bt-1',
-    title: "Madaniyat va sanʼat to‘garaklari",
-    tag: 'Madaniyat',
-    image: '/slide/1.jpg',
-  },
-  {
-    id: 'slide-bt-2',
-    title: "Sog‘lom turmush tarzi va sport musobaqalari",
-    tag: 'Sport',
-    image: '/slide/2.jpg',
-  },
-  {
-    id: 'slide-bt-3',
-    title: 'Axborot texnologiyalari va raqamli startaplar',
-    tag: 'IT va innovatsiya',
-    image: '/slide/3.jpg',
-  },
-  {
-    id: 'slide-bt-4',
-    title: "Kitobxonlik va maʼnaviyat maskani",
-    tag: 'Kitobxonlik',
-    image: '/slide/4.jpg',
-  },
   {
     id: 'slide-1',
     title: 'UrDU yoshlar forumi va taqdirlash marosimi',
@@ -273,8 +271,41 @@ function filterValidSlides(list) {
       String(item.id).trim().toLowerCase() !== 'id' &&
       item.title &&
       String(item.title).trim().toLowerCase() !== 'title' &&
-      item.image
+      item.image &&
+      !String(item.image).includes('/slide/1.jpg') &&
+      !String(item.image).includes('/slide/2.jpg') &&
+      !String(item.image).includes('/slide/3.jpg') &&
+      !String(item.image).includes('/slide/4.jpg')
   )
+}
+
+function filterValidGallery(list) {
+  if (!Array.isArray(list)) return []
+  const deleted = getDeletedGalleryIds()
+  return list.filter((item) => {
+    if (!item || !item.id || !item.image) return false
+    const idStr = String(item.id).trim()
+    if (idStr.toLowerCase() === 'id') return false
+    if (deleted.has(idStr)) return false
+    const imgLower = String(item.image).toLowerCase()
+    if (
+      imgLower.includes('/slide/1.jpg') ||
+      imgLower.includes('/slide/2.jpg') ||
+      imgLower.includes('/slide/3.jpg') ||
+      imgLower.includes('/slide/4.jpg') ||
+      imgLower.includes('tg_photo_1.jpg') ||
+      imgLower.includes('tg_photo_2.jpg') ||
+      imgLower.includes('tg_photo_11.jpg') ||
+      imgLower.includes('tg_photo_19.jpg') ||
+      imgLower.includes('tg_photo_23.jpg') ||
+      imgLower.includes('urdu_news_45.jpg') ||
+      imgLower.includes('logo') ||
+      imgLower.includes('banner')
+    ) {
+      return false
+    }
+    return true
+  })
 }
 
 export function NewsProvider({ children }) {
@@ -321,6 +352,19 @@ export function NewsProvider({ children }) {
       // Fallback
     }
     return defaultSlidesList
+  })
+
+  // 4. Fotolavhalar (Gallery) state
+  const [galleryList, setGalleryList] = useState(() => {
+    try {
+      const saved = localStorage.getItem(GALLERY_STORAGE_KEY)
+      if (saved) {
+        const parsed = JSON.parse(saved)
+        const valid = filterValidGallery(parsed)
+        if (valid.length > 0) return valid
+      }
+    } catch {}
+    return filterValidGallery(defaultGalleryList)
   })
 
   const [isSyncing, setIsSyncing] = useState(false)
@@ -370,6 +414,33 @@ export function NewsProvider({ children }) {
         }
       }
 
+      // 4. Fotolavhalarni Google Sheetsdan olish
+      try {
+        const sheetGallery = await fetchGalleryFromSheet()
+        if (sheetGallery && Array.isArray(sheetGallery) && sheetGallery.length > 0) {
+          const validGallery = filterValidGallery(sheetGallery)
+          if (validGallery.length > 0) {
+            setGalleryList((prev) => {
+              const existingIds = new Set(validGallery.map((g) => g.id))
+              const existingImgs = new Set(validGallery.map((g) => g.image))
+              const merged = [...validGallery]
+              for (const p of prev) {
+                if (!existingIds.has(p.id) && !existingImgs.has(p.image)) {
+                  merged.push(p)
+                }
+              }
+              const finalGallery = filterValidGallery(merged)
+              try {
+                localStorage.setItem(GALLERY_STORAGE_KEY, JSON.stringify(finalGallery))
+              } catch {}
+              return finalGallery
+            })
+          }
+        }
+      } catch (galleryErr) {
+        console.warn('Gallery sync error:', galleryErr)
+      }
+
       setLastSynced(new Date())
     } finally {
       setIsSyncing(false)
@@ -404,6 +475,14 @@ export function NewsProvider({ children }) {
       // Storage error
     }
   }, [slidesList])
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(GALLERY_STORAGE_KEY, JSON.stringify(galleryList))
+    } catch {
+      // Storage error
+    }
+  }, [galleryList])
 
   // Auth functions
   const adminLogin = useCallback((password) => {
@@ -764,6 +843,70 @@ export function NewsProvider({ children }) {
     }
   }, [])
 
+  // -------------------------------------------------------------------------
+  // GALLERY ACTIONS (Fotolavhalar)
+  // -------------------------------------------------------------------------
+  const addGalleryPhoto = useCallback(
+    async (item) => {
+      const id = `foto-${Date.now()}`
+      const newPhoto = {
+        id,
+        title: item.title?.trim() || 'UrDU Yoshlar Ittifoqi',
+        image: item.image?.trim() || '',
+        date: item.date?.trim() || new Date().toISOString().split('T')[0],
+        category: item.category?.trim() || 'Talabalar hayoti',
+        createdAt: Date.now(),
+      }
+
+      setGalleryList((prev) => {
+        const next = [newPhoto, ...prev.filter((p) => p.id !== id)]
+        try {
+          localStorage.setItem(GALLERY_STORAGE_KEY, JSON.stringify(next))
+        } catch (err) {
+          console.warn('LocalStorage save error:', err)
+        }
+        return next
+      })
+
+      try {
+        await addPhotoToSheet(newPhoto)
+      } catch (err) {
+        console.warn('Could not sync photo to Google Sheets:', err)
+      }
+      return newPhoto
+    },
+    []
+  )
+
+  const deleteGalleryPhoto = useCallback(
+    async (id) => {
+      saveDeletedGalleryId(id)
+      setGalleryList((prev) => {
+        const next = prev.filter((item) => item.id !== id)
+        try {
+          localStorage.setItem(GALLERY_STORAGE_KEY, JSON.stringify(next))
+        } catch (err) {
+          console.warn('LocalStorage save error:', err)
+        }
+        return next
+      })
+      try {
+        await deletePhotoFromSheet(id)
+      } catch (err) {
+        console.warn('Could not delete photo from Google Sheets:', err)
+      }
+    },
+    []
+  )
+
+  const resetGallery = useCallback(() => {
+    try {
+      localStorage.removeItem(DELETED_GALLERY_KEY)
+      localStorage.removeItem(GALLERY_STORAGE_KEY)
+    } catch {}
+    setGalleryList(filterValidGallery(defaultGalleryList))
+  }, [])
+
 
   const value = {
     // News
@@ -789,6 +932,12 @@ export function NewsProvider({ children }) {
     deleteSlide,
     resetSlides,
 
+    // Gallery (Fotolavhalar)
+    galleryList,
+    addGalleryPhoto,
+    deleteGalleryPhoto,
+    resetGallery,
+
     // Auth & Sync
     isSyncing,
     lastSynced,
@@ -809,6 +958,7 @@ export function useNews() {
       newsList: [],
       clubsList: defaultClubsList,
       slidesList: defaultSlidesList,
+      galleryList: defaultGalleryList,
       isSyncing: false,
       lastSynced: null,
       syncFromSheet: async () => {},
@@ -830,6 +980,9 @@ export function useNews() {
       updateSlide: async () => {},
       deleteSlide: async () => {},
       resetSlides: () => {},
+      addGalleryPhoto: async () => {},
+      deleteGalleryPhoto: async () => {},
+      resetGallery: () => {},
     }
   }
   return context
@@ -837,3 +990,4 @@ export function useNews() {
 
 export const useClubs = useNews
 export const useSlideshow = useNews
+export const useGallery = useNews

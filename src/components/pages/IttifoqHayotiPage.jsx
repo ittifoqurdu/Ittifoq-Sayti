@@ -13,25 +13,11 @@ import {
   ExternalLink,
   Check,
 } from 'lucide-react'
-import { useNews, defaultSlidesList } from '../../context/NewsContext'
-import telegramPhotos from '../../data/telegramPhotos.json'
-import urduNewsPhotos from '../../data/urduNewsPhotos.json'
+import { useNews } from '../../context/NewsContext'
+import { defaultGalleryList } from '../../data/defaultGalleryPhotos'
 import FooterSection from '../sections/FooterSection'
 
-// Real Yoshlar ittifoqi tadbirlari va anjumanlari suratlari
-const SLIDE_PHOTOS = [
-  { id: 's-1', image: '/slide/photo_2026-08-19_17-46-57.jpg' },
-  { id: 's-2', image: '/slide/photo_2026-08-19_17-46-56.jpg' },
-  { id: 's-3', image: '/slide/photo_2026-09-03_14-24-19.jpg' },
-  { id: 's-4', image: '/slide/photo_2026-09-13_00-08-45.jpg' },
-  { id: 's-5', image: '/slide/photo_2026-09-03_14-24-20.jpg' },
-  { id: 's-6', image: '/slide/photo_2026-08-19_17-45-29.jpg' },
-  { id: 's-7', image: '/slide/photo_2026-08-19_17-46-23.jpg' },
-  { id: 's-8', image: '/slide/photo_2026-09-03_14-24-20-2.jpg' },
-  { id: 's-9', image: '/slide/photo_2026-09-03_14-24-20-3.jpg' },
-]
-
-// Logo, banner va grafik plakatlarni chetlatib, faqat real hayot fotosuratlarini qoldirish
+// Logo, banner va grafik e'lon plakatlarini chetlatib, faqat real hayot fotosuratlarini qoldirish
 const isRealLifePhoto = (img) => {
   if (!img) return false
   const lower = img.toLowerCase()
@@ -47,7 +33,9 @@ const isRealLifePhoto = (img) => {
     lower.includes('tg_photo_1.jpg') ||
     lower.includes('tg_photo_2.jpg') ||
     lower.includes('tg_photo_11.jpg') ||
-    lower.includes('tg_photo_23.jpg')
+    lower.includes('tg_photo_19.jpg') ||
+    lower.includes('tg_photo_23.jpg') ||
+    lower.includes('urdu_news_45.jpg')
   ) {
     return false
   }
@@ -55,7 +43,7 @@ const isRealLifePhoto = (img) => {
 }
 
 export default function IttifoqHayotiPage() {
-  const { slidesList } = useNews()
+  const { galleryList } = useNews()
   const [lightboxIndex, setLightboxIndex] = useState(null)
   const [copiedLink, setCopiedLink] = useState(false)
 
@@ -63,27 +51,11 @@ export default function IttifoqHayotiPage() {
     window.scrollTo({ top: 0, behavior: 'auto' })
   }, [])
 
-  // Barcha faqat real hayot fotosuratlarini birlashtiramiz
+  // Admin panelda boshqariladigan dinamik fotolavhalar ro'yxati
   const allPhotos = useMemo(() => {
-    const list = [...telegramPhotos, ...SLIDE_PHOTOS, ...urduNewsPhotos].filter((p) =>
-      isRealLifePhoto(p.image)
-    )
-    const currentSlides = slidesList && slidesList.length > 0 ? slidesList : defaultSlidesList
-
-    currentSlides.forEach((slide) => {
-      if (!slide || !slide.image) return
-      if (!isRealLifePhoto(slide.image)) return
-      const alreadyExists = list.some((p) => p.image === slide.image)
-      if (!alreadyExists) {
-        list.push({
-          id: slide.id || `custom-${Math.random().toString(36).slice(2, 7)}`,
-          image: slide.image,
-        })
-      }
-    })
-
-    return list
-  }, [slidesList])
+    const source = galleryList && galleryList.length > 0 ? galleryList : defaultGalleryList
+    return source.filter((p) => isRealLifePhoto(p.image))
+  }, [galleryList])
 
   const openLightbox = (index) => setLightboxIndex(index)
   const closeLightbox = () => setLightboxIndex(null)
