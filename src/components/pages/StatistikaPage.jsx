@@ -25,7 +25,8 @@ import {
   Layers,
   HeartHandshake,
   ShieldCheck,
-  CalendarDays
+  CalendarDays,
+  ArrowRight
 } from 'lucide-react'
 import studentStats from '../../data/studentStats.json'
 import YoshlarDaftariSection from '../sections/YoshlarDaftariSection'
@@ -59,15 +60,21 @@ export default function StatistikaPage() {
             <span>Bosh sahifaga qaytish</span>
           </Link>
 
-          <div className="flex items-center gap-2 text-xs text-zinc-500">
-            <span>Bosh sahifa</span>
-            <span>/</span>
-            <span className="font-semibold text-emerald-600 dark:text-emerald-400">Talabalar statistikasi</span>
+          {/* Prominent top button for the user's latest task */}
+          <div className="flex items-center gap-2.5">
+            <Link
+              to="/tadbirlar"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-xs font-bold text-white shadow-md shadow-blue-500/25 hover:from-blue-500 hover:to-indigo-500 transition-all hover:scale-105"
+            >
+              <CalendarDays size={14} />
+              <span>O‘tkazilgan tadbirlar (6 663 ta)</span>
+              <ArrowRight size={13} />
+            </Link>
           </div>
         </div>
 
         {/* Page Hero Header */}
-        <header className="glass-card relative overflow-hidden p-6 sm:p-10 mb-8">
+        <header className="glass-card relative overflow-hidden p-6 sm:p-10 mb-6">
           <div className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl" />
           <div className="pointer-events-none absolute -left-16 -bottom-16 h-72 w-72 rounded-full bg-blue-500/10 blur-3xl" />
 
@@ -97,44 +104,75 @@ export default function StatistikaPage() {
           </div>
 
           {/* Quick Anchor Navigation */}
-          <div className="relative z-10 mt-6 pt-5 border-t border-zinc-200/80 dark:border-zinc-800/80 flex flex-wrap gap-2">
+          <div className="relative z-10 mt-6 pt-5 border-t border-zinc-200/80 dark:border-zinc-800/80 flex flex-wrap items-center gap-2.5">
+            <Link
+              to="/tadbirlar"
+              className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 px-5 py-2.5 text-xs font-black text-white shadow-lg shadow-blue-500/25 hover:from-blue-500 hover:to-indigo-500 transition-all hover:scale-105 ring-2 ring-blue-400/40"
+            >
+              <CalendarDays size={15} />
+              <span>O‘tkazilgan tadbirlar hisoboti (6 663 ta)</span>
+              <span className="rounded-full bg-white/25 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider">
+                To‘liq hisobot
+              </span>
+            </Link>
             <a
               href="#yoshlar-daftari-statistika"
-              className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3.5 py-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500 hover:text-zinc-950 transition-all shadow-sm"
+              className="inline-flex items-center gap-1.5 rounded-2xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-2.5 text-xs font-bold text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500 hover:text-zinc-950 transition-all shadow-sm"
             >
-              <HeartHandshake size={14} />
+              <HeartHandshake size={15} />
               <span>«Yoshlar daftari» & Ijtimoiy himoya (52 nafar)</span>
             </a>
             <a
-              href="#tadbirlar-statistika"
-              className="inline-flex items-center gap-1.5 rounded-full border border-blue-500/40 bg-blue-500/10 px-3.5 py-1.5 text-xs font-bold text-blue-700 dark:text-blue-300 hover:bg-blue-500 hover:text-white transition-all shadow-sm"
-            >
-              <CalendarDays size={14} />
-              <span>O‘tkazilgan tadbirlar (6 663 ta)</span>
-            </a>
-            <a
               href="#fakultetlar"
-              className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/70 px-3.5 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900/70 dark:text-zinc-300 dark:hover:bg-zinc-800 transition"
+              className="inline-flex items-center gap-1.5 rounded-2xl border border-zinc-200/80 bg-white/70 px-4 py-2.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900/70 dark:text-zinc-300 dark:hover:bg-zinc-800 transition"
             >
-              <Building2 size={13} />
+              <Building2 size={14} />
               <span>Fakultetlar kesimi</span>
             </a>
             <a
               href="#talim-shakllari"
-              className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/70 px-3.5 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900/70 dark:text-zinc-300 dark:hover:bg-zinc-800 transition"
+              className="inline-flex items-center gap-1.5 rounded-2xl border border-zinc-200/80 bg-white/70 px-4 py-2.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900/70 dark:text-zinc-300 dark:hover:bg-zinc-800 transition"
             >
-              <BookOpen size={13} />
+              <BookOpen size={14} />
               <span>Taʼlim shakllari</span>
             </a>
             <a
               href="#turar-joy"
-              className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/70 px-3.5 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900/70 dark:text-zinc-300 dark:hover:bg-zinc-800 transition"
+              className="inline-flex items-center gap-1.5 rounded-2xl border border-zinc-200/80 bg-white/70 px-4 py-2.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900/70 dark:text-zinc-300 dark:hover:bg-zinc-800 transition"
             >
-              <Home size={13} />
+              <Home size={14} />
               <span>Turar joy va hududlar</span>
             </a>
           </div>
         </header>
+
+        {/* Prominent Action Banner for Tadbirlar */}
+        <div className="glass-card p-4 sm:p-5 mb-8 border-l-4 border-l-blue-500 bg-gradient-to-r from-blue-500/5 via-indigo-500/5 to-transparent flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex items-center gap-3.5">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-600 dark:text-blue-400 shrink-0">
+              <CalendarDays size={22} />
+            </div>
+            <div>
+              <h3 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+                O‘tkazilgan tadbirlar va loyihalar statistikasi
+                <span className="rounded-full bg-blue-500/10 px-2.5 py-0.5 text-xs font-extrabold text-blue-600 dark:text-blue-400">
+                  6 663 ta tadbir
+                </span>
+              </h3>
+              <p className="text-xs text-zinc-500 mt-0.5">
+                UrDU boshlang‘ich tashkiloti hisoboti: 68 315 marta talabalar qamrovi, 207 ta loyiha, 135 ta to‘garak va klublar.
+              </p>
+            </div>
+          </div>
+
+          <Link
+            to="/tadbirlar"
+            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-xs font-bold text-white shadow-md shadow-blue-500/25 hover:from-blue-500 hover:to-indigo-500 transition-all hover:scale-105 shrink-0"
+          >
+            <span>Tadbirlar to‘liq hisobotiga o‘tish</span>
+            <ArrowRight size={14} />
+          </Link>
+        </div>
 
         {/* ROW 1: 4 Main Core Metrics Cards (Umumiy kontingent) */}
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-5">

@@ -23,6 +23,7 @@ import KlublarPage from './components/pages/KlublarPage'
 import ClubDetailPage from './components/pages/ClubDetailPage'
 import ContactPage from './components/pages/ContactPage'
 import StatistikaPage from './components/pages/StatistikaPage'
+import TadbirlarPage from './components/pages/TadbirlarPage'
 import IttifoqHayotiPage from './components/pages/IttifoqHayotiPage'
 import { NewsProvider } from './context/NewsContext'
 
@@ -182,6 +183,13 @@ function App() {
         description:
           'Urganch davlat universiteti talaba-yoshlar kontingenti, fakultetlar va jamoatchilik faolligi ko‘rsatkichlari.',
       }
+    } else if (normalizedPath === '/tadbirlar' || normalizedPath === '/tadbirlar-hisoboti' || normalizedPath === '/tadbirlar-statistika') {
+      seo = {
+        ...seo,
+        title: 'Tadbirlar va loyihalar statistikasi | Ursu Ittifoq',
+        description:
+          'Urganch davlat universiteti Yoshlar ittifoqi tomonidan o‘tkazilgan 6 663 ta tadbir, 207 ta loyiha va 5 muhim tashabbus hisoboti.',
+      }
     } else if (normalizedPath === '/ittifoq-hayoti' || normalizedPath === '/galereya') {
       seo = {
         ...seo,
@@ -249,6 +257,9 @@ function App() {
               <Route path="/ittifoq%20hayoti" element={<IttifoqHayotiPage />} />
               <Route path="/galereya" element={<IttifoqHayotiPage />} />
               <Route path="/statistika" element={<StatistikaPage />} />
+              <Route path="/tadbirlar" element={<TadbirlarPage />} />
+              <Route path="/tadbirlar-hisoboti" element={<TadbirlarPage />} />
+              <Route path="/tadbirlar-statistika" element={<TadbirlarPage />} />
               <Route path="/tuzilma" element={<TuzilmaPage />} />
               <Route path="/team" element={<TuzilmaPage />} />
               <Route path="/klublar" element={<KlublarPage />} />

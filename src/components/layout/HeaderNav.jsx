@@ -10,6 +10,7 @@ const MotionNav = motion.nav
 const navItems = [
   { label: 'Bosh sahifa', path: '/', id: 'hero' },
   { label: 'Statistika', path: '/statistika', id: 'stats' },
+  { label: 'Tadbirlar', path: '/tadbirlar', id: 'events' },
   { label: 'Tuzilma', path: '/tuzilma', id: 'team' },
   { label: 'To‘garaklar va klublar', path: '/klublar', id: 'directions' },
   { label: 'Yangiliklar va tanlovlar', path: '/yangiliklar', id: 'news' },
@@ -33,6 +34,7 @@ function HeaderNav() {
     const path = location.pathname
     if (path === '/ittifoq-hayoti' || path === '/galereya' || path === '/ittifoq hayoti' || path === '/ittifoq%20hayoti') return 'gallery'
     if (path === '/statistika') return 'stats'
+    if (path === '/tadbirlar' || path === '/tadbirlar-hisoboti' || path === '/tadbirlar-statistika') return 'events'
     if (path === '/tuzilma' || path === '/team') return 'team'
     if (path === '/klublar' || path === '/yonalishlar' || path.startsWith('/klublar/')) return 'directions'
     if (path.startsWith('/yangiliklar')) return 'news'

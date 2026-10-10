@@ -256,20 +256,29 @@ function TopCardsSection() {
           {/* Bottom Action Section: Tags & Detailed Button */}
           <div className="mt-6 pt-5 border-t border-zinc-200/80 dark:border-zinc-800/80 flex flex-wrap items-center justify-between gap-4">
             <div className="flex flex-wrap items-center gap-2">
-              {['«Yoshlar daftari»: 52', 'Ayollar daftari: 91', 'Ijtimoiy reyestr: 289', 'Chin yetim: 263', '3 362 nafar TTJ', '13 ta fakultet'].map((tag) => (
+              {['Tadbirlar: 6 663 ta', '«Yoshlar daftari»: 52', 'Ayollar daftari: 91', 'Ijtimoiy reyestr: 289', 'Chin yetim: 263', '135 ta to‘garak', '13 ta fakultet'].map((tag) => (
                 <span key={tag} className="rounded-full border border-zinc-200/80 bg-white/80 dark:border-zinc-800 dark:bg-zinc-900/80 px-3 py-1 text-[11px] font-medium text-zinc-700 dark:text-zinc-300 shadow-sm">
                   {tag}
                 </span>
               ))}
             </div>
 
-            <Link
-              to="/statistika"
-              className="inline-flex items-center gap-2 rounded-full bg-emerald-500 hover:bg-emerald-400 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-zinc-950 shadow-md shadow-emerald-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
-            >
-              <span>Batafsil statistika</span>
-              <ArrowRight size={14} />
-            </Link>
+            <div className="flex flex-wrap items-center gap-2">
+              <Link
+                to="/statistika#tadbirlar-statistika"
+                className="inline-flex items-center gap-1.5 rounded-full border border-blue-500/40 bg-blue-500/10 hover:bg-blue-500 hover:text-white px-4 py-2 text-xs font-bold text-blue-700 dark:text-blue-300 transition-all shadow-sm"
+              >
+                <CalendarDays size={14} />
+                <span>Tadbirlar hisoboti (6 663 ta)</span>
+              </Link>
+              <Link
+                to="/statistika"
+                className="inline-flex items-center gap-2 rounded-full bg-emerald-500 hover:bg-emerald-400 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-zinc-950 shadow-md shadow-emerald-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
+              >
+                <span>Batafsil statistika</span>
+                <ArrowRight size={14} />
+              </Link>
+            </div>
           </div>
         </article>
       </div>
