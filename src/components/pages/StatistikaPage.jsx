@@ -33,7 +33,6 @@ import FooterSection from '../sections/FooterSection'
 export default function StatistikaPage() {
   const [facultySearch, setFacultySearch] = useState('')
   const [activeView, setActiveView] = useState('barchasi') // barchasi, fakultetlar, ta'lim, hudud
-  const [selectedSocialCategory, setSelectedSocialCategory] = useState('barchasi')
 
   const total = studentStats.totalStudents
   const girlsPercent = ((studentStats.girls / total) * 100).toFixed(1)
@@ -209,7 +208,6 @@ export default function StatistikaPage() {
           {/* Card 1: yoshlar daftarida turadigan yoshlar */}
           <a
             href="#yoshlar-daftari-statistika"
-            onClick={() => setSelectedSocialCategory('yoshlar_daftari')}
             className="glass-card relative overflow-hidden p-6 border-l-4 border-l-emerald-500 transition hover:shadow-lg hover:border-emerald-400 group cursor-pointer block"
           >
             <div className="flex items-center justify-between">
@@ -232,7 +230,6 @@ export default function StatistikaPage() {
           {/* Card 2: Chin yetimligi bo'lgan yoshlar */}
           <a
             href="#yoshlar-daftari-statistika"
-            onClick={() => setSelectedSocialCategory('chin_yetim')}
             className="glass-card relative overflow-hidden p-6 border-l-4 border-l-purple-500 transition hover:shadow-lg hover:border-purple-400 group cursor-pointer block"
           >
             <div className="flex items-center justify-between">
@@ -255,7 +252,6 @@ export default function StatistikaPage() {
           {/* Card 3: ijtimoiy himoyaga muhtoj talabalar */}
           <a
             href="#yoshlar-daftari-statistika"
-            onClick={() => setSelectedSocialCategory('kam_taminlangan')}
             className="glass-card relative overflow-hidden p-6 border-l-4 border-l-amber-500 transition hover:shadow-lg hover:border-amber-400 group cursor-pointer block"
           >
             <div className="flex items-center justify-between">
@@ -278,7 +274,6 @@ export default function StatistikaPage() {
           {/* Card 4: Ayollar daftari */}
           <a
             href="#yoshlar-daftari-statistika"
-            onClick={() => setSelectedSocialCategory('ayollar_daftari')}
             className="glass-card relative overflow-hidden p-6 border-l-4 border-l-pink-500 transition hover:shadow-lg hover:border-pink-400 group cursor-pointer block"
           >
             <div className="flex items-center justify-between">
@@ -350,7 +345,7 @@ export default function StatistikaPage() {
         </section>
 
         {/* Dedicated Yoshlar Daftari & Social Notebooks Section */}
-        <YoshlarDaftariSection initialCategory={selectedSocialCategory} />
+        <YoshlarDaftariSection />
 
         {/* Education Forms and Degrees Section */}
         <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 mt-12" id="talim-shakllari">
