@@ -24,9 +24,7 @@ import {
   Briefcase,
   Layers,
   HeartHandshake,
-  ShieldCheck,
-  CalendarDays,
-  ArrowRight
+  ShieldCheck
 } from 'lucide-react'
 import studentStats from '../../data/studentStats.json'
 import YoshlarDaftariSection from '../sections/YoshlarDaftariSection'
