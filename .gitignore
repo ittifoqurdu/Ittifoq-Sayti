@@ -28,3 +28,11 @@ dist-ssr
 *.sw?
 *.xlsx
 *.xls
+*.docx
+*.doc
+*.pptx
+*.rar
+Yoshlar daftari ststisika/
+scripts/*.json
+scripts/*.txt
+scripts/*.py

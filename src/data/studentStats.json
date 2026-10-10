@@ -60,5 +60,16 @@
     "Sirdaryo viloyati": 19,
     "Boshqa": 24
   },
+  "socialCategories": {
+    "yoshlarDaftari": 52,
+    "ayollarDaftari": 91,
+    "ijtimoiyHimoyaReyestri": 289,
+    "chinYetim": 263,
+    "nogironTalabalar": 41,
+    "mehribonlikUyi": 19,
+    "boquvchisiniYoqotgan": 49,
+    "oilaliTalabalar": 37,
+    "ttjIjtimoiy": 3812
+  },
   "updatedAt": "5-oktyabr 2026-yil holatiga"
 }

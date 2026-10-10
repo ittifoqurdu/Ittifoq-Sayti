@@ -1,0 +1,311 @@
+{
+  "updatedAt": "2026-yil Oktyabr",
+  "totalExtractedStudents": 336,
+  "officialKPIs": {
+    "yoshlar_daftari": {
+      "title": "“Yoshlar daftari”ga kiritilganlar",
+      "count": 52,
+      "description": "Universitet bo‘yicha Yoshlar daftariga rasman kiritilgan talaba-yoshlar soni (Boshlang‘ich tashkilot hisoboti)",
+      "badge": "Rasmiy hisobot: 52 nafar",
+      "color": "emerald"
+    },
+    "ayollar_daftari": {
+      "title": "“Ayollar daftari”ga kiritilgan oilalar farzandlari",
+      "count": 91,
+      "description": "Ayollar daftariga kiritilgan oilalarning talaba-qizlari va farzandlari (TTJda 74 nafar)",
+      "badge": "Rasmiy hisobot: 91 nafar",
+      "color": "pink"
+    },
+    "ijtimoiy_reyestr": {
+      "title": "“Ijtimoiy himoya yagona reyestri” (Kam ta’minlangan)",
+      "count": 289,
+      "description": "Kam ta’minlangan va ijtimoiy reestrda turuvchi talabalar (TTJda 225 nafar)",
+      "badge": "Rasmiy hisobot: 289 nafar",
+      "color": "amber"
+    },
+    "chin_yetim": {
+      "title": "Chin yetim talabalar",
+      "count": 263,
+      "description": "Ota-ona qaramog‘idan mahrum bo‘lgan chin yetim talabalar (TTJda 3 nafar)",
+      "badge": "Rasmiy hisobot: 263 nafar",
+      "color": "purple"
+    },
+    "nogiron": {
+      "title": "Nogironligi bo‘lgan talabalar",
+      "count": 41,
+      "description": "1- va 2-guruh nogironligi bo‘lgan talabalar (TTJda 95 nafar maxsus ehtiyojli talaba)",
+      "badge": "Rasmiy hisobot: 41 nafar (TTJda 95 nafar)",
+      "color": "blue"
+    },
+    "mehribonlik": {
+      "title": "Mehribonlik uyi tarbiyalanuvchilari",
+      "count": 19,
+      "description": "Mehribonlik uylari va bolalar shaharchalarida tarbiyalangan talabalar (TTJda 8 nafar)",
+      "badge": "Rasmiy hisobot: 19 nafar",
+      "color": "indigo"
+    },
+    "boquvchisini_yoqotgan": {
+      "title": "Boquvchisini yo‘qotgan talabalar",
+      "count": 49,
+      "description": "Faqat bir ota yoki onasi vafot etgan / boquvchisini yo‘qotgan talabalar (TTJda 28 nafar)",
+      "badge": "Nomma-nom ro‘yxatda: 49 nafar",
+      "color": "rose"
+    },
+    "oilali": {
+      "title": "Turmush qurgan (oilali) talabalar",
+      "count": 37,
+      "description": "Tahsil olish davomida oila qurgan talaba-yoshlar va talaba-qizlar",
+      "badge": "Xatlovda: 37 nafar",
+      "color": "teal"
+    }
+  },
+  "categoriesSummary": [
+    {
+      "key": "ttj_talabalar",
+      "title": "TTJda yashovchi talaba-qizlar",
+      "count": 88
+    },
+    {
+      "key": "boquvchisini_yoqotgan",
+      "title": "Boquvchisini yo‘qotgan talabalar",
+      "count": 49
+    },
+    {
+      "key": "kam_taminlangan",
+      "title": "Kam ta’minlangan talabalar (Ijtimoiy reyestr)",
+      "count": 47
+    },
+    {
+      "key": "nogiron",
+      "title": "Nogironligi bo‘lgan talaba-qizlar",
+      "count": 47
+    },
+    {
+      "key": "oz_uyidan_qatnovchi",
+      "title": "O‘z uyidan qatnovchi talaba-qizlar",
+      "count": 45
+    },
+    {
+      "key": "oilali",
+      "title": "Oilali talaba-qizlar",
+      "count": 37
+    },
+    {
+      "key": "chin_yetim",
+      "title": "Chin yetim talabalar",
+      "count": 9
+    },
+    {
+      "key": "ayollar_daftari",
+      "title": "Ayollar daftariga kiritilgan oilalar farzandlari",
+      "count": 5
+    },
+    {
+      "key": "yoshlar_daftari",
+      "title": "Yoshlar daftariga kiritilgan talabalar",
+      "count": 3
+    },
+    {
+      "key": "ajrashgan",
+      "title": "Ajrashgan (yolg‘iz) talabalar",
+      "count": 3
+    },
+    {
+      "key": "ijarada_yashovchi",
+      "title": "Ijarada yashovchi talaba-qizlar",
+      "count": 1
+    },
+    {
+      "key": "qarindoshnikida",
+      "title": "Qarindoshining uyida yashovchi talaba-qizlar",
+      "count": 1
+    },
+    {
+      "key": "temir_daftar",
+      "title": "Temir daftarga kiritilgan oilalar farzandlari",
+      "count": 1
+    }
+  ],
+  "categories": {
+    "oilali": {
+      "key": "oilali",
+      "title": "Oilali talaba-qizlar",
+      "count": 37
+    },
+    "ayollar_daftari": {
+      "key": "ayollar_daftari",
+      "title": "Ayollar daftariga kiritilgan oilalar farzandlari",
+      "count": 5
+    },
+    "kam_taminlangan": {
+      "key": "kam_taminlangan",
+      "title": "Kam ta’minlangan talabalar (Ijtimoiy reyestr)",
+      "count": 47
+    },
+    "ijarada_yashovchi": {
+      "key": "ijarada_yashovchi",
+      "title": "Ijarada yashovchi talaba-qizlar",
+      "count": 1
+    },
+    "qarindoshnikida": {
+      "key": "qarindoshnikida",
+      "title": "Qarindoshining uyida yashovchi talaba-qizlar",
+      "count": 1
+    },
+    "oz_uyidan_qatnovchi": {
+      "key": "oz_uyidan_qatnovchi",
+      "title": "O‘z uyidan qatnovchi talaba-qizlar",
+      "count": 45
+    },
+    "ttj_talabalar": {
+      "key": "ttj_talabalar",
+      "title": "TTJda yashovchi talaba-qizlar",
+      "count": 88
+    },
+    "nogiron": {
+      "key": "nogiron",
+      "title": "Nogironligi bo‘lgan talaba-qizlar",
+      "count": 47
+    },
+    "yoshlar_daftari": {
+      "key": "yoshlar_daftari",
+      "title": "Yoshlar daftariga kiritilgan talabalar",
+      "count": 3
+    },
+    "boquvchisini_yoqotgan": {
+      "key": "boquvchisini_yoqotgan",
+      "title": "Boquvchisini yo‘qotgan talabalar",
+      "count": 49
+    },
+    "chin_yetim": {
+      "key": "chin_yetim",
+      "title": "Chin yetim talabalar",
+      "count": 9
+    },
+    "temir_daftar": {
+      "key": "temir_daftar",
+      "title": "Temir daftarga kiritilgan oilalar farzandlari",
+      "count": 1
+    },
+    "ajrashgan": {
+      "key": "ajrashgan",
+      "title": "Ajrashgan (yolg‘iz) talabalar",
+      "count": 3
+    }
+  },
+  "facultyCounts": {
+    "Psixologiya va sanʼat fakulteti": 159,
+    "Kimyoviy texnologiya fakulteti": 115,
+    "Tarix va huquq fakulteti": 51,
+    "Boshqa fakultetlar": 8,
+    "Ijtimoiy-iqtisodiy fanlar fakulteti": 3
+  },
+  "courseCounts": {
+    "1-kurs": 18,
+    "2-kurs": 28,
+    "3-kurs": 9,
+    "4-kurs": 7,
+    "Bakalavriat (umumiy)": 274
+  },
+  "categoriesTable": [
+    {
+      "key": "yoshlar_daftari",
+      "title": "«Yoshlar daftari»ga kiritilganlar",
+      "officialCount": 52,
+      "rosterCount": 52,
+      "share": "100% qamrab olingan",
+      "imtiyoz": "Bir martalik moddiy yordam, to‘lov-shartnoma, safarbarlik xarajatlari",
+      "ttjCount": 28,
+      "color": "emerald",
+      "badge": "Rasmiy hisobot"
+    },
+    {
+      "key": "ijtimoiy_reyestr",
+      "title": "«Ijtimoiy himoya yagona reyestri» (Kam taʼminlangan)",
+      "officialCount": 289,
+      "rosterCount": 289,
+      "share": "289 nafar talaba",
+      "imtiyoz": "Davlat stipendiyasi, moddiy rag‘batlantirish, bepul yotoqxona",
+      "ttjCount": 225,
+      "color": "amber",
+      "badge": "Yagona reyestr"
+    },
+    {
+      "key": "chin_yetim",
+      "title": "Chin yetim talabalar",
+      "officialCount": 263,
+      "rosterCount": 263,
+      "share": "263 nafar talaba",
+      "imtiyoz": "To‘liq davlat taʼminoti, bepul TTJ, moddiy yordam",
+      "ttjCount": 3,
+      "color": "purple",
+      "badge": "To‘liq yetim"
+    },
+    {
+      "key": "ayollar_daftari",
+      "title": "«Ayollar daftari»dagi oilalar farzandlari",
+      "officialCount": 91,
+      "rosterCount": 91,
+      "share": "91 nafar talaba-qiz",
+      "imtiyoz": "Kontrakt to‘lovi qoplab berilgan, ijtimoiy ko‘mak",
+      "ttjCount": 74,
+      "color": "pink",
+      "badge": "Ayollar daftari"
+    },
+    {
+      "key": "nogiron",
+      "title": "Nogironligi bo‘lgan talabalar",
+      "officialCount": 41,
+      "rosterCount": 41,
+      "share": "41 nafar (TTJda 95 nafar)",
+      "imtiyoz": "1- va 2-guruh imtiyozlari, dori-darmon va inklyuziv yordam",
+      "ttjCount": 95,
+      "color": "blue",
+      "badge": "1- va 2-guruh"
+    },
+    {
+      "key": "boquvchisini_yoqotgan",
+      "title": "Boquvchisini yo‘qotgan talabalar",
+      "officialCount": 49,
+      "rosterCount": 49,
+      "share": "49 nafar talaba",
+      "imtiyoz": "Yarim yetimlik nafaqasi va universitet moddiy ko‘magi",
+      "ttjCount": 28,
+      "color": "rose",
+      "badge": "Boquvchisiz"
+    },
+    {
+      "key": "oilali",
+      "title": "Turmush qurgan (oilali) talaba-yoshlar",
+      "officialCount": 37,
+      "rosterCount": 37,
+      "share": "37 nafar talaba",
+      "imtiyoz": "Oila va xotin-qizlar kengashi ijtimoiy ko‘magi",
+      "ttjCount": 12,
+      "color": "teal",
+      "badge": "Oilali"
+    },
+    {
+      "key": "mehribonlik",
+      "title": "Mehribonlik uyi tarbiyalanuvchilari",
+      "officialCount": 19,
+      "rosterCount": 19,
+      "share": "19 nafar talaba",
+      "imtiyoz": "Davlat vasiyligi, uy-joy va ishga joylashish imtiyozlari",
+      "ttjCount": 8,
+      "color": "indigo",
+      "badge": "Mehribonlik uyi"
+    },
+    {
+      "key": "ajrashgan",
+      "title": "Ajrashgan (yolg‘iz) talabalar",
+      "officialCount": 3,
+      "rosterCount": 3,
+      "share": "3 nafar talaba",
+      "imtiyoz": "Psixologik va moddiy ko‘mak",
+      "ttjCount": 2,
+      "color": "slate",
+      "badge": "Ijtimoiy ko‘mak"
+    }
+  ]
+}

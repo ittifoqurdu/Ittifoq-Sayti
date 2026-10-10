@@ -16,13 +16,20 @@ import {
   Search,
   BookOpen,
   PieChart,
-  UserCheck
+  UserCheck,
+  HeartHandshake,
+  FileText,
+  ArrowRight
 } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import studentStats from '../../data/studentStats.json'
+import yoshlarDaftariStats from '../../data/yoshlarDaftariStats.json'
 
 export default function StudentStatsModal({ isOpen, onClose }) {
   const [activeTab, setActiveTab] = useState('umumiy')
   const [facultySearch, setFacultySearch] = useState('')
+  const [socialSearch, setSocialSearch] = useState('')
+  const [socialCategoryFilter, setSocialCategoryFilter] = useState('barchasi')
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -107,6 +114,7 @@ export default function StudentStatsModal({ isOpen, onClose }) {
               <div className="mt-5 flex gap-2 overflow-x-auto pb-1 scrollbar-none">
                 {[
                   { id: 'umumiy', label: 'Umumiy tahlil' },
+                  { id: 'yoshlar_daftari', label: '«Yoshlar daftari» & Ijtimoiy toifalar' },
                   { id: 'fakultet', label: 'Fakultetlar kesimida' },
                   { id: 'talim', label: 'Taʼlim shakllari va kurslar' },
                   { id: 'hudud', label: 'Hududlar va turar joy' },
@@ -177,6 +185,35 @@ export default function StudentStatsModal({ isOpen, onClose }) {
                       </p>
                       <span className="mt-1 block text-[11px] text-zinc-500">Yoshlar qatlami</span>
                     </div>
+                  </div>
+
+                  {/* Yoshlar daftari va ijtimoiy toifalar highlight banner */}
+                  <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/5 p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div className="flex items-start gap-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shrink-0">
+                        <HeartHandshake size={20} />
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+                          «Yoshlar daftari» & Ijtimoiy himoya reyestri
+                          <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold text-emerald-600 dark:text-emerald-400">
+                            52 nafar rasmiy
+                          </span>
+                        </h4>
+                        <p className="mt-0.5 text-xs text-zinc-500">
+                          Yoshlar daftari (52), Ayollar daftari (91), Ijtimoiy reyestr (289), Chin yetim (263), Nogironligi bor talabalar (41).
+                        </p>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab('yoshlar_daftari')}
+                      className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-500 px-4 py-2 text-xs font-bold text-zinc-950 shadow-md shadow-emerald-500/20 hover:bg-emerald-400 transition shrink-0"
+                    >
+                      <span>To‘liq ro‘yxatni ko‘rish</span>
+                      <ArrowRight size={13} />
+                    </button>
                   </div>
 
                   {/* Gender and Age Visual Bar */}
@@ -266,6 +303,129 @@ export default function StudentStatsModal({ isOpen, onClose }) {
                     </div>
                   </div>
                 </>
+              )}
+
+              {/* TAB: YOSHLAR DAFTARI VA IJTIMOIY TOIFALAR */}
+              {activeTab === 'yoshlar_daftari' && (
+                <div className="space-y-5">
+                  {/* KPI Cards Grid */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/5 p-3.5">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                        Yoshlar daftari
+                      </span>
+                      <p className="text-xl font-extrabold text-zinc-900 dark:text-zinc-100 mt-1">
+                        52 nafar
+                      </p>
+                      <span className="text-[10px] text-zinc-500">Rasmiy hisobot</span>
+                    </div>
+
+                    <div className="rounded-2xl border border-pink-500/30 bg-pink-500/5 p-3.5">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-pink-600 dark:text-pink-400">
+                        Ayollar daftari
+                      </span>
+                      <p className="text-xl font-extrabold text-zinc-900 dark:text-zinc-100 mt-1">
+                        91 nafar
+                      </p>
+                      <span className="text-[10px] text-zinc-500">TTJda 74 nafar</span>
+                    </div>
+
+                    <div className="rounded-2xl border border-amber-500/30 bg-amber-500/5 p-3.5">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
+                        Ijtimoiy reyestr
+                      </span>
+                      <p className="text-xl font-extrabold text-zinc-900 dark:text-zinc-100 mt-1">
+                        289 nafar
+                      </p>
+                      <span className="text-[10px] text-zinc-500">Kam taʼminlangan</span>
+                    </div>
+
+                    <div className="rounded-2xl border border-purple-500/30 bg-purple-500/5 p-3.5">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400">
+                        Chin yetim
+                      </span>
+                      <p className="text-xl font-extrabold text-zinc-900 dark:text-zinc-100 mt-1">
+                        263 nafar
+                      </p>
+                      <span className="text-[10px] text-zinc-500">Ota-onasiz</span>
+                    </div>
+                  </div>
+
+                  {/* Sub cards: Nogiron, Boquvchisini yo'qotgan, Mehribonlik, Oilali */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                    <div className="rounded-xl bg-zinc-50 dark:bg-zinc-800/50 p-2.5 text-center">
+                      <p className="text-[10px] text-zinc-400">Nogironligi bor</p>
+                      <p className="text-base font-bold text-zinc-800 dark:text-zinc-200 mt-0.5">41 nafar</p>
+                    </div>
+                    <div className="rounded-xl bg-zinc-50 dark:bg-zinc-800/50 p-2.5 text-center">
+                      <p className="text-[10px] text-zinc-400">Boquvchisini yo‘qotgan</p>
+                      <p className="text-base font-bold text-zinc-800 dark:text-zinc-200 mt-0.5">49 nafar</p>
+                    </div>
+                    <div className="rounded-xl bg-zinc-50 dark:bg-zinc-800/50 p-2.5 text-center">
+                      <p className="text-[10px] text-zinc-400">Mehribonlik uyi</p>
+                      <p className="text-base font-bold text-zinc-800 dark:text-zinc-200 mt-0.5">19 nafar</p>
+                    </div>
+                    <div className="rounded-xl bg-zinc-50 dark:bg-zinc-800/50 p-2.5 text-center">
+                      <p className="text-[10px] text-zinc-400">Oilali talabalar</p>
+                      <p className="text-base font-bold text-zinc-800 dark:text-zinc-200 mt-0.5">37 nafar</p>
+                    </div>
+                  </div>
+
+                  {/* Quantitative Table of Categories (Only Numbers, No Names) */}
+                  <div className="max-h-[340px] overflow-y-auto rounded-2xl border border-zinc-200/80 dark:border-zinc-800">
+                    <table className="w-full text-left text-xs">
+                      <thead className="bg-zinc-50 dark:bg-zinc-900 sticky top-0 border-b border-zinc-200 dark:border-zinc-800 text-zinc-500 font-bold">
+                        <tr>
+                          <th className="py-2.5 px-3 w-10 text-center">№</th>
+                          <th className="py-2.5 px-3">Ijtimoiy toifa / Daftar nomi</th>
+                          <th className="py-2.5 px-3 text-center">Talabalar soni</th>
+                          <th className="py-2.5 px-3 text-center">TTJda yashaydiganlar</th>
+                          <th className="py-2.5 px-3">Ko‘rsatilgan imtiyoz va yordam</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-zinc-200/70 dark:divide-zinc-800/70">
+                        {(yoshlarDaftariStats.categoriesTable || []).map((cat, i) => (
+                          <tr key={cat.key} className="hover:bg-zinc-50 dark:hover:bg-zinc-900/50">
+                            <td className="py-2.5 px-3 text-center text-zinc-400 font-semibold">{i + 1}</td>
+                            <td className="py-2.5 px-3 font-bold text-zinc-900 dark:text-zinc-100">
+                              {cat.title}
+                            </td>
+                            <td className="py-2.5 px-3 text-center">
+                              <span className="inline-flex rounded-lg bg-emerald-500/10 px-2.5 py-0.5 font-extrabold text-emerald-700 dark:text-emerald-300">
+                                {cat.officialCount} nafar
+                              </span>
+                            </td>
+                            <td className="py-2.5 px-3 text-center font-medium text-zinc-600 dark:text-zinc-400">
+                              {cat.ttjCount} nafar
+                            </td>
+                            <td className="py-2.5 px-3 text-zinc-500 max-w-xs truncate">
+                              {cat.imtiyoz}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Link to full Statistika page */}
+                  <div className="rounded-2xl border border-zinc-200/80 bg-zinc-50/80 p-4 dark:border-zinc-800 dark:bg-zinc-900/40 flex flex-wrap items-center justify-between gap-3">
+                    <div className="flex items-center gap-2">
+                      <TrendingUp size={16} className="text-emerald-500" />
+                      <span className="text-xs text-zinc-600 dark:text-zinc-300">
+                        «Yoshlar daftari» va ijtimoiy toifalar bo‘yicha to‘liq fakultet va kurslar kesimidagi statistik tahlil:
+                      </span>
+                    </div>
+
+                    <Link
+                      to="/statistika#yoshlar-daftari-statistika"
+                      onClick={onClose}
+                      className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-500 px-3.5 py-1.5 text-xs font-bold text-zinc-950 hover:bg-emerald-400 transition"
+                    >
+                      <span>Statistika sahifasida ochish</span>
+                      <ArrowRight size={13} />
+                    </Link>
+                  </div>
+                </div>
               )}
 
               {activeTab === 'fakultet' && (

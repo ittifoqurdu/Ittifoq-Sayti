@@ -22,14 +22,18 @@ import {
   School,
   Clock,
   Briefcase,
-  Layers
+  Layers,
+  HeartHandshake,
+  ShieldCheck
 } from 'lucide-react'
 import studentStats from '../../data/studentStats.json'
+import YoshlarDaftariSection from '../sections/YoshlarDaftariSection'
 import FooterSection from '../sections/FooterSection'
 
 export default function StatistikaPage() {
   const [facultySearch, setFacultySearch] = useState('')
   const [activeView, setActiveView] = useState('barchasi') // barchasi, fakultetlar, ta'lim, hudud
+  const [selectedSocialCategory, setSelectedSocialCategory] = useState('barchasi')
 
   const total = studentStats.totalStudents
   const girlsPercent = ((studentStats.girls / total) * 100).toFixed(1)
@@ -90,10 +94,42 @@ export default function StatistikaPage() {
               </span>
             </div>
           </div>
+
+          {/* Quick Anchor Navigation */}
+          <div className="relative z-10 mt-6 pt-5 border-t border-zinc-200/80 dark:border-zinc-800/80 flex flex-wrap gap-2">
+            <a
+              href="#yoshlar-daftari-statistika"
+              className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3.5 py-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500 hover:text-zinc-950 transition-all shadow-sm"
+            >
+              <HeartHandshake size={14} />
+              <span>«Yoshlar daftari» & Ijtimoiy himoya (52 nafar)</span>
+            </a>
+            <a
+              href="#fakultetlar"
+              className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/70 px-3.5 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900/70 dark:text-zinc-300 dark:hover:bg-zinc-800 transition"
+            >
+              <Building2 size={13} />
+              <span>Fakultetlar kesimi</span>
+            </a>
+            <a
+              href="#talim-shakllari"
+              className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/70 px-3.5 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900/70 dark:text-zinc-300 dark:hover:bg-zinc-800 transition"
+            >
+              <BookOpen size={13} />
+              <span>Taʼlim shakllari</span>
+            </a>
+            <a
+              href="#turar-joy"
+              className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/70 px-3.5 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900/70 dark:text-zinc-300 dark:hover:bg-zinc-800 transition"
+            >
+              <Home size={13} />
+              <span>Turar joy va hududlar</span>
+            </a>
+          </div>
         </header>
 
-        {/* 4 Main Core Metrics Cards */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+        {/* ROW 1: 4 Main Core Metrics Cards (Umumiy kontingent) */}
+        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-5">
           {/* Total Students */}
           <div className="glass-card relative overflow-hidden p-6 border-l-4 border-l-emerald-500">
             <div className="flex items-center justify-between">
@@ -119,7 +155,7 @@ export default function StatistikaPage() {
               <span className="text-xs font-bold uppercase tracking-wider text-pink-600 dark:text-pink-400">
                 Talaba-qizlar
               </span>
-              <div className="rounded-xl bg-pink-500/10 p-2 text-pink-600 dark:text-pink-400 font-bold text-xs">
+              <div className="rounded-xl bg-pink-500/10 px-2.5 py-1 text-pink-600 dark:text-pink-400 font-bold text-xs">
                 {girlsPercent}%
               </div>
             </div>
@@ -137,7 +173,7 @@ export default function StatistikaPage() {
               <span className="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">
                 Talaba-yigitlar
               </span>
-              <div className="rounded-xl bg-blue-500/10 p-2 text-blue-600 dark:text-blue-400 font-bold text-xs">
+              <div className="rounded-xl bg-blue-500/10 px-2.5 py-1 text-blue-600 dark:text-blue-400 font-bold text-xs">
                 {boysPercent}%
               </div>
             </div>
@@ -155,7 +191,7 @@ export default function StatistikaPage() {
               <span className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
                 30 yoshgacha bo‘lganlar
               </span>
-              <div className="rounded-xl bg-amber-500/10 p-2 text-amber-600 dark:text-amber-400 font-bold text-xs">
+              <div className="rounded-xl bg-amber-500/10 px-2.5 py-1 text-amber-600 dark:text-amber-400 font-bold text-xs">
                 {under30Percent}%
               </div>
             </div>
@@ -166,6 +202,101 @@ export default function StatistikaPage() {
               <span>Yoshlar qatlami: 17,410 nafar</span>
             </div>
           </div>
+        </section>
+
+        {/* ROW 2: 4 Cards matching user diagram (Yoshlar daftari va Ijtimoiy toifalar) */}
+        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+          {/* Card 1: yoshlar daftarida turadigan yoshlar */}
+          <a
+            href="#yoshlar-daftari-statistika"
+            onClick={() => setSelectedSocialCategory('yoshlar_daftari')}
+            className="glass-card relative overflow-hidden p-6 border-l-4 border-l-emerald-500 transition hover:shadow-lg hover:border-emerald-400 group cursor-pointer block"
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 group-hover:underline">
+                Yoshlar daftarida turadigan yoshlar
+              </span>
+              <div className="rounded-xl bg-emerald-500/10 p-2 text-emerald-600 dark:text-emerald-400">
+                <Sparkles size={18} />
+              </div>
+            </div>
+            <p className="mt-4 text-3xl sm:text-4xl font-black text-zinc-900 dark:text-zinc-100">
+              52 <span className="text-sm font-semibold text-zinc-500">nafar</span>
+            </p>
+            <div className="mt-2 flex items-center justify-between text-xs text-zinc-500">
+              <span>«Yoshlar daftari»ga kiritilganlar</span>
+              <span className="font-semibold text-emerald-600 dark:text-emerald-400 group-hover:translate-x-0.5 transition-transform">Batafsil →</span>
+            </div>
+          </a>
+
+          {/* Card 2: Chin yetimligi bo'lgan yoshlar */}
+          <a
+            href="#yoshlar-daftari-statistika"
+            onClick={() => setSelectedSocialCategory('chin_yetim')}
+            className="glass-card relative overflow-hidden p-6 border-l-4 border-l-purple-500 transition hover:shadow-lg hover:border-purple-400 group cursor-pointer block"
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 group-hover:underline">
+                Chin yetimligi bo‘lgan yoshlar
+              </span>
+              <div className="rounded-xl bg-purple-500/10 p-2 text-purple-600 dark:text-purple-400">
+                <Award size={18} />
+              </div>
+            </div>
+            <p className="mt-4 text-3xl sm:text-4xl font-black text-zinc-900 dark:text-zinc-100">
+              263 <span className="text-sm font-semibold text-zinc-500">nafar</span>
+            </p>
+            <div className="mt-2 flex items-center justify-between text-xs text-zinc-500">
+              <span>Ota-ona qaramog‘idan mahrum</span>
+              <span className="font-semibold text-purple-600 dark:text-purple-400 group-hover:translate-x-0.5 transition-transform">Batafsil →</span>
+            </div>
+          </a>
+
+          {/* Card 3: ijtimoiy himoyaga muhtoj talabalar */}
+          <a
+            href="#yoshlar-daftari-statistika"
+            onClick={() => setSelectedSocialCategory('kam_taminlangan')}
+            className="glass-card relative overflow-hidden p-6 border-l-4 border-l-amber-500 transition hover:shadow-lg hover:border-amber-400 group cursor-pointer block"
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 group-hover:underline">
+                Ijtimoiy himoyaga muhtoj talabalar
+              </span>
+              <div className="rounded-xl bg-amber-500/10 p-2 text-amber-600 dark:text-amber-400">
+                <HeartHandshake size={18} />
+              </div>
+            </div>
+            <p className="mt-4 text-3xl sm:text-4xl font-black text-zinc-900 dark:text-zinc-100">
+              289 <span className="text-sm font-semibold text-zinc-500">nafar</span>
+            </p>
+            <div className="mt-2 flex items-center justify-between text-xs text-zinc-500">
+              <span>Yagona reyestr & Kam taʼminlangan</span>
+              <span className="font-semibold text-amber-600 dark:text-amber-400 group-hover:translate-x-0.5 transition-transform">Batafsil →</span>
+            </div>
+          </a>
+
+          {/* Card 4: Ayollar daftari */}
+          <a
+            href="#yoshlar-daftari-statistika"
+            onClick={() => setSelectedSocialCategory('ayollar_daftari')}
+            className="glass-card relative overflow-hidden p-6 border-l-4 border-l-pink-500 transition hover:shadow-lg hover:border-pink-400 group cursor-pointer block"
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold uppercase tracking-wider text-pink-600 dark:text-pink-400 group-hover:underline">
+                Ayollar daftari
+              </span>
+              <div className="rounded-xl bg-pink-500/10 p-2 text-pink-600 dark:text-pink-400">
+                <Users size={18} />
+              </div>
+            </div>
+            <p className="mt-4 text-3xl sm:text-4xl font-black text-zinc-900 dark:text-zinc-100">
+              91 <span className="text-sm font-semibold text-zinc-500">nafar</span>
+            </p>
+            <div className="mt-2 flex items-center justify-between text-xs text-zinc-500">
+              <span>TTJda 74 nafar • Oilalar farzandlari</span>
+              <span className="font-semibold text-pink-600 dark:text-pink-400 group-hover:translate-x-0.5 transition-transform">Batafsil →</span>
+            </div>
+          </a>
         </section>
 
         {/* Gender & Age Progress Visualization */}
@@ -218,8 +349,11 @@ export default function StatistikaPage() {
           </div>
         </section>
 
+        {/* Dedicated Yoshlar Daftari & Social Notebooks Section */}
+        <YoshlarDaftariSection initialCategory={selectedSocialCategory} />
+
         {/* Education Forms and Degrees Section */}
-        <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 mt-12" id="talim-shakllari">
           {/* Ta'lim Shakllari */}
           <div className="glass-card p-6 lg:col-span-2">
             <div className="flex items-center justify-between mb-5">
@@ -374,7 +508,7 @@ export default function StatistikaPage() {
         </section>
 
         {/* Accommodation and Regional Analytics */}
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8" id="turar-joy">
           {/* Residence Types */}
           <div className="glass-card p-6">
             <div className="flex items-center gap-2 mb-5">

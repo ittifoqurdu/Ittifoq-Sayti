@@ -18,9 +18,9 @@ import {
   MapPin,
   Newspaper,
   Phone,
-  Send,
   Sparkles,
   Users,
+  HeartHandshake
 } from 'lucide-react'
 import { fadeUp } from '../../lib/animations'
 import { profile, socialLinks, universityStats } from '../../data/siteData'
@@ -225,12 +225,37 @@ function TopCardsSection() {
                 </p>
               </div>
             </div>
+
+            {/* Yoshlar daftari va ijtimoiy toifalar highlight */}
+            <div className="mt-3 rounded-2xl border border-emerald-500/30 bg-emerald-500/5 p-3 flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-2.5">
+                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shrink-0">
+                  <HeartHandshake size={16} />
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
+                    «Yoshlar daftari» & Ijtimoiy himoya: <span className="text-emerald-600 dark:text-emerald-400">52 nafar</span>
+                  </p>
+                  <p className="text-[10px] text-zinc-500">
+                    Ayollar daftari: 91 • Ijtimoiy reyestr: 289 • Chin yetim: 263 • Nogironligi bor: 41
+                  </p>
+                </div>
+              </div>
+
+              <Link
+                to="/statistika#yoshlar-daftari-statistika"
+                className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
+              >
+                <span>Batafsil statistika</span>
+                <ArrowRight size={12} />
+              </Link>
+            </div>
           </div>
 
           {/* Bottom Action Section: Tags & Detailed Button */}
           <div className="mt-6 pt-5 border-t border-zinc-200/80 dark:border-zinc-800/80 flex flex-wrap items-center justify-between gap-4">
             <div className="flex flex-wrap items-center gap-2">
-              {['13 ta fakultet', '3 362 nafar TTJ talabasi', 'Masofaviy: 1 127', 'Iqtidorli yoshlar'].map((tag) => (
+              {['«Yoshlar daftari»: 52', 'Ayollar daftari: 91', 'Ijtimoiy reyestr: 289', 'Chin yetim: 263', '3 362 nafar TTJ', '13 ta fakultet'].map((tag) => (
                 <span key={tag} className="rounded-full border border-zinc-200/80 bg-white/80 dark:border-zinc-800 dark:bg-zinc-900/80 px-3 py-1 text-[11px] font-medium text-zinc-700 dark:text-zinc-300 shadow-sm">
                   {tag}
                 </span>
