@@ -24,10 +24,12 @@ import {
   Briefcase,
   Layers,
   HeartHandshake,
-  ShieldCheck
+  ShieldCheck,
+  CalendarDays
 } from 'lucide-react'
 import studentStats from '../../data/studentStats.json'
 import YoshlarDaftariSection from '../sections/YoshlarDaftariSection'
+import TadbirlarStatsSection from '../sections/TadbirlarStatsSection'
 import FooterSection from '../sections/FooterSection'
 
 export default function StatistikaPage() {
@@ -102,6 +104,13 @@ export default function StatistikaPage() {
             >
               <HeartHandshake size={14} />
               <span>«Yoshlar daftari» & Ijtimoiy himoya (52 nafar)</span>
+            </a>
+            <a
+              href="#tadbirlar-statistika"
+              className="inline-flex items-center gap-1.5 rounded-full border border-blue-500/40 bg-blue-500/10 px-3.5 py-1.5 text-xs font-bold text-blue-700 dark:text-blue-300 hover:bg-blue-500 hover:text-white transition-all shadow-sm"
+            >
+              <CalendarDays size={14} />
+              <span>O‘tkazilgan tadbirlar (6 663 ta)</span>
             </a>
             <a
               href="#fakultetlar"
@@ -346,6 +355,9 @@ export default function StatistikaPage() {
 
         {/* Dedicated Yoshlar Daftari & Social Notebooks Section */}
         <YoshlarDaftariSection />
+
+        {/* Dedicated Events and Projects Section (from official 52MB PPTX report) */}
+        <TadbirlarStatsSection />
 
         {/* Education Forms and Degrees Section */}
         <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 mt-12" id="talim-shakllari">

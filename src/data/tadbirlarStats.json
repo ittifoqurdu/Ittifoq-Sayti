@@ -1,0 +1,174 @@
+{
+  "updatedAt": "2026-yil",
+  "source": "UrDU Yoshlar ittifoqi boshlang‘ich tashkiloti rasmiy hisoboti",
+  "summary": {
+    "totalEvents": 6663,
+    "totalParticipants": 68315,
+    "totalClubs": 135,
+    "totalProjects": 207
+  },
+  "mainDirections": [
+    {
+      "key": "vatanparvarlik",
+      "title": "Vatanparvarlik, milliy g‘urur va iftixor tadbirlari",
+      "eventsCount": 1247,
+      "participantsCount": 12400,
+      "description": "Talaba-yoshlar ongida vatanga muhabbat, milliy qadriyatlar va iftixor tuyg‘ularini yuksaltirishga qaratilgan uchrashuv va tadbirlar",
+      "color": "emerald",
+      "icon": "Flag"
+    },
+    {
+      "key": "huquqbuzarlik",
+      "title": "Huquqbuzarliklarni oldini olish va profilaktika",
+      "eventsCount": 1002,
+      "participantsCount": 12040,
+      "description": "Profilaktika inspektorlari va soha mutaxassislari ishtirokida davra suhbatlari, huquqiy savodxonlik soatlari va tushuntirish tadbirlari",
+      "color": "blue",
+      "icon": "ShieldCheck"
+    },
+    {
+      "key": "kitobxonlik",
+      "title": "Kitobxonlikni keng targ‘ib qilish tadbirlari",
+      "eventsCount": 991,
+      "participantsCount": 12000,
+      "description": "«Kitobxon yoshlar», adabiy kechalar, kitob taqdimotlari, mutolaa marafonlari va intellektual viktorinalar",
+      "color": "amber",
+      "icon": "BookOpen"
+    },
+    {
+      "key": "sport",
+      "title": "Sport musobaqalari va sog‘lomlashtirish",
+      "eventsCount": 755,
+      "participantsCount": 11700,
+      "description": "«TTJ birinchiligi», mini-futbol, voleybol, shaxmat-shashka, stol tennisi va sport estafetalari musobaqalari",
+      "color": "rose",
+      "icon": "Trophy"
+    },
+    {
+      "key": "biznes",
+      "title": "Mehnat yarmarkalari, biznes marafonlar va kasb-hunar",
+      "eventsCount": 347,
+      "participantsCount": 7800,
+      "description": "Bitiruvchi yoshlar bandligini taʼminlash, «Biznes marafon» motivatsion treninglari, startap ko‘rgazmalari va master-klasslar",
+      "color": "purple",
+      "icon": "Briefcase"
+    },
+    {
+      "key": "boshqa_manaviy",
+      "title": "Umumiy maʼnaviy-maʼrifiy kechalar va uchrashuvlar",
+      "eventsCount": 2321,
+      "participantsCount": 12375,
+      "description": "Universitet va fakultet miqyosidagi bayram dasturlari, madaniy hordiq chiqarish loyihalari hamda davra suhbatlari",
+      "color": "teal",
+      "icon": "Sparkles"
+    }
+  ],
+  "coordinatorProjects": [
+    {
+      "title": "Besh tashabbus loyihalari",
+      "coordinator": "Besh tashabbus loyihalari koordinatori",
+      "projectsCount": 52,
+      "participantsCount": 5000,
+      "highlight": "Talabalar qamrovi eng yuqori yo‘nalish"
+    },
+    {
+      "title": "Intellektual loyihalar («Zakovat» klubi)",
+      "coordinator": "Intellektual loyihalar koordinatori",
+      "projectsCount": 38,
+      "participantsCount": 4800,
+      "highlight": "Zakovat klubida 1 000 dan ortiq aʼzo"
+    },
+    {
+      "title": "Harbiy-vatanparvarlik loyihalari",
+      "coordinator": "Harbiy-vatanparvarlik koordinatori",
+      "projectsCount": 35,
+      "participantsCount": 3100,
+      "highlight": "Asosan yigitlar qamrab olingan"
+    },
+    {
+      "title": "Tadbirkorlik va innovatsion loyihalar",
+      "coordinator": "Tadbirkorlik koordinatori",
+      "projectsCount": 30,
+      "participantsCount": 4500,
+      "highlight": "Startap va biznes reja tanlovlari"
+    },
+    {
+      "title": "«Yoshlar daftari» va metsenatlik dasturlari",
+      "coordinator": "Ijtimoiy himoya koordinatori",
+      "projectsCount": 28,
+      "participantsCount": 3000,
+      "highlight": "Ijtimoiy toifadagi yoshlar qo‘llab-quvvatlovi"
+    },
+    {
+      "title": "Talaba-qizlar yo‘nalishidagi loyihalar",
+      "coordinator": "Talaba-qizlar koordinatori",
+      "projectsCount": 24,
+      "participantsCount": 2800,
+      "highlight": "Qizlar uchun maxsus loyihalar"
+    }
+  ],
+  "fiveInitiatives": [
+    {
+      "number": 1,
+      "title": "1-tashabbus: Madaniyat, sanʼat, teatr va musiqa",
+      "count": 1463,
+      "description": "Musiqa, teatr studiyalari, QVZ va sanʼat to‘garaklariga qatnashuvchilar"
+    },
+    {
+      "number": 2,
+      "title": "2-tashabbus: Jismoniy tarbiya va sport",
+      "count": 5267,
+      "description": "Sport seksiyalari, sog‘lomlashtirish va ommaviy sport musobaqalari ishtirokchilari"
+    },
+    {
+      "number": 3,
+      "title": "3-tashabbus: Kompyuter texnologiyalari va IT",
+      "count": 4153,
+      "description": "Dasturlash, kompyuter savodxonligi va raqamli texnologiyalar to‘garaklari"
+    },
+    {
+      "number": 4,
+      "title": "4-tashabbus: Kitobxonlik va maʼnaviyat",
+      "count": 2351,
+      "description": "Kitobxonlik klublari, mutolaa kechalari va adabiy to‘garaklar qatnashchilari"
+    },
+    {
+      "number": 5,
+      "title": "5-tashabbus: Xotin-qizlar bandligi va kasb-hunar",
+      "count": 3278,
+      "description": "Tikuvchilik, pazandachilik, hunarmandchilik va kasbiy to‘garaklar aʼzolari"
+    }
+  ],
+  "clubsAndSpecialUnits": [
+    {
+      "name": "Zakovat klubi",
+      "members": "1 000+ nafar",
+      "details": "Har haftalik intellektual o‘yinlar va universitet ligasi"
+    },
+    {
+      "name": "Talabalar teatr studiyasi (10 ta jamoa)",
+      "members": "600 nafar",
+      "details": "Har bir fakultetda teatr studiyalari va spektakllar"
+    },
+    {
+      "name": "QVZ (Quvnoqlar va zukkolar) jamoalari",
+      "members": "10 ta jamoa",
+      "details": "Fakultetlararo va respublika bosqichidagi tanlovlar"
+    },
+    {
+      "name": "Chet tili klubi (Speaking Club)",
+      "members": "400+ nafar",
+      "details": "Ingliz tili, nemis tili va so‘zlashuv mashg‘ulotlari"
+    },
+    {
+      "name": "Tikuvchilik va amaliy sanʼat to‘garagi",
+      "members": "200 nafar",
+      "details": "TTJ va fakultetlarda xotin-qizlar hunar to‘garaklari"
+    },
+    {
+      "name": "«Qalqon» jamoat guruhi",
+      "members": "30 nafar",
+      "details": "4 ta hududda navbatchilik, tartib-intizom va xavfsizlik reydlari"
+    }
+  ]
+}
